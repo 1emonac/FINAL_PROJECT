@@ -1,0 +1,67 @@
+.map-section{
+    width: 100%;
+    position: relative;
+}
+body{
+    height: unset;
+}
+.map-section > .select > ul{
+    width: 240px;
+    height: 30px;
+    line-height: 1.3rem;
+    font-size: 1.3rem;
+    
+    padding: 7px;
+
+    position: absolute;
+    top: 5;
+    left: 5;
+    display: flex;    
+    opacity: 0.8;
+    z-index: 999;
+    background-color: lightgrey;
+    justify-content: space-around;
+}
+.map-section > .select > ul li{
+    list-style-type: none;
+    font-size: 14px;
+    
+    
+}
+.map-section > .select > ul li:hover{
+    cursor: pointer;
+}
+#select{
+    position: relative;
+}
+#select .infowindow {
+    display: block;
+    position: absolute;
+    z-index: 999;
+    width: 800px;
+    height: 90vh;
+    top: 50px;
+    left: 0;
+    -ms-overflow-style: none; /* 인터넷 익스플로러 */
+    scrollbar-width: none;
+    
+}
+#select .hidden{
+    display: none;
+}
+#select .top {
+    background-color: wheat;
+    /* font-size: 24px; */
+    text-align: right;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 3px;
+}
+#select .infowindow .detail {
+    width: 100%;
+    height: 100%;
+}
+#select .infowindow::-webkit-scrollbar {
+    display: none;
+}
