@@ -34,6 +34,12 @@
                 margin: 0 auto; /* 중앙 정렬 */
                 padding: 0 15px; /* 좌우 패딩 */
             }
+            .forms_field {
+            margin-bottom: 12px; /* 필드 간 간격을 15px로 설정 */
+            }
+            .forms_buttons {
+                margin-top: 10px; /* 버튼 위쪽에 간격 추가 */
+            }
         </style>
 
     </head>
@@ -66,43 +72,42 @@
             
             <div class="user_options-forms" id="user_options-forms">
                 <div class="user_forms-login">
-                <form action="{% url 'users:login2' %}" method="POST" id="login" enctype="multipart/form-data">
-                    <h2 class="forms_title">로그인</h2>
-                    <form class="forms_form">
-                        <fieldset class="forms_fieldset">
+                    <form action="{% url 'users:login' %}" method="POST" id="login" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <h2 class="forms_title">로그인</h2>
+                        {% for field in form %}
                         <div class="forms_field">
-                            <input type="id" placeholder="아이디" class="forms_field-input" required autofocus />
+                            {{ field }} <!-- 필드 입력란을 렌더링 -->
+                            {% if field.help_text %}
+                            <small class="form-text text-muted">{{ field.help_text }}</small>
+                            {% endif %}
                         </div>
-                        <div class="forms_field">
-                            <input type="password" placeholder="비밀번호" class="forms_field-input" required />
-                        </div>
-                        </fieldset>
+                        {% endfor %}
                         <div class="forms_buttons">
-                        <button type="button" class="forms_buttons-forgot">비밀번호를 잊어버리셨나요?</button>
-                        <input type="submit" value="로그인" class="forms_buttons-action">
+                            <button type="button" class="forms_buttons-forgot">비밀번호를 잊어버리셨나요?</button>
+                            <input type="submit" value="로그인" class="forms_buttons-action">
                         </div>
                     </form>
-                </form>
                 </div>
 
                 <div class="user_forms-signup">
-                <h2 class="forms_title">회원가입</h2>
-                <form class="forms_form">
-                    <fieldset class="forms_fieldset">
-                    <div class="forms_field">
-                        <input type="text" placeholder="이름" class="forms_field-input" required />
-                    </div>
-                    <div class="forms_field">
-                        <input type="id" placeholder="아이디" class="forms_field-input" required />
-                    </div>
-                    <div class="forms_field">
-                        <input type="password" placeholder="비밀번호" class="forms_field-input" required />
-                    </div>
-                    </fieldset>
-                    <div class="forms_buttons">
-                    <input type="submit" value="회원가입" class="forms_buttons-action">
-                    </div>
-                </form>
+                    <form method="post" action="#" class="forms_form">
+                        <h2 class="forms_title">회원가입</h2>
+                        {% csrf_token %}
+                        {% for field in form2 %}
+                        <fieldset class="forms_fieldset">
+                            <div class="forms_field">
+                                {{ field }} <!-- 필드 입력란을 렌더링 -->
+                                {% if field.help_text %}
+                                <small class="form-text text-muted">{{ field.help_text }}</small>
+                                {% endif %}
+                            </div>
+                        </fieldset>
+                        {% endfor %}
+                        <div class="forms_buttons">
+                            <input type="submit" value="회원가입" class="forms_buttons-action">
+                        </div>
+                    </form>
                 </div>
             </div>
             </div>
