@@ -135,7 +135,16 @@
       </footer>
       
     <script src="{% static 'js/login.js' %}"></script>
-    
-
+    {% if signup_failed %}
+    <script>
+        // 페이지 로드 후 실행되는 함수
+        document.addEventListener('DOMContentLoaded', function() {
+            // 뷰에서 전달받은 정보를 확인하고, signup_failed가 True인 경우에만 실행
+            
+                // 회원가입 버튼을 찾아 클릭 이벤트를 발생시킴
+            document.getElementById('signup-button').click()
+        });
+    </script>
+    {% endif %}
 </body>
 </html>
