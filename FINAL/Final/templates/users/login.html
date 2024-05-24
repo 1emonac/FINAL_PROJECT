@@ -25,9 +25,9 @@
                 height: 100px; /* 원하는 높이 설정 */
             }
             .footer-bg {
-            background-color: #f7f7f7; /* 회색 배경 색상 */
-            padding: 20px 0; /* 위아래 여백 추가 */
-            width: 100%; /* 전체 너비 설정 */
+                background-color: #f7f7f7; /* 회색 배경 색상 */
+                padding: 20px 0; /* 위아래 여백 추가 */
+                width: 100%; /* 전체 너비 설정 */
             }
             .footer-content {
                 max-width: 1200px; /* 컨테이너 최대 너비 설정 */
@@ -35,11 +35,17 @@
                 padding: 0 15px; /* 좌우 패딩 */
             }
             .forms_field {
-            margin-bottom: 12px; /* 필드 간 간격을 15px로 설정 */
+                margin-bottom: 11px; /* 필드 간 간격을 15px로 설정 */
             }
             .forms_buttons {
                 margin-top: 10px; /* 버튼 위쪽에 간격 추가 */
             }
+            
+            .error {
+                color: red;
+                font-size: small;
+            }
+
         </style>
 
     </head>
@@ -72,16 +78,22 @@
             
             <div class="user_options-forms" id="user_options-forms">
                 <div class="user_forms-login">
-                    <form action="{% url 'users:login' %}" method="POST" id="login" enctype="multipart/form-data">
+                    <form action="{% url 'users:login2' %}" method="POST" id="login" enctype="multipart/form-data">
                         {% csrf_token %}
                         <h2 class="forms_title">로그인</h2>
+                        {% if form.non_field_errors %}
+                            <div class="errors">
+                                {% for error in form.non_field_errors %}
+                                <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
                         {% for field in form %}
-                        <div class="forms_field">
-                            {{ field }} <!-- 필드 입력란을 렌더링 -->
-                            {% if field.help_text %}
-                            <small class="form-text text-muted">{{ field.help_text }}</small>
-                            {% endif %}
-                        </div>
+                        <fieldset class="forms_fieldset">
+                            <div class="forms_field">
+                                {{ field }}
+                            </div>
+                        </fieldset>    
                         {% endfor %}
                         <div class="forms_buttons">
                             <button type="button" class="forms_buttons-forgot">비밀번호를 잊어버리셨나요?</button>
@@ -90,16 +102,17 @@
                     </form>
                 </div>
 
-                <div class="user_forms-signup">
-                    <form method="post" action="#" class="forms_form">
+                <div class="user_forms-signup"  style="height:82%; overflow-y: auto">
+                    <form method="post" action="{% url 'users:signup' %}" class="forms_form">
                         <h2 class="forms_title">회원가입</h2>
+                        <div></div>
                         {% csrf_token %}
                         {% for field in form2 %}
                         <fieldset class="forms_fieldset">
                             <div class="forms_field">
                                 {{ field }} <!-- 필드 입력란을 렌더링 -->
-                                {% if field.help_text %}
-                                <small class="form-text text-muted">{{ field.help_text }}</small>
+                                {% if field.errors %}
+                                <div class="errors">{{ field.errors }}</div>
                                 {% endif %}
                             </div>
                         </fieldset>
@@ -120,7 +133,8 @@
             <p>&copy; 2024, Final Project TEAM JamJOBGO &middot; <a href="https://g-sa.koreaisacademy.com/?ACE_REF=adwords_g&ACE_KW=%EC%BD%94%EB%A6%AC%EC%95%84it&gad_source=1&gclid=Cj0KCQjwxqayBhDFARIsAANWRnTgHrK-sMcRhVpFBCnpfv1F2omvCrlEE6GJ5xs0JoQs0DfkhzefFWkaAhbVEALw_wcB">Privacy</a></p>
         </div>
       </footer>
-
-     <script src="{% static 'js/login.js' %}"></script>
+      
+    <script src="{% static 'js/login.js' %}"></script>
+    
     </body>
 </html>
