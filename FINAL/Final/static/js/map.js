@@ -2,13 +2,13 @@
 let lat = 0
 let lng = 0
 function getSuccess(position) {
-    // 위도
-    lat = position.coords.latitude;
-    // 경도
-    lng = position.coords.longitude;
-    // 위도 경도 오차(m)
-    const accuracy = Math.floor(position.coords.accuracy);
-    // alert(lat +" "+ lng)
+        // 위도
+        lat = position.coords.latitude;
+        // 경도
+        lng = position.coords.longitude;
+        // 위도 경도 오차(m)
+        const accuracy = Math.floor(position.coords.accuracy);
+        // alert(lat +" "+ lng)
 
 
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
@@ -18,7 +18,7 @@ function getSuccess(position) {
     };
 
     var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-    
+        
     // 마커를 표시할 위치와 내용을 가지고 있는 객체 배열입니다 
     let data = JSON.parse("{{ data | escapejs }}")
     console.log(data);
@@ -46,9 +46,6 @@ function getSuccess(position) {
     positions.map(e => {
         mm(e, map, positions)
     })
-
-
-
 }
 
 function mm(position, map, positions) {
@@ -84,14 +81,12 @@ function mm(position, map, positions) {
     })
         })
 }
+
 const $select =  document.querySelector(".select")
 $select.onclick = (e) => {
     if(e.target.tagName != "LI") return;
     const keyword = e.target.getAttribute("id")
     fetchPy(keyword, lat, lng)
-
-
-    
 }
 
 function fetchPy(keyword, lat, lng) {
@@ -125,7 +120,7 @@ function fetchPy(keyword, lat, lng) {
 
         var positions = []
         switch (keyword) {
-            case "hall":
+            case "mental":
                 
                 break;
         
@@ -154,10 +149,6 @@ function fetchPy(keyword, lat, lng) {
                 position: positions[i].latlng // 마커의 위치
             });
         }
-
-
-
-
     })
 }
 
