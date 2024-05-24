@@ -96,4 +96,4 @@ def map(request):
         "data" : json.dumps(data), 
         # "position" : a
     }
-    return render(request, "feed/map2.html", context)
+    return render(request, "feed/map.html", context)
