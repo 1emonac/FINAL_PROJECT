@@ -1,4 +1,5 @@
 import requests
+import selenium
 
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
@@ -15,7 +16,7 @@ headers = {
     "content-type": "application/json;charset=UTF-8"
 }
 params = {
-    "query" : "서울 마포구 웨딩",    
+    "query" : "서울 마포구 정신과",    
 }
 
 data_list = requests.get(url, params=params, headers=headers).json()["documents"]
@@ -25,7 +26,7 @@ data_list = requests.get(url, params=params, headers=headers).json()["documents"
 # print(url)
 # data = requests.get(url).json()
 
-def search(address1="서울시", address2="마포", keyword="웨딩홀"):
+def search(address1="서울시", address2="마포", keyword="정신과"):
     data = []
     print(data,"11111111111111111")
     params = {

@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
-# from private_file import key
-import json
-from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 
 from users.forms import *
 from .models import *
+
+from api import address
+from private_file import key
+import json
+from django.http import JsonResponse
 
 
 # Create your views here.
@@ -72,26 +74,26 @@ def team(request):
     return render(request, "business/team.html")
 
 # map.html
-# def map(request):
-#     data = address.search()
-#     # geolocoder = Nominatim(user_agent = 'South Korea', timeout=None)
-#     # a = geolocoder.reverse("37.5424411 126.9433486") 
-#     if request.method == "POST":
-#         print(request.body)
-#         fetchData = json.loads(request.body)
-#         print(fetchData)
-#         x = fetchData["x"]
-#         y = fetchData["y"]
+def map(request):
+    data = address.search()
+    # geolocoder = Nominatim(user_agent = 'South Korea', timeout=None)
+    # a = geolocoder.reverse("37.5424411 126.9433486") 
+    if request.method == "POST":
+        print(request.body)
+        fetchData = json.loads(request.body)
+        print(fetchData)
+        x = fetchData["x"]
+        y = fetchData["y"]
         
-#         mental= address.searchGeo(x,y,"정신과")
-#         hospital = address.searchGeo(x,y,"병원")
-#         print(data)
-#         return JsonResponse({
-#                                 "mental": mental,
-#                                 "hospital" : hospital})
-#     context = {
-#         "map_key" : "0e03efef5a20230c182645bf000aa33c",
-#         "data" : json.dumps(data), 
-#         # "position" : a
-#     }
-#     return render(request, "map.html", context)
+        mental= address.searchGeo(x,y,"정신과")
+        hospital = address.searchGeo(x,y,"병원")
+        print(data)
+        return JsonResponse({
+                                "mental": mental,
+                                "hospital": hospital})
+    context = {
+        "map_key" : "0e03efef5a20230c182645bf000aa33c",
+        "data" : json.dumps(data), 
+        # "position" : a
+    }
+    return render(request, "feed/map2.html", context)

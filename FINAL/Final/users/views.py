@@ -90,23 +90,38 @@ def logout_view(request):
 
 def signup(request):
     if request.method == "POST":
-        print("아무거나")
-        form = SignupForm(data=request.POST)
-        # Form에 에러가 없다면 form의 save() 메서드로 사용자를 생성
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect(request, "main/main.html")
+        form3 = SignupForm(data=request.POST)
+
+        if form3.is_valid():
+            # username과 password 값을 가져와 변수에 할당
+            username = form3.cleaned_data["username"]
+            email = form3.cleaned_data["email"]
+            password1 = form3.cleaned_data["password1"]
+            password2 = form3.cleaned_data["password2"]
+
+            # username, password 에 해당하는 사용자가 있는지 검사
+            user = authenticate(username=username, email=email, password1=password1, password2=password2)
+
+            # Form에 에러가 없다면 form의 save() 메서드로 사용자를 생성
+            if form3.is_valid():
+                user = form3.save()
+                login(request, user)
+                return redirect("/sleep/main", context)
+            
+        # 실패한 경우 다시 SignupForm 을 사용한 로그 페이지 렌더링
+        context = {"form3" : form3,}
         
     # GET 요청에서는 빈 Form을 보여줌
     else:
         # SignupForm 인스턴스를 생성, Template 에 전달
-        form = SignupForm()
+        form3 = SignupForm()
         
     # context로 전달되는 form은 두 가지 경우가 존재
     # 1. POST 요청에서 생성된 form이 유효하지 않은 경우
         # -> 에러를 포함한 form이 사용자에게 보여짐
     # 2. GET 요청으로 빈 form이 생성되는 경우
         # -> 빈 form이 사용자에게 보여짐
-    # context = {"form": form}
+        context = {
+            "form3": form3
+        }
     return render(request, "users/login.html")

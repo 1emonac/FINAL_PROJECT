@@ -1,224 +1,133 @@
-{% extends "base.html" %}
-{% load static %}
-{% block head%}
-    <link rel="stylesheet" href="{% static 'map.css' %}">
-{% endblock%}
-{% block content %}
-<div class="map-section">
-    <div class="select">
-        <ul>
-            {% csrf_token %}
-            <li id="hall">웨딩홀</li>
-            <li id="studio">스튜디오</li>
-            <li id="dress">드레스</li>
-        </ul>
-    </div>
-    <div id="select" style="width: 100%; height:90vh;">
-        <div id="map" style="width:100%; height: 90vh;"></div>
-        <div class="infowindow hidden">
-            <div class="top">
-                <div class="check">
-                    <input type="checkbox" name="check" id="check"><label for="check">담기</label>
-                </div>
-                <div class="close">x</div>
-            </div>
-            <iframe class="detail" src="" frameborder="0" ></iframe>
-        </div>
-    </div>
-</div>
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{map_key}}"></script>
-<script type="text/javascript">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+        <meta name="generator" content="Hugo 0.122.0">
+        <title>Eunoianest</title>
 
-    // 가져오기 성공
-    let lat = 0
-    let lng = 0
-    function getSuccess(position) {
-        // 위도
-        lat = position.coords.latitude;
-        // 경도
-        lng = position.coords.longitude;
-        // 위도 경도 오차(m)
-        const accuracy = Math.floor(position.coords.accuracy);
-        // alert(lat +" "+ lng)
+        <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/carousel/">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+        <link href="../../static/css/carousel.css" rel="stylesheet"  type="text/css">
 
-
-        var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
-        mapOption = { 
-            center: new kakao.maps.LatLng(lat,lng), // 지도의 중심좌표
-            level: 3 // 지도의 확대 레벨
-        };
-
-        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+        <style>
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&family=Noto+Sans+KR:wght@100..900&display=swap');
         
-        // 마커를 표시할 위치와 내용을 가지고 있는 객체 배열입니다 
-        let data = JSON.parse("{{ data | escapejs }}")
-        console.log(data);
-        var positions = []
-        data.map(e => {
-            
-            var json = new Object();
-            var object = new Object();
-
-            // <img src="${data[i].img_url}" width="100">    
-            object.content = `
-                <div style="border:none">
-                    
-                    <span>${e.place_name}</span>
-                    <span>${e.phone}</span>
-                </div>`,
-                iwRemoveable = true;
-            object.latlng =new kakao.maps.LatLng(e.y, e.x)
-            // object.src = e.place_url
-            json.marker = object;
-            json.url = e.place_url
-            console.log(json.marker.latlng);
-            positions.push(json)
-        })
-        positions.map(e => {
-            mm(e, map, positions)
-        })
-
-
-
-    }
-
-    function mm(position, map, positions) {
-        var marker = new kakao.maps.Marker({
-                map: map, // 마커를 표시할 지도
-                position: position.marker.latlng, // 마커의 위치
-                
-            });
-            kakao.maps.event.addListener(marker, 'click', function() {
-                console.log(marker);
-                var coords = new kakao.maps.Coords(marker.n.La, marker.n.Ma);
-        lat = coords.toLatLng().La
-        lng = coords.toLatLng().Ma
-        fixedLatLng =  new kakao.maps.LatLng(lat,lng)
-        positions.map(e => {
-            markerLat = e.marker.latlng.La
-            markerLng = e.marker.latlng.Ma
-            markerLatLng = new kakao.maps.LatLng(markerLat, markerLng)
-
-            fixedLat = coords.toLatLng().La
-            fixedLng = coords.toLatLng().Ma
-            fixedLatLng = new kakao.maps.LatLng(fixedLat, fixedLng)
-
-            console.log(markerLatLng, " ", fixedLatLng, );            
-            
-            if(markerLat == fixedLat && markerLng == fixedLng){
-                const $detail = document.querySelector(".infowindow")
-                console.log(e.url);
-                $detail.querySelector(".detail").src = e.url;
-                $detail.classList.toggle("hidden")
-            }
-
-        })
-            })
-    }
-    const $select =  document.querySelector(".select")
-    $select.onclick = (e) => {
-        if(e.target.tagName != "LI") return;
-        const keyword = e.target.getAttribute("id")
-        fetchPy(keyword, lat, lng)
-
-
-        
-    }
-    function fetchPy(keyword, lat, lng) {
-        const csrftoken = document.querySelector('input[name=csrfmiddlewaretoken]').value;
-        console.log(csrftoken);
-        fetch("/map/", {
-            method: "POST",
-            headers:{
-                Accept: "application / json", 
-                "X-CSRFToken": csrftoken,
-            },
-            body: JSON.stringify({
-                "x" : lng,
-                "y" : lat,
-            })
-        }).then(res => res.text())
-        .then(data => {         
-
-            hall = JSON.parse(data).hall
-            studio = JSON.parse(data).studio
-            dress = JSON.parse(data).dress
-
-            var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
-            mapOption = { 
-                center: new kakao.maps.LatLng(lat,lng), // 지도의 중심좌표
-                level: 3 // 지도의 확대 레벨
-            };
-
-            var map = new kakao.maps.Map(mapContainer, mapOption);
-
-
-            var positions = []
-            switch (keyword) {
-                case "hall":
-                    
-                    break;
-            
-                default:
-                    break;
-            }
-            hall.map(e => {
-                var object = new Object();    
-                // <img src="${data[i].img_url}" width="100">    
-                object.content = `
-                    <div style="border:none">
-                        
-                        <span>${e.place_name}</span>
-                        <span>${e.phone}</span>
-                    </div>`,
-                    iwRemoveable = true;
-                object.latlng =new kakao.maps.LatLng(e.y, e.x)
-                // console.log(object);
-                positions.push(object)
-            })
-            
-            for (var i = 0; i < positions.length; i ++) {
-                // 마커를 생성합니다
-                var marker = new kakao.maps.Marker({
-                    map: map, // 마커를 표시할 지도
-                    position: positions[i].latlng // 마커의 위치
-                });
-            }
-
-
-
-
-        })
-    }
-
-
-
-     // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
-    function makeOverListener(map, marker, infowindow) {
-            return function() {
-                infowindow.open(map, marker);
-            };
+        .ibm-plex-sans-kr-regular {
+        font-family: "IBM Plex Sans KR", sans-serif;
+        font-weight: 600;
+        font-style: normal;
         }
 
-    // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
-    function makeOutListener(infowindow) {
-        return function() {
-            infowindow.close();
+        .noto-sans-kr-main {
+            font-family: "Noto Sans KR", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .navbar-nav .nav-link {
+        color: black !important; /* 네비게이션 바 텍스트 색상 */
+        font-size: 1.25rem; /* 폰트 사이즈 */
+        margin-right: 17px;
+        }
+        .navbar-nav .nav-link.active {
+            color: black !important; /* 활성화된 네비게이션 바 텍스트 색상 */
+        }
+        .btn-custom {
+            background-color: white !important; /* 버튼 배경 색상 */
+            color: black !important; /* 버튼 텍스트 색상 */
+            border: 1.2px solid navy !important; /* 버튼 테두리 색상 */
+        }
+        .footer-bg {
+            background-color: #f7f7f7; /* 회색 배경 색상 */
+            padding: 20px 0; /* 위아래 여백 추가 */
+            width: 100%; /* 전체 너비 설정 */
+        }
+        .footer-content {
+            max-width: 1200px; /* 컨테이너 최대 너비 설정 */
+            margin: 0 auto; /* 중앙 정렬 */
+            padding: 0 15px; /* 좌우 패딩 */
+        }
+        </style>
+  </head>
+  
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar ibm-plex-sans-kr-regular" aria-label="Ninth navbar example">
+      <div class="container-xl">
+
+        <a class="navbar-brand" href="{% url 'sleep:main' %}">
+          <img src="../../media/image/flogo2.png" alt="Logo" style="height: 80px;">
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample07XL" aria-controls="navbarsExample07XL" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+  
+        <div class="collapse navbar-collapse" id="navbarsExample07XL">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item noto-sans-kr-main">
+              <a class="nav-link" aria-current="page" href="{% url 'sleep:main' %}">Home</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'sleep:team' %}">COMPANY</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'sleep:define' %}">ABOUT SLEEP</a>
+            </li>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">BUSINESS</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'sleep:chatbot' %}">CHATBOT</a></li>
+                <li><a class="dropdown-item" href="{% url 'sleep:chatting' %}">CHATTING</a></li>
+                <li><a class="dropdown-item" href="{% url 'sleep:dr' %}">DR.AI</a></li>
+              </ul>
+            </li>
+
+            <li class="nav-item noto-sans-kr-main">
+              <a class="nav-link disabled" aria-disabled="true">CLINIC</a>
+            </li>
+          </ul>
+
+          <div class="text-end noto-sans-kr-main">
+            <a href="{% url 'users:login' %}" class="btn btn-custom">로그인/회원가입</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    </head>
+    <body>
+        <div id="map" style="width:100%; height: 90vh;"></div> 
+        
+        
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0e03efef5a20230c182645bf000aa33c"></script>
+        <script type="text/javascript">
+        
+        var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+        var options = { //지도를 생성할 때 필요한 기본 옵션
+            center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
+            level: 3 //지도의 레벨(확대, 축소 정도)
         };
-    }
-    
-    // 가지오기 실패(거부)
-    function getError() {
-        alert('Geolocation Error');
-    }
-    navigator.geolocation.getCurrentPosition(getSuccess, getError);
 
-    kakao.maps.event.addListener(marker, 'click', function() {
-      // 마커 위에 인포윈도우를 표시합니다
-      infowindow.open(map, marker);  
-});
-
-</script>
-{% endblock %}
+        var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+        
+        </script>
+        <!-- FOOTER -->
+        <footer class="footer-bg">
+        <div class="footer-content">
+            <p class="float-end"><a href="#">Back to top</a></p>
+            <p>&copy; 2024, Final Project TEAM JamJOBGO &middot; <a href="https://g-sa.koreaisacademy.com/?ACE_REF=adwords_g&ACE_KW=%EC%BD%94%EB%A6%AC%EC%95%84it&gad_source=1&gclid=Cj0KCQjwxqayBhDFARIsAANWRnTgHrK-sMcRhVpFBCnpfv1F2omvCrlEE6GJ5xs0JoQs0DfkhzefFWkaAhbVEALw_wcB">Privacy</a></p>
+        </div>
+      </footer>
+    </body>
+</html>
