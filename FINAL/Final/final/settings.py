@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "sleep",
     "users",
-    "seoul_address",
 ]
 
 MIDDLEWARE = [
