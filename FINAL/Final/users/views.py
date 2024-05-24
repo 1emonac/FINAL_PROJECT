@@ -61,8 +61,8 @@ def signup(request):
         form = LoginForm()
         form2 = SignupForm(data=request.POST)
         # Form에 에러가 없다면 form의 save() 메서드로 사용자를 생성
-        if form.is_valid():
-            user = form.save()
+        if form2.is_valid():
+            user = form2.save()
             login(request, user)
             return redirect("/sleep/main")
         else:
