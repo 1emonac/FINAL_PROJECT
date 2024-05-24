@@ -1,0 +1,210 @@
+// 가져오기 성공
+let lat = 0
+let lng = 0
+function getSuccess(position) {
+        // 위도
+        lat = position.coords.latitude;
+        // 경도
+        lng = position.coords.longitude;
+        // 위도 경도 오차(m)
+        const accuracy = Math.floor(position.coords.accuracy);
+        // alert(lat +" "+ lng)
+
+
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+    mapOption = { 
+        center: new kakao.maps.LatLng(lat,lng), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };
+
+    var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+        
+    // 마커를 표시할 위치와 내용을 가지고 있는 객체 배열입니다 
+    let data = JSON.parse("{{ data | escapejs }}")
+    console.log(data);
+    var positions = []
+    data.map(e => {
+        
+        var json = new Object();
+        var object = new Object();
+
+        // <img src="${data[i].img_url}" width="100">    
+        object.content = `
+            <div style="border:none">
+                
+                <span>${e.place_name}</span>
+                <span>${e.phone}</span>
+            </div>`,
+            iwRemoveable = true;
+        object.latlng =new kakao.maps.LatLng(e.y, e.x)
+        // object.src = e.place_url
+        json.marker = object;
+        json.url = e.place_url
+        console.log(json.marker.latlng);
+        positions.push(json)
+    })
+    positions.map(e => {
+        mm(e, map, positions)
+    })
+}
+
+function mm(position, map, positions) {
+    var marker = new kakao.maps.Marker({
+            map: map, // 마커를 표시할 지도
+            position: position.marker.latlng, // 마커의 위치
+            
+        });
+        kakao.maps.event.addListener(marker, 'click', function() {
+            console.log(marker);
+            var coords = new kakao.maps.Coords(marker.n.La, marker.n.Ma);
+    lat = coords.toLatLng().La
+    lng = coords.toLatLng().Ma
+    fixedLatLng =  new kakao.maps.LatLng(lat,lng)
+    positions.map(e => {
+        markerLat = e.marker.latlng.La
+        markerLng = e.marker.latlng.Ma
+        markerLatLng = new kakao.maps.LatLng(markerLat, markerLng)
+
+        fixedLat = coords.toLatLng().La
+        fixedLng = coords.toLatLng().Ma
+        fixedLatLng = new kakao.maps.LatLng(fixedLat, fixedLng)
+
+        console.log(markerLatLng, " ", fixedLatLng, );            
+        
+        if(markerLat == fixedLat && markerLng == fixedLng){
+            const $detail = document.querySelector(".infowindow")
+            console.log(e.url);
+            $detail.querySelector(".detail").src = e.url;
+            $detail.classList.toggle("hidden")
+        }
+
+    })
+        })
+}
+
+const $select =  document.querySelector(".select")
+$select.onclick = (e) => {
+    if(e.target.tagName != "LI") return;
+    const keyword = e.target.getAttribute("id")
+    fetchPy(keyword, lat, lng)
+}
+
+function fetchPy(keyword, lat, lng) {
+    const csrftoken = document.querySelector('input[name=csrfmiddlewaretoken]').value;
+    console.log(csrftoken);
+    fetch("/map/", {
+        method: "POST",
+        headers:{
+            Accept: "application / json", 
+            "X-CSRFToken": csrftoken,
+        },
+        body: JSON.stringify({
+            "x" : lng,
+            "y" : lat,
+        })
+    }).then(res => res.text())
+    .then(data => {         
+
+        hall = JSON.parse(data).hall
+        studio = JSON.parse(data).studio
+        dress = JSON.parse(data).dress
+
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+        mapOption = { 
+            center: new kakao.maps.LatLng(lat,lng), // 지도의 중심좌표
+            level: 3 // 지도의 확대 레벨
+        };
+
+        var map = new kakao.maps.Map(mapContainer, mapOption);
+
+
+        var positions = []
+        switch (keyword) {
+            case "mental":
+                
+                break;
+        
+            default:
+                break;
+        }
+        hall.map(e => {
+            var object = new Object();    
+            // <img src="${data[i].img_url}" width="100">    
+            object.content = `
+                <div style="border:none">
+                    
+                    <span>${e.place_name}</span>
+                    <span>${e.phone}</span>
+                </div>`,
+                iwRemoveable = true;
+            object.latlng =new kakao.maps.LatLng(e.y, e.x)
+            // console.log(object);
+            positions.push(object)
+        })
+        
+        for (var i = 0; i < positions.length; i ++) {
+            // 마커를 생성합니다
+            var marker = new kakao.maps.Marker({
+                map: map, // 마커를 표시할 지도
+                position: positions[i].latlng // 마커의 위치
+            });
+        }
+    })
+}
+
+
+
+// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+function makeOverListener(map, marker, infowindow) {
+        return function() {
+            infowindow.open(map, marker);
+        };
+    }
+
+// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+function makeOutListener(infowindow) {
+    return function() {
+        infowindow.close();
+    };
+}
+
+// 가지오기 실패(거부)
+function getError() {
+    alert('Geolocation Error');
+}
+navigator.geolocation.getCurrentPosition(getSuccess, getError);
+
+kakao.maps.event.addListener(marker, 'click', function() {
+// 마커 위에 인포윈도우를 표시합니다
+infowindow.open(map, marker);  
+});
+
+function initMap() {
+    var mapContainer = document.getElementById('map');
+    var mapOption = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667),
+        level: 3
+    };
+    var map = new kakao.maps.Map(mapContainer, mapOption);
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var lat = position.coords.latitude;
+            var lon = position.coords.longitude;
+
+            var locPosition = new kakao.maps.LatLng(lat, lon);
+            map.setCenter(locPosition);
+
+            var marker = new kakao.maps.Marker({
+                position: locPosition
+            });
+            marker.setMap(map);
+        }, function(error) {
+            console.error("Geolocation error: " + error.message);
+        });
+    } else {
+        console.error("Geolocation is not supported by this browser.");
+    }
+}
+
+window.onload = initMap;

@@ -19,8 +19,8 @@ class LoginForm(forms.Form):
 class SignupForm(forms.Form):
     username = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': '아이디', 'class': 'form-control', 'required': True, 'autofocus': True}))
     email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': '이메일', 'class': 'form-control', 'required': True, 'autofocus': True}))
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': '비밀번호', 'class': 'form-control', 'required': True, 'autofocus': True}))
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': '비밀번호 확인', 'class': 'form-control', 'required': True, 'autofocus': True}))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': '비밀번호 (4자리 이상)', 'class': 'form-control', 'required': True, 'autofocus': True}))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': '비밀번호 확인 (4자리 이상)', 'class': 'form-control', 'required': True, 'autofocus': True}))
 
     def clean_username(self):
         username = self.cleaned_data["username"]
