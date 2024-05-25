@@ -66,7 +66,7 @@ def signup(request):
             login(request, user)
             return redirect("/sleep/main")
         else:
-            context = {"form": form, "form2": form2, "signup_failed": "1"}
+            context = {"form": form, "form2": form2, "signup_failed": True}
             return render(request, "users/login.html", context)
     # GET 요청에서는 빈 Form을 보여줌
     else:

@@ -72,28 +72,22 @@ def result(request):
 
 def team(request):    
     return render(request, "business/team.html")
+import geocoder
 
 # map.html
 def map(request):
     data = address.search()
-    # geolocoder = Nominatim(user_agent = 'South Korea', timeout=None)
-    # a = geolocoder.reverse("37.5424411 126.9433486") 
+
     if request.method == "POST":
-        print(request.body)
         fetchData = json.loads(request.body)
-        print(fetchData)
         x = fetchData["x"]
         y = fetchData["y"]
-        
-        mental= address.searchGeo(x,y,"정신과")
-        hospital = address.searchGeo(x,y,"병원")
-        print(data)
-        return JsonResponse({
-                                "mental": mental,
-                                "hospital": hospital})
+        sleep_clinic = address.searchGeo(x,y,"수면클리닉")
+        return JsonResponse({"sleep_clinic": sleep_clinic,})
+    
     context = {
         "map_key" : "0e03efef5a20230c182645bf000aa33c",
         "data" : json.dumps(data), 
-        # "position" : a
+        "sleep_clinic" : "수면클리닉"
     }
-    return render(request, "feed/map2.html", context)
+    return render(request, "feed/map_jw.html", context)

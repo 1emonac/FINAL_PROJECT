@@ -1,466 +1,354 @@
-<!doctype html>
-<html lang="ko">
-  <head><script src="../assets/js/color-modes.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+{% extends "_base.html" %}
+{% load static %}
+{% block head%}
+  <script src="{% static 'js/team.js' %}"></script>
 
+  <style>
+    main {
+      margin-bottom: 100px; /* footer와의 간격을 위한 하단 마진 */
+    }
+    * {
+      border: 0;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    :root {
+      --hue: 223;
+      --bg: hsl(var(--hue), 10%, 90%);
+      --fg: hsl(var(--hue), 10%, 10%);
+      --primary: hsl(var(--hue), 90%, 50%);
+      --trans-dur: 0.3s;
+      --trans-timing: cubic-bezier(0.65, 0, 0.35, 1);
+    }
+    a {
+      color: var(--primary);
+      transition: color var(--trans-dur);
+    }
+    body,
+    button {
+      color: var(--fg);
+      font: 1em/1.5 "IBM Plex Sans", sans-serif;
+    }
+    
+    h1 {
+      font-size: 2em;
+      margin: 0 0 3rem;
+      padding-top: 1.5rem;
+      text-align: center;
+    }
+    .btn {
+      background-color: var(--fg);
+      border-radius: 0.25em;
+      color: var(--bg);
+      cursor: pointer;
+      padding: 0.375em 0.75em;
+      transition: background-color calc(var(--trans-dur) / 2) linear,
+        color var(--trans-dur);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn:hover {
+      background-color: hsl(var(--hue), 10%, 50%);
+    }
+    .btn-group {
+      display: flex;
+      gap: 0.375em;
+      margin-bottom: 1.5em;
+    }
+    .timeline {
+      margin: auto;
+      padding: 0 1.5em;
+      width: 100%;
+      max-width: 36em;
+    }
+    .timeline__arrow {
+      background-color: transparent;
+      border-radius: 0.25em;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-inline-end: 0.25em;
+      outline: transparent;
+      width: 2em;
+      height: 2em;
+      transition: background-color calc(var(--trans-dur) / 2) linear,
+        color var(--trans-dur);
+      -webkit-appearance: none;
+      appearance: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .timeline__arrow:focus-visible,
+    .timeline__arrow:hover {
+      background-color: hsl(var(--hue), 10%, 50%, 0.4);
+    }
+    .timeline__arrow-icon {
+      display: block;
+      pointer-events: none;
+      transform: rotate(-90deg);
+      transition: transform var(--trans-dur) var(--trans-timing);
+      width: 100%;
+      height: auto;
+    }
+    .timeline__date {
+      font-size: 0.833em;
+      line-height: 2.4;
+    }
+    .timeline__dot {
+      background-color: currentColor;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+      margin: 0.625em 0;
+      margin-inline-end: 1em;
+      position: relative;
+      width: 0.75em;
+      height: 0.75em;
+    }
+    .timeline__item {
+      position: relative;
+      padding-bottom: 2.25em;
+    }
+    .timeline__item:not(:last-child):before {
+      background-color: currentColor;
+      content: "";
+      display: block;
+      position: absolute;
+      top: 1em;
+      left: 2.625em;
+      width: 0.125em;
+      height: 100%;
+      transform: translateX(-50%);
+    }
+    [dir="rtl"] .timeline__arrow-icon {
+      transform: rotate(90deg);
+    }
+    [dir="rtl"] .timeline__item:not(:last-child):before {
+      right: 2.625em;
+      left: auto;
+      transform: translateX(50%);
+    }
+    .timeline__item-header {
+      display: flex;
+    }
+    .timeline__item-body {
+      border-radius: 0.375em;
+      overflow: hidden;
+      margin-top: 0.5em;
+      margin-inline-start: 4em;
+      height: 0;
+    }
+    .timeline__item-body-content {
+      background-color: hsl(var(--hue), 10%, 50%, 0.2);
+      opacity: 0;
+      padding: 0.5em 0.75em;
+      visibility: hidden;
+      transition: opacity var(--trans-dur) var(--trans-timing),
+        visibility var(--trans-dur) steps(1, end);
+    }
+    .timeline__meta {
+      width: 100%;
+    }
+    .timeline__title {
+      font-size: 1.5em;
+      line-height: 1.333;
+    }
+    /* Expanded state */
+    .timeline__item-body--expanded {
+      height: auto;
+    }
+    .timeline__item-body--expanded .timeline__item-body-content {
+      opacity: 1;
+      visibility: visible;
+      transition-delay: var(--trans-dur), 0s;
+    }
+    .timeline__arrow[aria-expanded="true"] .timeline__arrow-icon {
+      transform: rotate(0);
+    }
+  </style>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.122.0">
-    <title>Eunoianest</title>
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/carousel/">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
-    <link href="../../static/css/carousel.css" rel="stylesheet"  type="text/css">
-
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
-      @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&family=Noto+Sans+KR:wght@100..900&display=swap');
-      
-      .ibm-plex-sans-kr-regular {
-      font-family: "IBM Plex Sans KR", sans-serif;
-      font-weight: 600;
-      font-style: normal;
-      }
-
-      .noto-sans-kr-main {
-        font-family: "Noto Sans KR", sans-serif;
-        font-optical-sizing: auto;
-        font-weight: 400;
-        font-style: normal;
-      }
-
-      .navbar-nav .nav-link {
-      color: black !important; /* 네비게이션 바 텍스트 색상 */
-      font-size: 1.25rem; /* 폰트 사이즈 */
-      margin-right: 17px;
-      }
-      .navbar-nav .nav-link.active {
-        color: black !important; /* 활성화된 네비게이션 바 텍스트 색상 */
-      }
-      .btn-custom {
-        background-color: white !important; /* 버튼 배경 색상 */
-        color: black !important; /* 버튼 텍스트 색상 */
-        border: 1.2px solid navy !important; /* 버튼 테두리 색상 */
-      }
-      .featurette-container {
-        max-width: 1200px; /* 원하는 최대 너비 설정 */
-        margin: 100px auto 0 auto;  /* 중앙 정렬 */
-      }
-      .footer-bg {
-        background-color: #f7f7f7; /* 회색 배경 색상 */
-        padding: 20px 0; /* 위아래 여백 추가 */
-        width: 100%; /* 전체 너비 설정 */
-      }
-      .footer-content {
-        max-width: 1200px; /* 컨테이너 최대 너비 설정 */
-        margin: 0 auto; /* 중앙 정렬 */
-        padding: 0 15px; /* 좌우 패딩 */
-      }
-      main {
-        margin-bottom: 100px; /* footer와의 간격을 위한 하단 마진 */
-      }
-      * {
-        border: 0;
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-      :root {
-        --hue: 223;
-        --bg: hsl(var(--hue), 10%, 90%);
-        --fg: hsl(var(--hue), 10%, 10%);
-        --primary: hsl(var(--hue), 90%, 50%);
-        --trans-dur: 0.3s;
-        --trans-timing: cubic-bezier(0.65, 0, 0.35, 1);
-      }
-      a {
-        color: var(--primary);
-        transition: color var(--trans-dur);
-      }
-      body,
-      button {
-        color: var(--fg);
-        font: 1em/1.5 "IBM Plex Sans", sans-serif;
-      }
-      
-      h1 {
-        font-size: 2em;
-        margin: 0 0 3rem;
-        padding-top: 1.5rem;
-        text-align: center;
-      }
-      .btn {
-        background-color: var(--fg);
-        border-radius: 0.25em;
-        color: var(--bg);
-        cursor: pointer;
-        padding: 0.375em 0.75em;
-        transition: background-color calc(var(--trans-dur) / 2) linear,
-          color var(--trans-dur);
-        -webkit-tap-highlight-color: transparent;
-      }
-      .btn:hover {
-        background-color: hsl(var(--hue), 10%, 50%);
-      }
-      .btn-group {
-        display: flex;
-        gap: 0.375em;
-        margin-bottom: 1.5em;
-      }
-      .timeline {
-        margin: auto;
-        padding: 0 1.5em;
-        width: 100%;
-        max-width: 36em;
-      }
-      .timeline__arrow {
-        background-color: transparent;
-        border-radius: 0.25em;
-        cursor: pointer;
-        flex-shrink: 0;
-        margin-inline-end: 0.25em;
-        outline: transparent;
-        width: 2em;
-        height: 2em;
-        transition: background-color calc(var(--trans-dur) / 2) linear,
-          color var(--trans-dur);
-        -webkit-appearance: none;
-        appearance: none;
-        -webkit-tap-highlight-color: transparent;
-      }
-      .timeline__arrow:focus-visible,
-      .timeline__arrow:hover {
-        background-color: hsl(var(--hue), 10%, 50%, 0.4);
-      }
-      .timeline__arrow-icon {
-        display: block;
-        pointer-events: none;
-        transform: rotate(-90deg);
-        transition: transform var(--trans-dur) var(--trans-timing);
-        width: 100%;
-        height: auto;
-      }
-      .timeline__date {
-        font-size: 0.833em;
-        line-height: 2.4;
-      }
-      .timeline__dot {
-        background-color: currentColor;
-        border-radius: 50%;
-        display: inline-block;
-        flex-shrink: 0;
-        margin: 0.625em 0;
-        margin-inline-end: 1em;
-        position: relative;
-        width: 0.75em;
-        height: 0.75em;
-      }
-      .timeline__item {
-        position: relative;
-        padding-bottom: 2.25em;
-      }
-      .timeline__item:not(:last-child):before {
-        background-color: currentColor;
-        content: "";
-        display: block;
-        position: absolute;
-        top: 1em;
-        left: 2.625em;
-        width: 0.125em;
-        height: 100%;
-        transform: translateX(-50%);
-      }
-      [dir="rtl"] .timeline__arrow-icon {
-        transform: rotate(90deg);
-      }
-      [dir="rtl"] .timeline__item:not(:last-child):before {
-        right: 2.625em;
-        left: auto;
-        transform: translateX(50%);
-      }
-      .timeline__item-header {
-        display: flex;
-      }
-      .timeline__item-body {
-        border-radius: 0.375em;
-        overflow: hidden;
-        margin-top: 0.5em;
-        margin-inline-start: 4em;
-        height: 0;
-      }
-      .timeline__item-body-content {
-        background-color: hsl(var(--hue), 10%, 50%, 0.2);
-        opacity: 0;
-        padding: 0.5em 0.75em;
-        visibility: hidden;
-        transition: opacity var(--trans-dur) var(--trans-timing),
-          visibility var(--trans-dur) steps(1, end);
-      }
-      .timeline__meta {
-        width: 100%;
-      }
-      .timeline__title {
-        font-size: 1.5em;
-        line-height: 1.333;
-      }
-      /* Expanded state */
-      .timeline__item-body--expanded {
-        height: auto;
-      }
-      .timeline__item-body--expanded .timeline__item-body-content {
-        opacity: 1;
-        visibility: visible;
-        transition-delay: var(--trans-dur), 0s;
-      }
-      .timeline__arrow[aria-expanded="true"] .timeline__arrow-icon {
-        transform: rotate(0);
-      }
-    </style>
-  </head>
-  
-  <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar ibm-plex-sans-kr-regular" aria-label="Ninth navbar example">
-      <div class="container-xl">
-
-        <a class="navbar-brand" href="{% url 'sleep:main' %}">
-          <img src="../../media/image/flogo2.png" alt="Logo" style="height: 80px;">
-        </a>
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample07XL" aria-controls="navbarsExample07XL" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-  
-        <div class="collapse navbar-collapse" id="navbarsExample07XL">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item noto-sans-kr-main">
-              <a class="nav-link" aria-current="page" href="{% url 'sleep:main' %}">Home</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'sleep:team' %}">COMPANY</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'sleep:define' %}">ABOUT SLEEP</a>
-            </li>
-
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">BUSINESS</a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'sleep:chatbot' %}">CHATBOT</a></li>
-                <li><a class="dropdown-item" href="{% url 'sleep:chatting' %}">CHATTING</a></li>
-                <li><a class="dropdown-item" href="{% url 'sleep:dr' %}">DR.AI</a></li>
-              </ul>
-            </li>
-
-            <li class="nav-item noto-sans-kr-main">
-              <a class="nav-link" aria-current="page" href="{% url 'sleep:clinic' %}">CLINIC</a>
-            </li>
-          </ul>
-
-          <div class="text-end noto-sans-kr-main">
-            <a href="{% url 'users:login' %}" class="btn btn-custom">로그인/회원가입</a>
-          </div>
-        </div>
-      </div>
-    </nav>
-
-    <!-- 글 내용 -->
-    <main>
-      <div class="my-5">
-        <div class="p-5 text-center bg-body-tertiary">
-            <div class="container py-5">
-                <h1 class="text-body-emphasis">Full-width jumbotron</h1>
-                <p class="col-lg-8 mx-auto lead">
-                    This takes the basic jumbotron above and makes its background edge-to-edge with a <code>.container</code> inside to align content. Similar to above, it's been recreated with built-in grid and utility classes.
-                </p>
-            </div>
-        </div>
-      </div>
-
-      <div class="container featurette-container">
-          <div class="row featurette">
-              <div class="col-md-7">
-                  <h2 class="featurette-heading fw-normal lh-1">잠잡GO
-                    <span class="text-body-secondary">It’ll blow your mind.</span></h2>
-                  <p class="lead">Some great placeholder content for the first featurette here. Imagine some exciting prose here.</p>
-              </div>
-              <div class="col-md-5">
-                <img src="../../media/image/jamjobgo.png" alt="Featurette Image" class="img-fluid mx-auto" width="500" height="500">
-              </div>
+{% endblock%}
+{% block content %}
+  <!-- 글 내용 -->
+  <main>
+    <div class="my-5">
+      <div class="p-5 text-center bg-body-tertiary">
+          <div class="container py-5">
+              <h1 class="text-body-emphasis">Full-width jumbotron</h1>
+              <p class="col-lg-8 mx-auto lead">
+                  This takes the basic jumbotron above and makes its background edge-to-edge with a <code>.container</code> inside to align content. Similar to above, it's been recreated with built-in grid and utility classes.
+              </p>
           </div>
       </div>
+    </div>
 
-      <hr class="featurette-divider">
-
-      <div class="container featurette-container">
+    <div class="container featurette-container">
         <div class="row featurette">
-            <div class="col-md-5">
-                <img src="../../media/image/elogo.png" alt="Featurette Image" class="img-fluid mx-auto" width="500" height="500">
-            </div>
             <div class="col-md-7">
-                <h2 class="featurette-heading fw-normal lh-1">Eunoianest <span class="text-body-secondary">See for yourself.</span></h2>
-                <p class="lead">Another featurette? Of course. More placeholder content here to give you an idea of how this layout would work with some actual real-world content in place.</p>
+                <h2 class="featurette-heading fw-normal lh-1">잠잡GO
+                  <span class="text-body-secondary">It’ll blow your mind.</span></h2>
+                <p class="lead">Some great placeholder content for the first featurette here. Imagine some exciting prose here.</p>
+            </div>
+            <div class="col-md-5">
+              <img src="../../media/image/jamjobgo.png" alt="Featurette Image" class="img-fluid mx-auto" width="500" height="500">
             </div>
         </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="container featurette-container">
+      <div class="row featurette">
+          <div class="col-md-5">
+              <img src="../../media/image/elogo.png" alt="Featurette Image" class="img-fluid mx-auto" width="500" height="500">
+          </div>
+          <div class="col-md-7">
+              <h2 class="featurette-heading fw-normal lh-1">Eunoianest <span class="text-body-secondary">See for yourself.</span></h2>
+              <p class="lead">Another featurette? Of course. More placeholder content here to give you an idea of how this layout would work with some actual real-world content in place.</p>
+          </div>
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <!-- 히스토리 연표 -->
+    <svg display="none">
+      <symbol id="arrow">
+        <polyline points="7 10,12 15,17 10" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+      </symbol>
+    </svg>
+
+    <h1>빅데이터를 활용한 AI챗봇&광학기술 개발자 과정</h1>
+    <div id="timeline" class="timeline">
+      <div class="btn-group">
+        <button class="btn" type="button" data-action="expand">모두 보기</button>
+        <button class="btn" type="button" data-action="collapse">요약 보기</button>
       </div>
 
-      <hr class="featurette-divider">
-
-      <!-- 히스토리 연표 -->
-      <svg display="none">
-        <symbol id="arrow">
-          <polyline points="7 10,12 15,17 10" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
-        </symbol>
-      </svg>
-
-      <h1>빅데이터를 활용한 AI챗봇&광학기술 개발자 과정</h1>
-      <div id="timeline" class="timeline">
-        <div class="btn-group">
-          <button class="btn" type="button" data-action="expand">모두 보기</button>
-          <button class="btn" type="button" data-action="collapse">요약 보기</button>
+      <div class="timeline__item">
+        <div class="timeline__item-header">
+          <button class="timeline__arrow" type="button" id="item1" aria-labelledby="item1-name" aria-expanded="false" aria-controls="item1-ctrld" aria-haspopup="true" data-item="1">
+            <svg class="timeline__arrow-icon" viewBox="0 0 24 24" width="24px" height="24px">
+              <use href="#arrow" />
+            </svg>
+          </button>
+          <span class="timeline__dot"></span>
+          <span id="item1-name" class="timeline__meta">
+            <time class="timeline__date" datetime="1970-01-01">2023.12.27</time><br>
+            <strong class="timeline__title">국비 프로그램 시작</strong>
+          </span>
         </div>
-
-        <div class="timeline__item">
-          <div class="timeline__item-header">
-            <button class="timeline__arrow" type="button" id="item1" aria-labelledby="item1-name" aria-expanded="false" aria-controls="item1-ctrld" aria-haspopup="true" data-item="1">
-              <svg class="timeline__arrow-icon" viewBox="0 0 24 24" width="24px" height="24px">
-                <use href="#arrow" />
-              </svg>
-            </button>
-            <span class="timeline__dot"></span>
-            <span id="item1-name" class="timeline__meta">
-              <time class="timeline__date" datetime="1970-01-01">2023.12.27</time><br>
-              <strong class="timeline__title">국비 프로그램 시작</strong>
-            </span>
-          </div>
-          <div class="timeline__item-body" id="item1-ctrld" role="region" aria-labelledby="item1" aria-hidden="true">
-            <div class="timeline__item-body-content">
-              <p class="timeline__item-p">This is the day the Unix clock began (or <time datetime="1969-12-31">December 31, 1969</time> if you live behind UTC 😉).</p>
-            </div>
+        <div class="timeline__item-body" id="item1-ctrld" role="region" aria-labelledby="item1" aria-hidden="true">
+          <div class="timeline__item-body-content">
+            <p class="timeline__item-p">This is the day the Unix clock began (or <time datetime="1969-12-31">December 31, 1969</time> if you live behind UTC 😉).</p>
           </div>
         </div>
-        <div class="timeline__item">
-          <div class="timeline__item-header">
-            <button class="timeline__arrow" type="button" id="item2" aria-labelledby="item2-name" aria-expanded="false" aria-controls="item2-ctrld" aria-haspopup="true" data-item="2">
-              <svg class="timeline__arrow-icon" viewBox="0 0 24 24" width="24px" height="24px">
-                <use href="#arrow" />
-              </svg>
-            </button>
-            <span class="timeline__dot"></span>
-            <span id="item2-name" class="timeline__meta">
-              <time class="timeline__date" datetime="1973-10-17">2024.02</time><br>
-              <strong class="timeline__title">1st 프로젝트 진행</strong>
-            </span>
-          </div>
-
-          <div class="timeline__item-body" id="item2-ctrld" role="region" aria-labelledby="item2" aria-hidden="true">
-            <div class="timeline__item-body-content">
-              <p class="timeline__item-p">At 6:36:57 PM UTC, the date in ISO 8601 format (1973-10-17) within the time digits (119731017) appeared for the first time.</p>
-            </div>
-          </div>
+      </div>
+      <div class="timeline__item">
+        <div class="timeline__item-header">
+          <button class="timeline__arrow" type="button" id="item2" aria-labelledby="item2-name" aria-expanded="false" aria-controls="item2-ctrld" aria-haspopup="true" data-item="2">
+            <svg class="timeline__arrow-icon" viewBox="0 0 24 24" width="24px" height="24px">
+              <use href="#arrow" />
+            </svg>
+          </button>
+          <span class="timeline__dot"></span>
+          <span id="item2-name" class="timeline__meta">
+            <time class="timeline__date" datetime="1973-10-17">2024.02</time><br>
+            <strong class="timeline__title">1st 프로젝트 진행</strong>
+          </span>
         </div>
 
-        <div class="timeline__item">
-          <div class="timeline__item-header">
-            <button class="timeline__arrow" type="button" id="item3" aria-labelledby="item3-name" aria-expanded="false" aria-controls="item3-ctrld" aria-haspopup="true" data-item="3">
-              <svg class="timeline__arrow-icon" viewBox="0 0 24 24" width="24px" height="24px">
-                <use href="#arrow" />
-              </svg>
-            </button>
-            <span class="timeline__dot"></span>
-            <span id="item3-name" class="timeline__meta">
-              <time class="timeline__date" datetime="2001-09-09">2024.03</time><br>
-              <strong class="timeline__title">2nd 프로젝트 진행</strong>
-            </span>
-          </div>
-
-          <div class="timeline__item-body" id="item3-ctrld" role="region" aria-labelledby="item3" aria-hidden="true">
-            <div class="timeline__item-body-content">
-              <p class="timeline__item-p">Unix time reached 1,000,000,000 seconds at 1:46:40 AM UTC. The Danish UNIX User Group celebrated this in Copenhagen, Denmark.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline__item">
-          <div class="timeline__item-header">
-            <button class="timeline__arrow" type="button" id="item4" aria-labelledby="item4-name" aria-expanded="false" aria-controls="item4-ctrld" aria-haspopup="true" data-item="4">
-              <svg class="timeline__arrow-icon" viewBox="0 0 24 24" width="24px" height="24px">
-                <use href="#arrow" />
-              </svg>
-            </button>
-            <span class="timeline__dot"></span>
-            <span id="item4-name" class="timeline__meta">
-              <time class="timeline__date" datetime="2009-02-13">2024.05</time><br>
-              <strong class="timeline__title">파이널 프로젝트 진행</strong>
-            </span>
-          </div>
-
-          <div class="timeline__item-body" id="item4-ctrld" role="region" aria-labelledby="item4" aria-hidden="true">
-            <div class="timeline__item-body-content">
-              <p class="timeline__item-p">At 11:31:30 PM UTC, the digits of the time were 1234567890. This was celebrated worldwide, and even Google had a <a href="https://www.google.com/logos/unix1234567890.gif" target="_blank" rel="noopener">doodle</a> for it.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline__item">
-          <div class="timeline__item-header">
-            <button class="timeline__arrow" type="button" id="item5" aria-labelledby="item5-name" aria-expanded="false" aria-controls="item5-ctrld" aria-haspopup="true" data-item="5">
-              <svg class="timeline__arrow-icon" viewBox="0 0 24 24" width="24px" height="24px">
-                <use href="#arrow" />
-              </svg>
-            </button>
-            <span class="timeline__dot"></span>
-            <span id="item5-name" class="timeline__meta">
-              <time class="timeline__date" datetime="2033-05-18">2024.06.14</time><br>
-              <strong class="timeline__title">파이널 프로젝트 발표</strong>
-            </span>
-          </div>
-
-          <div class="timeline__item-body" id="item5-ctrld" role="region" aria-labelledby="item5" aria-hidden="true">
-            <div class="timeline__item-body-content">
-              <p class="timeline__item-p">Unix time will reach 2,000,000,000 seconds at 3:33:20 AM UTC.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline__item">
-          <div class="timeline__item-header">
-            <button class="timeline__arrow" type="button" id="item6" aria-labelledby="item6-name" aria-expanded="false" aria-controls="item6-ctrld" aria-haspopup="true" data-item="6">
-              <svg class="timeline__arrow-icon" viewBox="0 0 24 24" width="24px" height="24px">
-                <use href="#arrow" />
-              </svg>
-            </button>
-            <span class="timeline__dot"></span>
-            <span id="item6-name" class="timeline__meta">
-              <time class="timeline__date" datetime="2038-01-19">2024.06.24</time><br>
-              <strong class="timeline__title">국비 프로그램 종료</strong>
-            </span>
-          </div>
-
-          <div class="timeline__item-body" id="item6-ctrld" role="region" aria-labelledby="item6" aria-hidden="true">
-            <div class="timeline__item-body-content">
-              <p class="timeline__item-p">Also known as the year 2038 problem, clocks running on a 32-bit signed integer will flip from 3:14:08 AM UTC on this day to 8:45:52 PM UTC on December 13, 1901. Therefore, values only from -2,147,483,648 to 2,147,483,647 for the second are supported.</p>
-            </div>
+        <div class="timeline__item-body" id="item2-ctrld" role="region" aria-labelledby="item2" aria-hidden="true">
+          <div class="timeline__item-body-content">
+            <p class="timeline__item-p">At 6:36:57 PM UTC, the date in ISO 8601 format (1973-10-17) within the time digits (119731017) appeared for the first time.</p>
           </div>
         </div>
       </div>
 
-    </main>
+      <div class="timeline__item">
+        <div class="timeline__item-header">
+          <button class="timeline__arrow" type="button" id="item3" aria-labelledby="item3-name" aria-expanded="false" aria-controls="item3-ctrld" aria-haspopup="true" data-item="3">
+            <svg class="timeline__arrow-icon" viewBox="0 0 24 24" width="24px" height="24px">
+              <use href="#arrow" />
+            </svg>
+          </button>
+          <span class="timeline__dot"></span>
+          <span id="item3-name" class="timeline__meta">
+            <time class="timeline__date" datetime="2001-09-09">2024.03</time><br>
+            <strong class="timeline__title">2nd 프로젝트 진행</strong>
+          </span>
+        </div>
 
-    <!-- FOOTER -->
-    <footer class="footer-bg">
-      <div class="footer-content">
-          <p class="float-end"><a href="#">Back to top</a></p>
-          <p>&copy; 2024, Final Project TEAM JamJOBGO &middot; <a href="https://g-sa.koreaisacademy.com/?ACE_REF=adwords_g&ACE_KW=%EC%BD%94%EB%A6%AC%EC%95%84it&gad_source=1&gclid=Cj0KCQjwxqayBhDFARIsAANWRnTgHrK-sMcRhVpFBCnpfv1F2omvCrlEE6GJ5xs0JoQs0DfkhzefFWkaAhbVEALw_wcB">Privacy</a></p>
+        <div class="timeline__item-body" id="item3-ctrld" role="region" aria-labelledby="item3" aria-hidden="true">
+          <div class="timeline__item-body-content">
+            <p class="timeline__item-p">Unix time reached 1,000,000,000 seconds at 1:46:40 AM UTC. The Danish UNIX User Group celebrated this in Copenhagen, Denmark.</p>
+          </div>
+        </div>
       </div>
-    </footer>
 
-    <script src="../../static/js/team.js"></script>
-  </body>
-</html>
+      <div class="timeline__item">
+        <div class="timeline__item-header">
+          <button class="timeline__arrow" type="button" id="item4" aria-labelledby="item4-name" aria-expanded="false" aria-controls="item4-ctrld" aria-haspopup="true" data-item="4">
+            <svg class="timeline__arrow-icon" viewBox="0 0 24 24" width="24px" height="24px">
+              <use href="#arrow" />
+            </svg>
+          </button>
+          <span class="timeline__dot"></span>
+          <span id="item4-name" class="timeline__meta">
+            <time class="timeline__date" datetime="2009-02-13">2024.05</time><br>
+            <strong class="timeline__title">파이널 프로젝트 진행</strong>
+          </span>
+        </div>
+
+        <div class="timeline__item-body" id="item4-ctrld" role="region" aria-labelledby="item4" aria-hidden="true">
+          <div class="timeline__item-body-content">
+            <p class="timeline__item-p">At 11:31:30 PM UTC, the digits of the time were 1234567890. This was celebrated worldwide, and even Google had a <a href="https://www.google.com/logos/unix1234567890.gif" target="_blank" rel="noopener">doodle</a> for it.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline__item">
+        <div class="timeline__item-header">
+          <button class="timeline__arrow" type="button" id="item5" aria-labelledby="item5-name" aria-expanded="false" aria-controls="item5-ctrld" aria-haspopup="true" data-item="5">
+            <svg class="timeline__arrow-icon" viewBox="0 0 24 24" width="24px" height="24px">
+              <use href="#arrow" />
+            </svg>
+          </button>
+          <span class="timeline__dot"></span>
+          <span id="item5-name" class="timeline__meta">
+            <time class="timeline__date" datetime="2033-05-18">2024.06.14</time><br>
+            <strong class="timeline__title">파이널 프로젝트 발표</strong>
+          </span>
+        </div>
+
+        <div class="timeline__item-body" id="item5-ctrld" role="region" aria-labelledby="item5" aria-hidden="true">
+          <div class="timeline__item-body-content">
+            <p class="timeline__item-p">Unix time will reach 2,000,000,000 seconds at 3:33:20 AM UTC.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline__item">
+        <div class="timeline__item-header">
+          <button class="timeline__arrow" type="button" id="item6" aria-labelledby="item6-name" aria-expanded="false" aria-controls="item6-ctrld" aria-haspopup="true" data-item="6">
+            <svg class="timeline__arrow-icon" viewBox="0 0 24 24" width="24px" height="24px">
+              <use href="#arrow" />
+            </svg>
+          </button>
+          <span class="timeline__dot"></span>
+          <span id="item6-name" class="timeline__meta">
+            <time class="timeline__date" datetime="2038-01-19">2024.06.24</time><br>
+            <strong class="timeline__title">국비 프로그램 종료</strong>
+          </span>
+        </div>
+
+        <div class="timeline__item-body" id="item6-ctrld" role="region" aria-labelledby="item6" aria-hidden="true">
+          <div class="timeline__item-body-content">
+            <p class="timeline__item-p">Also known as the year 2038 problem, clocks running on a 32-bit signed integer will flip from 3:14:08 AM UTC on this day to 8:45:52 PM UTC on December 13, 1901. Therefore, values only from -2,147,483,648 to 2,147,483,647 for the second are supported.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="{% static 'js/team.js' %}"></script>
+{% endblock %}
