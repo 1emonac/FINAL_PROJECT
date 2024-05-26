@@ -9,6 +9,7 @@ from private_file import key
 import json
 from django.http import JsonResponse
 
+import geocoder
 
 # Create your views here.
 # video.html
@@ -72,7 +73,6 @@ def result(request):
 
 def team(request):    
     return render(request, "business/team.html")
-import geocoder
 
 # map.html
 def map(request):
@@ -82,7 +82,7 @@ def map(request):
         fetchData = json.loads(request.body)
         x = fetchData["x"]
         y = fetchData["y"]
-        sleep_clinic = address.searchGeo(x,y,"수면클리닉")
+        sleep_clinic = address.searchGeo(x,y,"정신과")
         return JsonResponse({"sleep_clinic": sleep_clinic,})
     
     context = {

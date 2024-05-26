@@ -79,13 +79,7 @@ function fetchPy(keyword, lat, lng) {
           
             fragment.appendChild(itemEl);
             listEl.appendChild(fragment);
-            }
-            
-             // 검색결과 항목들을 검색결과 목록 Element에 추가합니다
-        
-        
-        
-
+        }
     })
 }
 
@@ -102,10 +96,6 @@ function getError() {
 
 navigator.geolocation.getCurrentPosition(getSuccess, getError); 
 // 장소 받아오기 -> 성공시 getSuccess, 실패시 getError 함수사용//
-
-//-----------------------------------------------------------------성공라인//
-
-
 
 
 
@@ -130,5 +120,5 @@ function getListItem(index, places) {
         el.className = 'item';
 
         return el;
-        }
+    }
 
