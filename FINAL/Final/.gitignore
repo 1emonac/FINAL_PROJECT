@@ -179,12 +179,4 @@ pyrightconfig.json
 
 # End of https://www.toptal.com/developers/gitignore/api/python
 
-## 파일 이라면
-git rm --cached test.txt
-
-## 전체파일 이라면
-git rm --cached *.txt
-
-## 폴더 라면
-git rm --cached test/ -r
 
