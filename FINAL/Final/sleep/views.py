@@ -62,8 +62,8 @@ def define(request):
 def chatbot(request):    
     return render(request, "feed/chatbot.html")
 
-def chatting(request):    
-    return render(request, "feed/chatting.html")
+# def chatting(request):    
+#     return render(request, "feed/chatting.html")
 
 def drai(request):    
     return render(request, "feed/drai.html")

@@ -26,6 +26,7 @@ urlpatterns = [
     path("", views.index),
     path("sleep/", include("sleep.urls")),
     path("users/", include("users.urls")),
+    path("", include("chatting.urls")),
 ]
 
 if settings.DEBUG:

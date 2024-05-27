@@ -1,6 +1,7 @@
 .env
 private_file/
 .sqlite3
+video/
 
 # Created by https://www.toptal.com/developers/gitignore/api/python
 # Edit at https://www.toptal.com/developers/gitignore?templates=python
