@@ -1,0 +1,32 @@
+{% extends "_base.html" %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Poppins:300,400,500,700&amp;display=swap'>
+    <link href="{% static 'css/video.css' %}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+    <!-- partial:index.partial.html -->
+    <div class="wrapper">
+      <input type="checkbox">
+      <div class="video a video">
+        <video src="{% static 'media/video/aurora.mp4' %}" loop muted autoplay playsinline id="video-element">asdasd</video>
+      </div>
+      <div class="text">
+        <span data-text="Let's go catch our dreams"></span>
+      </div>
+    </div>
+    <script>
+      let clickCount = 0;
+      document.querySelector('.wrapper').addEventListener('change', function() {
+        if (this.checked) {
+          clickCount++;
+        } else {
+          clickCount++;
+        }
+        if (clickCount === 2) {
+          window.location.href = '/sleep/main';
+        }
+      });
+    </script>
+{% endblock %}
