@@ -66,14 +66,14 @@ def signup(request):
             login(request, user)
             return redirect("/sleep/main")
         else:
-            context = {"form": form, "form2": form2, "signup_failed": "True"}
+            context = {"form": form, "form2": form2, "signup_failed": True}
             return render(request, "users/login.html", context)
     # GET 요청에서는 빈 Form을 보여줌
     else:
         # SignupForm 인스턴스를 생성, Template 에 전달
         form = LoginForm() 
         form2 = SignupForm()
-                
+        
     # context로 전달되는 form은 두 가지 경우가 존재
     # 1. POST 요청에서 생성된 form이 유효하지 않은 경우
         # -> 에러를 포함한 form이 사용자에게 보여짐
