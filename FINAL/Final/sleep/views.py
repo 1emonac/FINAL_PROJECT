@@ -90,4 +90,4 @@ def map(request):
         "data" : json.dumps(data), 
         "sleep_clinic" : "수면클리닉"
     }
-    return render(request, "feed/map_jw.html", context)
+    return render(request, "feed/mapping.html", context)
