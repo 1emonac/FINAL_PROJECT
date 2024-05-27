@@ -2,4 +2,4 @@ from django.shortcuts import render, redirect
 
 def index(request):
 
-    return redirect("sleep:main")
+    return redirect("sleep:video")
