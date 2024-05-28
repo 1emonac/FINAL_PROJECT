@@ -7,7 +7,7 @@ django~=4.1.0
 channels[daphne]~=4.0.0
 
 # 채널스, 채널 레이어 Redis 백엔드 라이브러리
-channels_redis~=4.0.0
+channels-redis~=4.0.0
 
 # 채널스, 채널 레이어 Redis 백엔드 라이브러리
 redis~=4.4.0

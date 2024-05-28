@@ -49,6 +49,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     "channels",
     "daphne",
+    "django_bootstrap5",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -58,6 +59,7 @@ INSTALLED_APPS = [
     "sleep",
     "users",
     "chatting",
+    "app",
 ]
 
 MIDDLEWARE = [
@@ -109,9 +111,8 @@ DATABASES = {
 
 
 # CHANNEL_LAYER_REDIS_URL 환경변수가 설정되어있다면 로딩/파싱하여, CHANNEL_LAYERS 값을 설정
-if "CHANNEL_LAYER_REIDS_URL" in env:
+if "CHANNEL_LAYER_REDIS_URL" in env:
     channel_layer_redis = env.db_url("CHANNEL_LAYER_REDIS_URL")
-
     CHANNEL_LAYERS = {
         "default": {
             "BACKEND": "channels_redis.core.RedisChannelLayer",

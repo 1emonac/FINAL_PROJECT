@@ -19,14 +19,17 @@ from django.urls import path, include
 from final import views
 from django.conf.urls.static import static
 from django.conf import settings
-from django.contrib.auth import views as auth_views
+from django.views.generic import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", views.index),
     path("sleep/", include("sleep.urls")),
     path("users/", include("users.urls")),
-    path("", include("chatting.urls")),
+    path("chat/", include("chatting.urls")),
+    # 최상위 주소로 요청이 들어오면, chat:index 패턴의 주소로 페이지 이동하도록 RedirectView를 지정
+    # 즉, / 주소로 요청이 들어오면 /chat/ 주소로 이동
+    path('', RedirectView.as_view(pattern_name="chat:index"), name="root"),
 ]
 
 if settings.DEBUG:
