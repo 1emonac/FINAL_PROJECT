@@ -14,10 +14,15 @@
 
 {% block extra-body %}
 <script>
+// 각 이벤트 핸들러들이 호출될 때에는 this는 일관되게 handlers를 가리키도록
+// 웹소켓 이벤트 핸드러를 등록할 때 .bin(this)를 지정
 const handlers = {
     ws: null,
     retry: 0,
     connect(ws_url) {
+        // connect 함수 호출 시에 ws_url 인자가 지정되지 않으면(undefined),
+        // 기존 웹소켓 연결 주소를 사용토록 대체값을 지정
+        // 재접속 처리 시에 인자없이 connect 함수를 호출하기 위함
         this.ws = new WebSocket(ws_url || this.ws?.url);
 
         this.ws.onopen = this.onopen.bind(this);
@@ -25,24 +30,31 @@ const handlers = {
         this.ws.onerror = this.onerror.bind(this);
         this.ws.onmessage = this.onmessage.bind(this);
     },
+    // reconnect() 함수를 정의
+    // 호출 시에 인자없이 connect() 함수를 호출
     reconnect() {
         this.connect();
     },
     onopen() {
         console.log("웹소켓 서버와 접속");
+        // 웹소켓 접속이 이뤄질 때마다 retry 속성은 0으로 초기화
         this.retry = 0;
     },
     onclose(event) {
         if(!event.wasClean) {
             console.error("웹소켓 서버가 죽거나 네트워크 장애입니다.");
-
+            
+            // 네트워크 단절로 인해서 웹소켓 연결이 끊어질 때, 재접속을 시도
+            // 최대 3회까지 웹소켓 재접속을 시도
             if( this.retry < 3 ) {
+                // 매 시도 시마다 딜레이를 1초씩 늘려가며, 재접속을 시도
                 this.retry += 1;
                 setTimeout(() => {
                     this.reconnect();
                     console.log(`[${this.retry}] 접속 재시도 ...`);
                 }, 1000 * this.retry);
             }
+            // 재접속 시도 3회를 넘기면 사이트 홈으로 강제 이동
             else {
                 alert("웹소켓 서버에 접속할 수 없습니다. 사이트 홈으로 이동합니다.");
                 window.location.href = "/";
@@ -56,8 +68,13 @@ const handlers = {
         const message_json = event.data;
         console.log("웹소켓 텍스트 메세지 수신 :", message_json);
 
+        // 수신 메시지는 JSON 문자열이므로 JSON.parse를 통해 객체화
+        // JS 구조분해 문법을 통해 3개의 속성값을 각기 다른 변수에 할당
         const { type, post_id, post_partial_url } = JSON.parse(message_json);
 
+        // 메시지 타입에 따라 분기
+        // switch 문을 쓸 때에는 default 처리를 하는게 나음
+        // 혹시나 있을 오타나, 구현되지 않은 케이스로 인해 switch case에 매핑되지 않은 상황을 빠르게 인지할 수 있음
         switch(type) {
             case "liveblog.post.created":
                 this.post_created(post_id, post_partial_url);
@@ -72,22 +89,36 @@ const handlers = {
                 console.error(`Invalid message type : ${type}`);
         }
     },
+
+    // HTTP GET 요청
+
+    // post_partial_url로부터 받은 HTML 응답으로 #post-list DOM의 시작부분에 추가
+    // 서버에서 HTML을 만들어서 전송해주므로, 이 역시 SSR(Server Side Rendering)
+    // 포스팅 목록에는 감싸는 DOM에는 id="post-list"가 할당되어 있음
+    // 해당 DOM을 찾아 시작 부분에 수신한 partial html을 넣음
     post_created(post_id, post_partial_url) {
         fetch(post_partial_url)
             .then(response => response.text())
             .then(html => {
+                // HTML을 추가해야하기에 insertAdjacentHTML을 활용
                 document.querySelector("#post-list")
                     .insertAdjacentHTML("afterbegin", html);
             });
     },
+    // post_partial_url로부터 받은 HTML 응답으로 지정 data-post-id 속성값을 가지는 DOM을 업데이트
+    // 서버에서 HTML을 만들어서 전송해주므로, 이 역시 SSR(Server Side Rendring)
+    // 지정 주소로 HTTP GET 요청을 보내어 partial html 문자열을 획득하고, 이를 UI에 반영
     post_updated(post_id, post_partial_url) {
         fetch(post_partial_url)
+            // 각 포스팅의 DOM에는 data-post-id 커스텀 속성이 적용
             .then(response => response.text())
+            // data-post-id로 수정대상 DOM을 찾아서 포스팅 HTML을 업데이트
             .then(html => {
                 const css_selector = `[data-post-id="${post_id}"]`;
                 document.querySelector(css_selector).outerHTML = html;
             });
     },
+    // 지정 data-post-id 속성값을 가지는 DOM을 삭제
     post_deleted(post_id) {
         const css_selector = `[data-post-id="${post_id}"]`;
         document.querySelector(css_selector).remove();
