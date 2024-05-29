@@ -1,4 +1,4 @@
-{% extends "chat_base.html" %}
+{% extends "base_chat.html" %}
 {% load django_bootstrap5 %}
 
 {% block content %}
@@ -7,12 +7,13 @@
     <div class="my-3">
         <form action="" method="post">
             {% csrf_token %}
+
             {% bootstrap_form form %}
             <input type="submit" value="만들기" class="btn btn-primary" />
         </form>
     </div>
 
-    <a href="{% url 'chatting:index' %}" class="btn btn-primary">
+    <a href="{% url 'chat:index' %}" class="btn btn-primary">
         대기실로 이동
     </a>
 {% endblock %}

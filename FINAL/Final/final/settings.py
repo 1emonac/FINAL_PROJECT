@@ -180,3 +180,5 @@ LOGIN_REDIRECT_URL = "/"
 
 # Logout 성공시 URL 경로
 LOGOUT_REDIRECT_URL = "/"
+
+LOGIN_URL = '/login/'

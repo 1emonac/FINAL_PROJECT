@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from users.forms import LoginForm, SignupForm
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import TemplateView
+
 from django.urls import reverse_lazy
 from users.models import User
 from django.http import HttpResponseRedirect
@@ -81,3 +84,7 @@ def signup(request):
         # -> 빈 form이 사용자에게 보여짐
     context = {"form": form, "form2" : form2,}
     return render(request, "users/login.html", context)
+
+class ProfileView(LoginRequiredMixin, TemplateView):
+    template_name = "users/profile.html"
+profile = ProfileView.as_view()

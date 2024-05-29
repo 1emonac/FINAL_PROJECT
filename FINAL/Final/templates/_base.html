@@ -106,6 +106,7 @@
         
           <div class="text-end noto-sans-kr-main">
             {% if user.is_authenticated %}
+              <a class="btn btn-custom" href="{% url 'users:profile' %}">마이페이지</a>
               <a class="btn btn-custom" href="{% url 'users:logout' %}">로그아웃</a>
               {% else%}
               <a href="{% url 'users:login' %}" class="btn btn-custom">로그인/회원가입</a>
@@ -118,7 +119,8 @@
         </div>
       </div>
     </nav>
-    {% block content %}{% endblock %}
+    {% block base_extra-style %}{% endblock %}
+    {% block base_content %}{% endblock %}
     <!-- FOOTER -->
     <footer class="footer-bg">
       <div class="footer-content">
@@ -126,6 +128,6 @@
           <p>&copy; 2024, Final Project TEAM JamJOBGO &middot; <a href="https://g-sa.koreaisacademy.com/?ACE_REF=adwords_g&ACE_KW=%EC%BD%94%EB%A6%AC%EC%95%84it&gad_source=1&gclid=Cj0KCQjwxqayBhDFARIsAANWRnTgHrK-sMcRhVpFBCnpfv1F2omvCrlEE6GJ5xs0JoQs0DfkhzefFWkaAhbVEALw_wcB">학원광고임!</a></p>
       </div>
     </footer>
-
+    {% block base_extra-script %}{% endblock %}
   </body>
 </html>

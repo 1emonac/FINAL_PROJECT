@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Eunoianest Chat</title>
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    {% block base_extra-style %}
+        {% block extra-style %}{% endblock %}
+    {% endblock %}
+</head>
+<body>
+    {% bootstrap_messages %}
+    {% block base_content %}
+        {% block content %}{% endblock %}
+    {% endblock %}
+
+    {% block base_extra-script %}
+        {% block extra-script %}{% endblock %}
+    {% endblock %}
+</body>
+</html>

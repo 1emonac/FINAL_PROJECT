@@ -1,11 +1,18 @@
-{% extends "chat_base.html" %}
+{% extends "base_chat.html" %}
 
 {% block content %}
     <h1>채팅방 목록</h1>
     <ul>
+        {% for room in room_list %}
             <li>
-                {# TODO: 채팅방 목록을 조히하여 렌더링하기 #}
-                <a href="{% url 'chat:room_chat' 'test' %}">테스트 채팅방 진입</a>
+                <a href="{% url 'chat:room_chat' room.pk %}">
+                    {{ room.name }}
+                </a>
             </li>
+        {% endfor %}
     </ul>
+
+    <a href="{% url 'chat:room_new' %}">
+        새 채팅방 만들기
+    </a>
 {% endblock %}
