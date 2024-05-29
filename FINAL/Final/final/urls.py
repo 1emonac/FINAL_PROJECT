@@ -26,7 +26,7 @@ urlpatterns = [
     path("", views.index),
     path("sleep/", include("sleep.urls")),
     path("users/", include("users.urls")),
-    path("chat/", include("chatting.urls")),
+    path("chat/", include("chat.urls")),
     # 최상위 주소로 요청이 들어오면, chat:index 패턴의 주소로 페이지 이동하도록 RedirectView를 지정
     # 즉, / 주소로 요청이 들어오면 /chat/ 주소로 이동
     path('', RedirectView.as_view(pattern_name="chat:index"), name="root"),

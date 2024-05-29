@@ -58,8 +58,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "sleep",
     "users",
-    "chatting",
     "app",
+    "chat",
 ]
 
 MIDDLEWARE = [
