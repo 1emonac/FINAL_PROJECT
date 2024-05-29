@@ -28,7 +28,7 @@
     {# TODO: 웹소켓으로 실시간 채팅 기능 구현하기#}
     <div class="container my-5">
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-8">
                 <div class="card" style="height: 600px;">
                     <div class="card-header">
                         채팅방 : {{ room.name }}
@@ -45,6 +45,18 @@
                     </div>
                 </div>    
             </div>
+
+            <div class="col-sm-4">
+                <div class="card" style="height: 600px;">
+                    <div class="card-header">
+                        접속 유저 <span id="user_count"></span>
+                    </div>
+                    <div class="card-body">
+                        <ul id="user_list"></ul>
+                    </div>
+                </div>
+            </div>
+
             <hr class="my-3" />
             <a href="{% url 'chat:index' %}" class="btn btn-primary">대기실로 이동</a>
             {% if request.user == room.owner %}
@@ -77,6 +89,7 @@
     const handlers = {
         chat_messages_tag: null,
         retry: 0,
+        username_set: new Set(),
 
         // 초기화
         // init() 함수에서는 채팅 메시지 form에서 submit 이벤트가 발생하면 onsubmit() 함수가 호출되도록 이벤트 리스너 할당
@@ -115,7 +128,7 @@
                 element.className += " me";
             }
             else if (sender) {
-                footer = ` from ${sender}`;
+                footer = ``;
             }
            
             const wrapper = document.createElement("div");
@@ -147,9 +160,16 @@
         },
         
         // 웹소켓 : onmessage를 제외한 구현이 동일
-        onopen() { 
-            console.log("웹소켓 서버와 접속"); 
+        onopen() {
+            console.log("웹소켓 서버와 접속");
             this.retry = 0;
+    
+            fetch('{% url "chat:room_users" room.pk %}')
+                .then(response => response.json())
+                .then(({ username_list }) => {
+                    this.username_set = new Set([...this.username_set, ...username_list]);
+                    this.update_user_list();
+                });
         },
         onclose(event) {
             const close_code = event.code; // 종료코드
@@ -182,16 +202,37 @@
             const message_json = event.data;
             console.log("메세지 수신 :", message_json);
 
-            const { type, message, sender } = JSON.parse(message_json);
+            const { type, message, sender, username } = JSON.parse(message_json);
             // 메시지 타입에 따라 분기
             switch(type) {
                 case "chat.message":
                     this.append_message(message, sender);
                     break;
+                case "chat.user.join":
+                    this.append_message(`${username}님이 들어오셨습니다.`);
+                    this.username_set.add(username);
+                    this.update_user_list();
+                    break;
+                case "chat.user.leave":
+                    this.append_message(`${username}님이 나가셨습니다.`);
+                    this.username_set.delete(username);
+                    this.update_user_list();
+                    break;
                 default:
                     console.error('Invalid message type : ${type}');
             }
         },
+        update_user_list() {
+            const html = [...this.username_set]
+                .map(username => `<li>${username}</li>`)
+                .join('');
+            document.querySelector("#user_list").innerHTML = html;
+    
+            document.querySelector("#user_count").textContent =
+                `(${this.username_set.size}명)`;
+        },
+        // 삭제 알림창 띄우는 modal
+        // F12 콘솔에서 [handlers.modal("테스트 모달입니다.", () => { console.log('OK를 눌러주세요')});] 코드 입력하면 모달 알림 창이 뜨는걸 볼 수 있음
         modal(message, ok_handler) {
             const modal_ele = document.querySelector("#staticBackdrop");
             const body_ele = modal_ele.querySelector(".modal-body");

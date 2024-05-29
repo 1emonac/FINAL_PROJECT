@@ -95,20 +95,12 @@ WSGI_APPLICATION = 'final.wsgi.application'
 # asgi.py 부모 폴더명으로 '프로젝트' 변경
 ASGI_APPLICATION = "final.asgi.application"
 
-# CHANNEL_LAYERS = {
-#     'default': {
-#         'BACKEND': 'asgi_redis.RedisChannelLayer',
-#         'ROUTING': 'chatting.routing.channel_routing',
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # CHANNEL_LAYER_REDIS_URL 환경변수가 설정되어있다면 로딩/파싱하여, CHANNEL_LAYERS 값을 설정
 if "CHANNEL_LAYER_REDIS_URL" in env:
@@ -180,5 +172,3 @@ LOGIN_REDIRECT_URL = "/"
 
 # Logout 성공시 URL 경로
 LOGOUT_REDIRECT_URL = "/"
-
-LOGIN_URL = '/login/'

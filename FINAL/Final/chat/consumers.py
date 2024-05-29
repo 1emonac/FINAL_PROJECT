@@ -1,6 +1,7 @@
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import JsonWebsocketConsumer
 from chat.models import Room
+from django.contrib.auth.models import AnonymousUser
 
 # JsonWebsocketConsumer는 receive_json/send_json 메서드를 추가로 지원
 class ChatConsumer(JsonWebsocketConsumer):
@@ -35,24 +36,41 @@ class ChatConsumer(JsonWebsocketConsumer):
 
         else:
             room_pk = self.scope["url_route"]["kwargs"]["room_pk"]
-            # room_name에 기반하여 그룹명 생성
-            self.group_name = Room.make_chat_group_name(room_pk=room_pk)
+            
+            try:
+                # room_name에 기반하여 그룹명 생성
+                self.room = Room.objects.get(pk=room_pk)
+            except Room.DoesNotExist:
+                self.close()
+            else:
+                self.group_name = self.room.chat_group_name
 
-            async_to_sync(self.channel_layer.group_add)(
-                self.group_name,
-                self.channel_name
-            )
+                is_new_join = self.room.user_join(self.channel_name, user)
+                if is_new_join:
+                    async_to_sync(self.channel_layer.group_send)(
+                        self.group_name,
+                        {
+                            "type": "chat.user.join",
+                            "username": user.username,
+                        }
+                    )
 
-            # 본 웹소켓 접속을 허용합
-            # connect 메서드 기본 구현에서는 self.accept() 호출부만 있음
-            self.accept()
+                async_to_sync(self.channel_layer.group_add)(
+                    self.group_name,
+                    self.channel_name,
+                )
+
+                # 본 웹소켓 접속을 허용합
+                # connect 메서드 기본 구현에서는 self.accept() 호출부만 있음
+                self.accept()
 
     # 웹소켓 클라이언트와의 접속이 끊겼을 때 호출
     def disconnect(self, code):
         # 소속 그룹에서 빠져나와야함
         if self.group_name:
             async_to_sync(self.channel_layer.group_discard)(
-                self.group_name, self.channel_name
+                self.group_name,
+                self.channel_name,
             )
 
         user = self.scope["user"]
@@ -67,7 +85,19 @@ class ChatConsumer(JsonWebsocketConsumer):
                         "username": user.username,
                     }
                 )
+                
+    def chat_user_join(self, message_dict):
+        self.send_json({
+            "type": "chat.user.join",
+            "username": message_dict["username"],
+        })
 
+    def chat_user_leave(self, message_dict):
+        self.send_json({
+            "type": "chat.user.leave",
+            "username": message_dict["username"],
+        })
+        
     # 단일 클라이언트로부터 메시지를 받으면 호출됩니다,.
     def receive_json(self, content, **kwargs):
         user = self.scope["user"]
@@ -102,3 +132,18 @@ class ChatConsumer(JsonWebsocketConsumer):
             "message": message_dict["message"],
             "sender": message_dict["sender"],
         })
+        
+    # 웹소켓 채팅서버에서 커스텀 종료코드와 함께 연결을 끊음
+    # 종료코드 4000번대는 Private 구간이며,
+    # 종료코드를 지정하지 않으면 디폴트=1000
+    def chat_room_deleted(self, message_dict):
+        custom_code = 4000
+        self.close(code=custom_code)
+        
+class GreetingConsumer(JsonWebsocketConsumer):
+    def connect(self):
+        super().connect()
+        
+        user = self.scope["user"]
+        message = f"안녕하세요. {user.username}님."
+        self.send(message)

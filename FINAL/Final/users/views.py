@@ -3,11 +3,9 @@ from users.forms import LoginForm, SignupForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 
-from django.urls import reverse_lazy
-from users.models import User
-from django.http import HttpResponseRedirect
-from django.urls import reverse
 
 # Create your views here.
 def login_view(request):
@@ -84,6 +82,21 @@ def signup(request):
         # -> 빈 form이 사용자에게 보여짐
     context = {"form": form, "form2" : form2,}
     return render(request, "users/login.html", context)
+
+@login_required
+def signout(request):
+    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        username = request.POST.get('username')
+        user = request.user
+        
+        if user.username == username:
+            user.delete()
+            logout(request)
+            return JsonResponse({'success': True, 'message': '삭제가 완료되었습니다.'})
+        else:
+            return JsonResponse({'success': False, 'message': '아이디가 일치하지 않습니다.'})
+
+    return redirect('/sleep/main')
 
 class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = "users/profile.html"
