@@ -16,8 +16,10 @@ import geocoder
 def video(request):    
     return render(request, "main/videomain.html")
 
-def main(request):    
-    return render(request, "main/main.html")
+def main(request):
+    user = request.user
+    context = {"user" : user,}
+    return render(request, "main/main.html", context)
 
 # # main 페이지 연결
 # def main(request):
@@ -77,7 +79,7 @@ def team(request):
 # map.html
 def map(request):
     data = address.search()
-
+    kakao_map_key = key.kakao_map_key
     if request.method == "POST":
         fetchData = json.loads(request.body)
         x = fetchData["x"]
@@ -86,8 +88,16 @@ def map(request):
         return JsonResponse({"sleep_clinic": sleep_clinic,})
     
     context = {
-        "map_key" : "0e03efef5a20230c182645bf000aa33c",
+        "map_key" : kakao_map_key,
         "data" : json.dumps(data), 
         "sleep_clinic" : "수면클리닉"
     }
     return render(request, "feed/mapping.html", context)
+# from sleep.models import Survey
+
+# def list_answer(request):
+#     survey = Survey.objects.filter(status="y").order_by('-survey_idx')[0]
+#     context = {
+#         "survey" : survey
+#     }
+#     return render(request, "list.html", context)
