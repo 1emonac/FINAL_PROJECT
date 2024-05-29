@@ -1,0 +1,11 @@
+{% extends "chat_base.html" %}
+
+{% block content %}
+    <h1>채팅방 목록</h1>
+    <ul>
+            <li>
+                {# TODO: 채팅방 목록을 조히하여 렌더링하기 #}
+                <a href="{% url 'chat:room_chat' 'test' %}">테스트 채팅방 진입</a>
+            </li>
+    </ul>
+{% endblock %}
