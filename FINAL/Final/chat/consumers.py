@@ -91,6 +91,7 @@ class ChatConsumer(JsonWebsocketConsumer):
             "type": "chat.user.join",
             "username": message_dict["username"],
         })
+        
 
     def chat_user_leave(self, message_dict):
         self.send_json({
