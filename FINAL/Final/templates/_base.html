@@ -57,6 +57,8 @@
         margin: 0 auto; /* 중앙 정렬 */
         padding: 0 15px; /* 좌우 패딩 */
       }
+      
+      
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
@@ -125,7 +127,7 @@
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{% url 'sleep:chatbot' %}">CHATBOT</a></li>
                 <li><a class="dropdown-item" href="{% url 'chat:index' %}">CHATTING</a></li>
-                <li><a class="dropdown-item" href="{% url 'sleep:dr_ai' %}">DR.AI</a></li>
+                <li><a class="dropdown-item" href="#">DR.AI</a></li>
               </ul>
             </li>
 
@@ -154,12 +156,14 @@
     {% block base_extra-style %}{% endblock %}
     {% block base_content %}{% endblock %}
     <!-- FOOTER -->
-    <footer class="footer-bg">
-      <div class="footer-content">
-          <p class="float-end"><a href="#">Back to top</a></p>
-          <p>&copy; 2024, Final Project TEAM JamJOBGO &middot; <a href="https://g-sa.koreaisacademy.com/?ACE_REF=adwords_g&ACE_KW=%EC%BD%94%EB%A6%AC%EC%95%84it&gad_source=1&gclid=Cj0KCQjwxqayBhDFARIsAANWRnTgHrK-sMcRhVpFBCnpfv1F2omvCrlEE6GJ5xs0JoQs0DfkhzefFWkaAhbVEALw_wcB">학원광고임!</a></p>
-      </div>
-    </footer>
+    <div class="main-content">
+      <footer class="footer-bg">
+        <div class="footer-content">
+            <p class="float-end"><a href="#">Back to top</a></p>
+            <p>&copy; 2024, Final Project TEAM JamJOBGO &middot; <a href="https://g-sa.koreaisacademy.com/?ACE_REF=adwords_g&ACE_KW=%EC%BD%94%EB%A6%AC%EC%95%84it&gad_source=1&gclid=Cj0KCQjwxqayBhDFARIsAANWRnTgHrK-sMcRhVpFBCnpfv1F2omvCrlEE6GJ5xs0JoQs0DfkhzefFWkaAhbVEALw_wcB">학원광고임!</a></p>
+        </div>
+      </footer>
+    </div>
     {% block base_extra-script %}{% endblock %}
   </body>
 </html>

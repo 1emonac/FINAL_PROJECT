@@ -28,6 +28,10 @@ env = environ.Env()
 
 env_path = BASE_DIR / ".env"
 
+if env_path.is_file():
+    with env_path.open('rt', encoding='utf-8') as f:
+        env.read_env(f, overwrite=True)
+
 if env_path.exists():
     with env_path.open(encoding="utf8") as f:
         # 디폴트동작으로 동일 이름의 환경변수가 이미 등록된 경우, 덮어쓰기 하지 않음
@@ -50,6 +54,7 @@ INSTALLED_APPS = [
     "channels",
     "daphne",
     "django_bootstrap5",
+    "tailwind",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -60,6 +65,9 @@ INSTALLED_APPS = [
     "users",
     "app",
     "chat",
+    "dr",
+    "polls",
+    "theme",
 ]
 
 MIDDLEWARE = [
@@ -172,3 +180,12 @@ LOGIN_REDIRECT_URL = "/"
 
 # Logout 성공시 URL 경로
 LOGOUT_REDIRECT_URL = "/"
+
+OPENAI_API_KEY = env.str("OPENAI_API_KEY")
+
+BOOTSTRAP5 = {
+    "required_css_class": "fw-bold",
+    "set_placeholder": False,
+}
+
+TAILWIND_APP_NAME = "theme"
