@@ -25,10 +25,6 @@ def define(request):
 def chatbot(request):    
     return render(request, "feed/chatbot.html")
 
-
-def drai(request):    
-    return render(request, "feed/drai.html")
-
 def result(request):    
     return render(request, "feed/result.html")
 

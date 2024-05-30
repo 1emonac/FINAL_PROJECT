@@ -7,7 +7,6 @@ urlpatterns = [
     path('main/', views.main, name='main'), 
     path('define/', views.define, name='define'),
     path('chatbot/', views.chatbot, name='chatbot'),
-    path('drai/', views.drai, name='dr_ai'),
     path('result/', views.result, name='result'),
     path('team/', views.team, name='team'),
     path('clinic/', views.map, name='clinic'),
