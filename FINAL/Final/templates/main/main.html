@@ -3,6 +3,22 @@
 {% block head %}
 {% endblock %}
 {% block content %}
+
+<style>
+  .featurette {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .featurette .col-md-6 {
+    flex: 1;
+    min-width: 300px; /* Minimum width for better responsiveness */
+    margin: 10px;
+  }
+  iframe {
+    max-width: 100%;
+    height: 500px;
+  }
+</style>
   
 <main>
 
@@ -65,18 +81,21 @@
     <div class="row">
       <div class="col-lg-4">
         <img src="{% static 'media/image/ai2.jpg' %}" class="bd-placeholder-img rounded-circle" width="140" height="140" alt="Placeholder">
+        <br />
         <h2 class="fw-normal">수면 진단 결과</h2>
         <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
         <p><a class="btn btn-secondary" href="{% url 'sleep:result' %}">View details &raquo;</a></p>
       </div>
       <div class="col-lg-4">
         <img src="{% static 'media/image/chat.jpg' %}" class="bd-placeholder-img rounded-circle" width="140" height="140" alt="Placeholder">
+        <br />
         <h2 class="fw-normal">Enoinanest 채팅</h2>
         <p>Another exciting bit of representative placeholder content. This time, we've moved on to the second column.</p>
         <p><a class="btn btn-secondary" href="{% url 'chat:index' %}">View details &raquo;</a></p>
       </div>
       <div class="col-lg-4">
         <img src="{% static 'media/image/doctor.jpg' %}" class="bd-placeholder-img rounded-circle" width="140" height="140" alt="Placeholder">
+        <br />
         <h2 class="fw-normal">Dr.A와의 만남</h2>
         <p>And lastly this, the third column of representative placeholder content.</p>
         <p><a class="btn btn-secondary" href="{% url 'dr:drai' %}">View details &raquo;</a></p>
@@ -85,6 +104,19 @@
 
 
     <!-- START THE FEATURETTES -->
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-6">
+        <iframe width="800" height="500" src="https://www.youtube.com/embed/FoO7Pmx0bE4?autoplay=1&mute=1&si=sy4V_DXUSDFRvYYs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+      <div class="col-md-3">
+        <h2 class="featurette-heading fw-normal lg-1">잘자요, {{ user }}님</h2>
+        <p class="lead">Here is some descriptive text about the video. This can include information about the content of the video, why it's important, and any other relevant details.</p>
+        <p>Additional text can go here, providing more context or related information that might be useful to the viewer.</p>
+      </div>
+    </div>
 
     <hr class="featurette-divider">
 
