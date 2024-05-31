@@ -86,7 +86,8 @@
         flex: 1;
       }
       .greeting-text {
-        font-size: 17px; /* 원하는 글씨 크기로 설정 */
+        font-size: 18px; /* 원하는 글씨 크기로 설정 */
+        padding: 10px;
      }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -158,9 +159,9 @@
             </li>
           </ul>
         
-          <div class="text-end noto-sans-kr-main">
+          <div class="text-end ibm-plex-sans-kr-regular">
             {% if user.is_authenticated %}
-              <strong class="greeting-text">반갑습니다 {{ user }} 님</strong>
+              <strong class="greeting-text ibm-plex-sans-kr-regular">반갑습니다 {{ user }} 님</strong>
               <a class="btn btn-custom" href="{% url 'users:profile' %}">마이페이지</a>
               <a class="btn btn-custom" href="{% url 'users:logout' %}">로그아웃</a>
               <a class="btn btn-custom" onclick="showPrompt()">회원탈퇴</a>

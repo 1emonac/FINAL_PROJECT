@@ -7,7 +7,7 @@ from .models import SleepClinicRoom
 
 FIXED_ROOM_PK = 1  # 고정된 방의 Primary Key
 
-@method_decorator(staff_member_required, name="dispatch")
+# @method_decorator(staff_member_required, name="dispatch")
 class SleepClinicRoomDetailView(DetailView):
     model = SleepClinicRoom
 
