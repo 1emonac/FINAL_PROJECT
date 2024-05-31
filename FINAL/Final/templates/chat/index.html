@@ -1,29 +1,16 @@
 {% extends "base_chat.html" %}
+{% load static %}
 
 {% block content %}
-    <h1>채팅방 목록</h1>
-    <ul>
-        {% for room in room_list %}
-            <li>
-                <a href="{% url 'chat:room_chat' room.pk %}" class="protected-link">
-                    {{ room.name }}
-                </a>
-            </li>
-        {% endfor %}
-    </ul>   
-    <a href="{% url 'chat:room_new' %}" class="protected-link">
-        새 채팅방 만들기
-    </a>
-
     <!-- 로그인 모달 -->
     <div id="loginModal" class="modal">
-        <div class="modal-content">
+        <div class="modal-content ibm-plex-sans-kr-regular">
             <p class="close">&times;</p>
             <center>
                 <h2>로그인 필요</h2>
                 <p>이 작업을 수행하려면 로그인이 필요합니다.</p>
-                <a href="/users/login/" class="login-button">로그인</a>
-                <a href="/chat/">목록으로 이동합니다</a>
+                <a href="/users/login/" class="login-button btn btn-primary">로그인</a>
+                <a href="/chat/" class="btn btn-primary">채팅방 목록으로 이동</a>
                 <p></p>
             </center>
         </div>
@@ -53,7 +40,29 @@
             text-decoration: none;
             cursor: pointer;
         }
+        /* 텍스트 스타일 */
+        .room-name {
+            font-size: 3rem; /* 원하는 크기로 조정 */
+        }
     </style>
+
+    <div class="my-3 p-3 bg-body rounded shadow-sm">
+        <h4 class="border-bottom pb-2 mb-0 ibm-plex-sans-kr-regular">채팅방 목록</h4>
+        {% for room in room_list %}
+            <div class="d-flex text-body-secondary pt-3">
+                <img src="{% static 'media/image/chun.jpg' %}" class="bd-placeholder-img rounded-circle" width="35" height="35" alt="Placeholder">
+                <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                    <div class="d-flex justify-content-between">
+                        <strong class="text-dark mt-2 noto-sans-kr-main display-7">{{ room.name }}</strong>
+                        <a href="{% url 'chat:room_chat' room.pk %}" class="protected-link btn btn-primary">입장</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        <small class="d-block text-end mt-3">
+            <a href="{% url 'chat:room_new' %}" class="protected-link btn btn-primary">새 채팅방 만들기</a>
+        </small>
+    </div>
 
     <script>
        const userId = "{{ user.username|default:0 }}";

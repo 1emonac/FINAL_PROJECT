@@ -38,6 +38,19 @@
         #pagination {margin:10px auto;text-align: center;}
         #pagination a {display:inline-block;margin-right:10px;}
         #pagination .on {font-weight: bold; cursor: default;color:#777;}
+        .map-section .select ul li#sleep_clinic {
+        visibility: hidden;
+        position: relative;
+        }
+        .map-section .select ul li#sleep_clinic::before {
+            content: " ";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            visibility: visible;
+        }
     </style>
 {% endblock%}
 {% block content %}
