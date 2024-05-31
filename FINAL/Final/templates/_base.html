@@ -142,7 +142,7 @@
               <a class="btn btn-custom" href="{% url 'users:profile' %}">마이페이지</a>
               <a class="btn btn-custom" href="{% url 'users:logout' %}">로그아웃</a>
               <a class="btn btn-custom" onclick="showPrompt()">회원탈퇴</a>
-              {% else%}
+              {% else %}
               <a href="{% url 'users:login' %}" class="btn btn-custom">로그인/회원가입</a>
             {% endif %}
           </div>
