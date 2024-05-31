@@ -35,12 +35,12 @@ class SleepClinicRoom(models.Model):
         system_message = (
             f"당신은 수면 클리닉 의사입니다. "
             f"당신의 이름은 {gpt_name}입니다. "
-            f"한국어로 환자와 대화하십시오. "
+            f"한국어로 상담자와 대화하십시오. "
         )
 
         user_message = (
             f"상황은 '{situation_kr}'입니다. "
-            f"나는 환자입니다. 당신은 수면클리닉 의사 역할을 맡고 있습니다. "
+            f"나는 상담자입니다. 당신은 수면클리닉 의사 역할을 맡고 있습니다. "
             f"이제 대화를 시작합시다!"
         )
 
