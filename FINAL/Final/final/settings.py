@@ -54,7 +54,6 @@ INSTALLED_APPS = [
     "channels",
     "daphne",
     "django_bootstrap5",
-    "tailwind",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -67,7 +66,6 @@ INSTALLED_APPS = [
     "chat",
     "dr",
     "polls",
-    "theme",
 ]
 
 MIDDLEWARE = [

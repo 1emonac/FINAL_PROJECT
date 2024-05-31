@@ -91,7 +91,6 @@
       }
     </script>
 
-    <!-- Custom styles for this template -->
     <link href="{% static 'css/carousel.css' %}" rel="stylesheet"  type="text/css" />
     {% block head%}{% endblock%}
   </head>
@@ -127,7 +126,7 @@
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{% url 'sleep:chatbot' %}">CHATBOT</a></li>
                 <li><a class="dropdown-item" href="{% url 'chat:index' %}">CHATTING</a></li>
-                <li><a class="dropdown-item" href="#">DR.AI</a></li>
+                <li><a class="dropdown-item" href="{% url 'dr:drai' %}">DR.AI</a></li>
               </ul>
             </li>
 

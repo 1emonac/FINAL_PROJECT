@@ -1,4 +1,3 @@
-
 from typing import List, TypedDict, Literal
 
 from django.conf import settings
@@ -11,110 +10,50 @@ class GptMessage(TypedDict):
     content: str
 
 
-class RolePlayingRoom(models.Model):
-    class Language(models.TextChoices):
-        ENGLISH = "en-US", "English"
-        JAPANESE = "ja-JP", "Japanese"
-        CHINESE = "zh-CN", "Chinese"
-        SPANISH = "es-ES", "Spanish"
-        FRENCH = "fr-FR", "French"
-        GERMAN = "de-DE", "German"
-        RUSSIAN = "ru-RU", "Russian"
-
-    class Level(models.IntegerChoices):
-        BEGINNER = 1, "초급"
-        ADVANCED = 2, "고급"
-
+class SleepClinicRoom(models.Model):
     class Meta:
         ordering = ["-pk"]
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    language = models.CharField(
-        max_length=10,
-        choices=Language.choices,
-        default=Language.ENGLISH,
-        verbose_name="대화 언어",
-    )
-    level = models.SmallIntegerField(
-        choices=Level.choices, default=Level.BEGINNER, verbose_name="레벨"
-    )
     situation = models.CharField(max_length=100, verbose_name="상황")
-    situation_en = models.CharField(
+    situation_kr = models.CharField(
         max_length=100,
         blank=True,
-        verbose_name="상황 (영문)",
+        verbose_name="상황 (한국어)",
         help_text="GPT 프롬프트에 직접적으로 활용됩니다. 비워두시면, situation 필드를 번역하여 자동 반영됩니다.",
     )
-    my_role = models.CharField(max_length=100, verbose_name="내 역할")
-    my_role_en = models.CharField(
-        max_length=100,
-        blank=True,
-        verbose_name="내 역할 (영문)",
-        help_text="GPT 프롬프트에 직접적으로 활용됩니다. 비워두시면, my_role 필드를 번역하여 자동 반영됩니다.",
-    )
-    gpt_role = models.CharField(max_length=100, verbose_name="GPT 역할")
-    gpt_role_en = models.CharField(
-        max_length=100,
-        blank=True,
-        verbose_name="GPT 역할 (영문)",
-        help_text="GPT 프롬프트에 직접적으로 활용됩니다. 비워두시면, gpt_role 필드를 번역하여 자동 반영됩니다.",
-    )
+    my_role = models.CharField(max_length=100, verbose_name="내 역할", default="환자")
+    gpt_role = models.CharField(max_length=100, verbose_name="GPT 역할", default="수면클리닉 의사")
 
-    # def get_absolute_url(self) -> str:
-    #     return reverse("role_playing_room_detail", args=[self.pk])
+    def get_absolute_url(self) -> str:
+        return reverse("sleep_clinic_room_detail", args=[self.pk])
 
-    # def get_initial_messages(self) -> List[GptMessage]:
-    #     gpt_name = "RolePlayingBot"
-    #     language = self.get_language_display()
-    #     situation_en = self.situation_en
-    #     my_role_en = self.my_role_en
-    #     gpt_role_en = self.gpt_role_en
+    def get_initial_messages(self) -> List[GptMessage]:
+        gpt_name = "Dr.AI"
+        situation_kr = self.situation_kr or self.situation
 
-    #     if self.level == self.Level.BEGINNER:
-    #         level_string = f"a beginner in {language}"
-    #         level_word = "simple"
-    #     elif self.level == self.Level.ADVANCED:
-    #         level_string = f"a advanced learner in {language}"
-    #         level_word = "advanced"
-    #     else:
-    #         raise ValueError(f"Invalid level : {self.level}")
+        system_message = (
+            f"당신은 수면 클리닉 의사입니다. "
+            f"당신의 이름은 {gpt_name}입니다. "
+            f"한국어로 환자와 대화하십시오. "
+        )
 
-    #     system_message = (
-    #         f"You are helpful assistant supporting people learning {language}. "
-    #         f"Your name is {gpt_name}. "
-    #         f"Please assume that the user you are assisting is {level_string}. "
-    #         f"And please write only the sentence without the character role."
-    #     )
+        user_message = (
+            f"상황은 '{situation_kr}'입니다. "
+            f"나는 환자입니다. 당신은 수면클리닉 의사 역할을 맡고 있습니다. "
+            f"이제 대화를 시작합시다!"
+        )
 
-    #     user_message = (
-    #         f"Let's have a conversation in {language}. "
-    #         f"Please answer in {language} only "
-    #         f"without providing a translation. "
-    #         f"And please don't write down the pronunciation either. "
-    #         f"Let us assume that the situation in '{situation_en}'. "
-    #         f"I am {my_role_en}. The character I want you to act as is {gpt_role_en}. "
-    #         f"Please make sure that I'm {level_string}, so please use {level_word} words "
-    #         f"as much as possible. Now, start a conversation with the first sentence!"
-    #     )
+        return [
+            GptMessage(role="system", content=system_message),
+            GptMessage(role="user", content=user_message),
+        ]
 
-    #     return [
-    #         GptMessage(role="system", content=system_message),
-    #         GptMessage(role="user", content=user_message),
-    #     ]
 
-    # def get_recommend_message(self) -> str:
-    #     level = self.level
+class Message(models.Model):
+    user = models.CharField(max_length=255)
+    content = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
 
-    #     if level == self.Level.BEGINNER:
-    #         level_word = "simple"
-    #     elif level == self.Level.ADVANCED:
-    #         level_word = "advanced"
-    #     else:
-    #         raise ValueError(f"Invalid level : {level}")
-
-    #     return (
-    #         f"Can you please provide me an {level_word} example "
-    #         f"of how to respond to the last sentence "
-    #         f"in this situation, without providing a translation "
-    #         f"and any introductory phrases or sentences."
-    #     )
+    def __str__(self):
+        return f"{self.user}: {self.content}"
