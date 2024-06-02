@@ -25,10 +25,10 @@ class SleepClinicRoom(models.Model):
     my_role = models.CharField(max_length=100, verbose_name="내 역할", default="환자")
     gpt_role = models.CharField(max_length=100, verbose_name="GPT 역할", default="수면클리닉 의사")
 
-    def get_absolute_url(self) -> str:
+    def get_absolute_url(self):
         return reverse("sleep_clinic_room_detail", args=[self.pk])
 
-    def get_initial_messages(self) -> List[GptMessage]:
+    def get_initial_messages(self):
         gpt_name = "Dr.AI"
         situation_kr = self.situation_kr or self.situation
 
@@ -40,13 +40,14 @@ class SleepClinicRoom(models.Model):
 
         user_message = (
             f"상황은 '{situation_kr}'입니다. "
-            f"나는 상담자입니다. 당신은 수면클리닉 의사 역할을 맡고 있습니다. "
+            f"나는 상담자입니다. 당신은 수면클리닉 의사 역할을 맡고 있습니다. 나는 수면의 문제로 클리닉에 처음 방문했습니다."
+            f"상담자님이라고 불러주세요. "
             f"이제 대화를 시작합시다!"
         )
 
         return [
-            GptMessage(role="system", content=system_message),
-            GptMessage(role="user", content=user_message),
+            {"role": "system", "content": system_message},
+            {"role": "user", "content": user_message},
         ]
 
 
