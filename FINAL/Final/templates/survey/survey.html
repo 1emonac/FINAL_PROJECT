@@ -1,0 +1,147 @@
+{% extends "base_chat.html" %}
+{% load static %}
+{% load django_bootstrap5 %}
+
+{% block head %}
+<style>
+    #chat-message-list {
+        padding: 0;
+        list-style: none;
+        /* overflow-y: scroll; */
+        height: 500px; /* 메시지 리스트 높이 조정 */
+    }
+    .chat-message .message {
+        background-color: #3b3b3d;
+        color: #e1e1e1;
+        border-radius: 0.8em;
+        padding: 0.4em;
+        margin: 0.4em 0;
+        display: inline-block;
+        white-space: pre-wrap;
+    }
+    .chat-message.me {
+        text-align: right;
+    }
+    .chat-message.me .message {
+        background-color: #1f8cff;
+        color: #fff;
+        text-align: left;
+    }
+    .room-name {
+        font-size: 3rem; /* 원하는 크기로 조정 */
+    }
+    .card-header {
+        font-weight: bold;
+        text-align: center;
+        font-size: 1.3rem;
+    }
+    .custom-chat-width {
+        max-width: 900px;  /* 최대 너비 설정 */
+        margin: auto;  /* 중앙 정렬 */
+    }
+    .card-footer {
+        text-align: center;
+        font-size: 1rem;
+        color: rgb(129, 129, 129);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="card custom-chat-width"> 
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card" style="height: 700px;">
+                <div class="card-header ibm-plex-sans-kr-regular">
+                    수면 진단 CHATBOT
+                </div>
+                <ul id="chat-message-list" class="chat-message-list">
+                    <form method="post" action="{% url 'survey:survey' %}">
+                        {% csrf_token %}
+                        <h1>{{ question.text }}</h1>
+                        {% if question.question_type == "choice" or question.question_type == "multiple" %}
+                            {% for choice in question.choices.all %}
+                                <label>
+                                    {% if question.question_type == "multiple" %}
+                                        <input type="checkbox" name="response" value="{{ choice.id }}">
+                                    {% else %}
+                                        <input type="radio" name="response" value="{{ choice.id }}">
+                                    {% endif %}
+                                    {{ choice.choice_text }}
+                                </label><br>
+                            {% endfor %}
+                        {% else %}
+                            <input type="text" name="response" placeholder="Your answer">
+                        {% endif %}
+                        <input type="hidden" name="question_id" value="{{ question.id }}">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </ul>
+            </div>
+            <div class="card-footer noto-sans-kr-main">
+                해당하는 답변을 선택해 주세요.
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const ws = new WebSocket(`ws://${window.location.host}/ws/survey/`);
+    let currentQuestionId = null;
+
+    ws.onopen = function() {
+        console.log("WebSocket connection established.");
+        requestNextQuestion();
+    };
+
+    ws.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        if (data.type === 'question') {
+            currentQuestionId = data.questionId; // Update current question ID
+            displayQuestion(data.question, data.choices, data.questionType);
+        } else if (data.type === 'end') {
+            displayEndMessage();
+        }
+    };
+
+    function requestNextQuestion() {
+        ws.send(JSON.stringify({ action: 'next_question', questionId: currentQuestionId }));
+    }
+
+    function displayQuestion(question, choices, type) {
+        const ul = document.getElementById('chat-message-list');
+        ul.innerHTML = '';
+        let questionItem = document.createElement('li');
+        questionItem.classList.add('chat-message');
+        questionItem.innerHTML = `<div class="message">${question}</div>`;
+        ul.appendChild(questionItem);
+
+        choices.forEach(choice => {
+            let choiceItem = document.createElement('li');
+            choiceItem.classList.add('chat-message');
+            choiceItem.innerHTML = `<label><input type="${type === 'multiple' ? 'checkbox' : 'radio'}" name="response" value="${choice.id}"> ${choice.choice_text}</label>`;
+            ul.appendChild(choiceItem);
+        });
+
+        let submitButton = document.createElement('button');
+        submitButton.textContent = 'Submit';
+        submitButton.classList.add('btn', 'btn-primary');
+        submitButton.onclick = submitResponse;
+        ul.appendChild(submitButton);
+    }
+
+    function submitResponse() {
+        const selectedResponses = Array.from(document.querySelectorAll('input[name="response"]:checked')).map(input => input.value);
+        ws.send(JSON.stringify({ action: 'submit_response', questionId: currentQuestionId, responses: selectedResponses }));
+        requestNextQuestion();
+    }
+
+    function displayEndMessage() {
+        const ul = document.getElementById('chat-message-list');
+        let messageItem = document.createElement('li');
+        messageItem.classList.add('chat-message');
+        messageItem.innerHTML = `<div class="message">Thank you for completing the survey.</div>`;
+        ul.appendChild(messageItem);
+    }
+</script>
+{% endblock %}

@@ -55,7 +55,7 @@
           <div class="carousel-caption text-end">
             <h1>수면 진단</h1>
             <p>수면이 불편하시다면 Eunoianest와 함께 수면 진단을 해보아요</p>
-            <p><a class="btn btn-lg btn-primary" href="{% url 'sleep:chatbot' %}">진단하기</a></p>
+            <p><a class="btn btn-lg btn-primary" href="{% url 'survey:survey' %}">진단하기</a></p>
           </div>
         </div>
       </div>
@@ -69,43 +69,41 @@
       <span class="visually-hidden">Next</span>
     </button>
   </div>
-
-
-  <!-- Marketing messaging and featurettes
-  ================================================== -->
-  <!-- Wrap the rest of the page in another container to center all the content. -->
-
+  <br />
   <div class="container marketing noto-sans-kr-main">
-
-    <!-- Three columns of text below the carousel -->
     <div class="row">
       <div class="col-lg-4">
         <img src="{% static 'media/image/ai2.jpg' %}" class="bd-placeholder-img rounded-circle" width="140" height="140" alt="Placeholder">
+        <hr />
         <br />
         <h2 class="fw-normal">수면 진단 결과</h2>
-        <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
-        <p><a class="btn btn-secondary" href="{% url 'sleep:result' %}">View details &raquo;</a></p>
+        <br />
+        <!-- <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p> -->
+        <p><a class="btn btn-secondary" href="{% url 'survey:result' %}">View details &raquo;</a></p>
       </div>
       <div class="col-lg-4">
         <img src="{% static 'media/image/chat.jpg' %}" class="bd-placeholder-img rounded-circle" width="140" height="140" alt="Placeholder">
+        <hr />
         <br />
-        <h2 class="fw-normal">Enoinanest 채팅</h2>
-        <p>Another exciting bit of representative placeholder content. This time, we've moved on to the second column.</p>
+        <h2 class="fw-normal">Eunoianest<br>실시간 채팅</h2>
+        <br />
+        <!-- <p>Another exciting bit of representative placeholder content. This time, we've moved on to the second column.</p> -->
         <p><a class="btn btn-secondary" href="{% url 'chat:index' %}">View details &raquo;</a></p>
       </div>
       <div class="col-lg-4">
         <img src="{% static 'media/image/doctor.jpg' %}" class="bd-placeholder-img rounded-circle" width="140" height="140" alt="Placeholder">
+        <hr />
         <br />
-        <h2 class="fw-normal">Dr.A와의 만남</h2>
-        <p>And lastly this, the third column of representative placeholder content.</p>
+        <h2 class="fw-normal">Dr.A 와의 만남</h2>
+        <br />
+        <!-- <p>And lastly this, the third column of representative placeholder content.</p> -->
         <p><a class="btn btn-secondary" href="{% url 'dr:drai' %}">View details &raquo;</a></p>
       </div>
     </div>
-
-
-    <!-- START THE FEATURETTES -->
-
-    <hr class="featurette-divider">
+    <br />
+    <br />
+    <br />
+    <!-- <hr class="featurette-divider"> -->
 
     <div class="row featurette">
       <div class="col-md-6">
@@ -154,7 +152,9 @@
       </div>
     </div>
 
-    <hr class="featurette-divider">
+    <br />
+    <br />
+    <br />
 
     <!-- /END THE FEATURETTES -->
   </div>

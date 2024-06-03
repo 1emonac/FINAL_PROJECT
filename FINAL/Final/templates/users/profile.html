@@ -1,13 +1,258 @@
 {% extends "base.html" %}
 {% load static %}
 {% block head%}
-    <script src="{% static 'js/team.js' %}"></script>
+    <style>
+        @import 'https://fonts.googleapis.com/css?family=Open+Sans:300,400';
+        .firstinfo, .badgescard, body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        }
+
+        html {
+        height: 100%;
+        }
+
+        body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;  /* 뷰포트의 높이에 맞추기 */
+        display: block;  /* 기본 블록 레이아웃으로 변경 */
+        height: 100%;  /* 브라우저 높이와 맞춤 */
+        }
+
+        *, *:before, *:after {
+        box-sizing: border-box;
+        }
+
+        .content {
+        display: flex;
+        flex-direction: column;  /* 내부 요소를 세로로 정렬 */
+        align-items: center;  /* 가운데 정렬 */
+        justify-content: center;  /* 상하 중앙 정렬 */
+        width: 100%;  /* 너비를 100%로 설정 */
+        margin: auto;  /* 자동으로 마진을 설정하여 중앙에 위치 */
+        }
+
+        .card {
+        margin-top: 250px; /* 상단 여백 조정 */
+        margin-bottom: 340px; /* 하단 여백 조정 */
+        width: 500px;
+        min-height: 100px;
+        padding: 20px;
+        border-radius: 3px;
+        background-color: white;
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+        position: relative;
+        overflow: hidden;
+        }
+        .card:after {
+        content: "";
+        display: block;
+        width: 190px;
+        height: 300px;
+        background: rgb(125, 179, 230);
+        position: absolute;
+        animation: rotatemagic 0.75s cubic-bezier(0.425, 1.04, 0.47, 1.105) 1s both;
+        }
+
+        .badgescard {
+        padding: 10px 20px;
+        border-radius: 3px;
+        background-color: #ECECEC;
+        width: 480px;
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+        position: absolute;
+        z-index: -1;
+        left: 10px;
+        bottom: 10px;
+        animation: animainfos 0.5s cubic-bezier(0.425, 1.04, 0.47, 1.105) 0.75s forwards;
+        }
+        .badgescard span {
+        font-size: 1.6em;
+        margin: 0px 6px;
+        opacity: 0.6;
+        }
+
+        .firstinfo {
+        flex-direction: row;
+        z-index: 2;
+        position: relative;
+        }
+        .firstinfo img {
+        border-radius: 50%;
+        width: 120px;
+        height: 120px;
+        }
+        .firstinfo .profileinfo {
+        padding: 0px 20px;
+        }
+        .firstinfo .profileinfo h1 {
+        font-size: 1.8em;
+        }
+        .firstinfo .profileinfo h3 {
+        font-size: 1.2em;
+        color: #009688;
+        font-style: italic;
+        }
+        .firstinfo .profileinfo p.bio {
+        padding: 10px 0px;
+        color: #5A5A5A;
+        line-height: 1.2;
+        font-style: initial;
+        }
+
+        @keyframes animatop {
+        0% {
+            opacity: 0;
+            bottom: -500px;
+        }
+        100% {
+            opacity: 1;
+            bottom: 0px;
+        }
+        }
+        @keyframes animainfos {
+        0% {
+            bottom: 10px;
+        }
+        100% {
+            bottom: -42px;
+        }
+        }
+        @keyframes rotatemagic {
+        0% {
+            opacity: 0;
+            transform: rotate(0deg);
+            top: -24px;
+            left: -253px;
+        }
+        100% {
+            transform: rotate(-30deg);
+            top: -24px;
+            left: -78px;
+        }
+        }
+        @import url(//fonts.googleapis.com/css?family=Lato:300:400);
+
+        body {
+        margin:0;
+        }
+
+        h1 {
+        font-family: 'Lato', sans-serif;
+        font-weight:300;
+        letter-spacing: 2px;
+        font-size:48px;
+        }
+        p {
+        font-family: 'Lato', sans-serif;
+        letter-spacing: 1px;
+        font-size:14px;
+        color: #333333;
+        }
+
+        .header {
+        position:relative;
+        text-align:center;
+        background: linear-gradient(60deg, rgba(84,58,183,1) 0%, rgba(0,172,193,1) 100%);
+        color:white;
+        }
+        .logo {
+        width:50px;
+        fill:white;
+        padding-right:15px;
+        display:inline-block;
+        vertical-align: middle;
+        }
+
+        .inner-header {
+        height:65vh;
+        width:100%;
+        margin: 0;
+        padding: 0;
+        }
+
+        .flex { /*Flexbox for containers*/
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        }
+
+        .waves {
+        position:relative;
+        width: 100%;
+        height:15vh;
+        margin-bottom:-7px; /*Fix for safari gap*/
+        min-height:100px;
+        max-height:150px;
+        }
+
+        .content {
+        position:relative;
+        height:20vh;
+        text-align:center;
+        background-color: white;
+        }
+
+        /* Animation */
+
+        .parallax > use {
+        animation: move-forever 25s cubic-bezier(.55,.5,.45,.5)     infinite;
+        }
+        .parallax > use:nth-child(1) {
+        animation-delay: -2s;
+        animation-duration: 7s;
+        }
+        .parallax > use:nth-child(2) {
+        animation-delay: -3s;
+        animation-duration: 10s;
+        }
+        .parallax > use:nth-child(3) {
+        animation-delay: -4s;
+        animation-duration: 13s;
+        }
+        .parallax > use:nth-child(4) {
+        animation-delay: -5s;
+        animation-duration: 20s;
+        }
+        @keyframes move-forever {
+        0% {
+        transform: translate3d(-90px,0,0);
+        }
+        100% { 
+            transform: translate3d(85px,0,0);
+        }
+        }
+        /*Shrinking for mobile*/
+        @media (max-width: 768px) {
+        .waves {
+            height:40px;
+            min-height:40px;
+        }
+        .content {
+            height:30vh;
+        }
+        h1 {
+            font-size:24px;
+        }
+        }
+    </style>
 {% endblock%}
 {% block content %}
-    <h2>{{ user }}'s 프로필</h2>
 
-    <ul>
-        <li>Username: {{ user.username }}</li>
-        <li>Last login: {{ user.last_login }}</li>
-    </ul>
+<div class="content">
+    <div class="card">
+      <div class="firstinfo"><img src="{% static 'media/image/cat3.jpg' %}"/>
+        <div class="profileinfo">
+          <h1>{{ user }}의 프로필</h1>
+          <p class="bio">Last login: {{ user.last_login }}</p>
+          <center><a href="{% url 'survey:result' %}" class="login-button btn btn-primary">진단 결과</a>
+          <a href="{% url 'dr:drai' %}" class="btn btn-primary">Dr.AI 대화</a></center>
+        </div>
+      </div>
+    </div>
+
+</div>
 {% endblock %}

@@ -29,7 +29,7 @@ class SleepClinicRoom(models.Model):
         return reverse("sleep_clinic_room_detail", args=[self.pk])
 
     def get_initial_messages(self):
-        gpt_name = "Dr.AI"
+        gpt_name = "Dr.A"
         situation_kr = self.situation_kr or self.situation
 
         system_message = (
@@ -45,6 +45,11 @@ class SleepClinicRoom(models.Model):
             f"이제 대화를 시작합시다!"
         )
 
+        # user의 이름을 메시지에 포함
+        if self.user:
+            user_name = self.user.username  # username을 사용
+            user_message = user_message.replace("나는 상담자입니다.", f"나는 {user_name}입니다.")
+            
         return [
             {"role": "system", "content": system_message},
             {"role": "user", "content": user_message},

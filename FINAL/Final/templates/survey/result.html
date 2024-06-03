@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+{% block head %}
+<!--헤드에 들어갈 나머지 코드들을 입력해주세요-->
+{% endblock %}
+{% block content %}
+<h2>Survey Results</h2>
+<ul>
+    {% for response in responses %}
+    <li>{{ response.question.text }}: {{ response }}</li>
+    {% empty %}
+    <li>No responses recorded.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

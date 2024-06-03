@@ -16,6 +16,7 @@ from django.core.asgi import get_asgi_application
 import app.routing  # noqa: E402
 import chat.routing  # noqa: E402
 import dr.routing
+import survey.routing
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'final.settings')
 
@@ -30,7 +31,8 @@ application = ProtocolTypeRouter(
                 URLRouter(
                     chat.routing.websocket_urlpatterns +
                     app.routing.websocket_urlpatterns +
-                    dr.routing.websocket_urlpatterns
+                    dr.routing.websocket_urlpatterns +
+                    survey.routing.websocket_urlpatterns
                 )
             )
         ),
