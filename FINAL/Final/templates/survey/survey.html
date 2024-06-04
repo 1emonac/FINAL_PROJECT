@@ -56,9 +56,9 @@
                     수면 진단 CHATBOT
                 </div>
                 <ul id="chat-message-list" class="chat-message-list">
-                    <form method="post" action="{% url 'survey:survey' %}">
+                    <form method="post" action="{% url 'survey:survey' %}" >
                         {% csrf_token %}
-                        <h1>{{ question.text }}</h1>
+                        <p class="chat-message-list chat-message .message">{{ question.text }}</p>
                         {% if question.question_type == "choice" or question.question_type == "multiple" %}
                             {% for choice in question.choices.all %}
                                 <label>
@@ -71,7 +71,7 @@
                                 </label><br>
                             {% endfor %}
                         {% else %}
-                            <input type="text" name="response" placeholder="Your answer">
+                            <input type="text" name="response" placeholder="답변해 주세요">
                         {% endif %}
                         <input type="hidden" name="question_id" value="{{ question.id }}">
                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -86,29 +86,51 @@
 </div>
 
 <script>
-    const ws = new WebSocket(`ws://${window.location.host}/ws/survey/`);
-    let currentQuestionId = null;
+    const surveyHandler = {
+    ws: null,
+    currentQuestionId: null,
 
-    ws.onopen = function() {
+    init() {
+        this.connect();
+    },
+
+    connect() {
+        this.ws = new WebSocket(`ws://${window.location.host}/ws/survey/`);
+        
+        this.ws.onopen = this.onopen.bind(this);
+        this.ws.onmessage = this.onmessage.bind(this);
+    },
+
+    onopen() {
         console.log("WebSocket connection established.");
-        requestNextQuestion();
-    };
+        this.requestNextQuestion();
+    },
 
-    ws.onmessage = function(e) {
-        const data = JSON.parse(e.data);
-        if (data.type === 'question') {
-            currentQuestionId = data.questionId; // Update current question ID
-            displayQuestion(data.question, data.choices, data.questionType);
-        } else if (data.type === 'end') {
-            displayEndMessage();
+    onmessage(event) {
+        const data = JSON.parse(event.data);
+        console.log("메세지 수신 :", data);
+
+        switch (data.type) {
+            case 'question':
+                this.currentQuestionId = data.questionId; // Update current question ID
+                this.displayQuestion(data.question, data.choices, data.questionType);
+                break;
+            case 'end':
+                this.displayEndMessage();
+                break;
+            case "chat.message":
+                this.append_message("Eunoianest 수면 진단 서비스에 어서 오세요.");
+                break;
+            default:
+                console.error(`Invalid message type: ${data.type}`);
         }
-    };
+    },
 
-    function requestNextQuestion() {
-        ws.send(JSON.stringify({ action: 'next_question', questionId: currentQuestionId }));
-    }
+    requestNextQuestion() {
+        this.ws.send(JSON.stringify({ action: 'next_question', questionId: this.currentQuestionId }));
+    },
 
-    function displayQuestion(question, choices, type) {
+    displayQuestion(question, choices, type) {
         const ul = document.getElementById('chat-message-list');
         ul.innerHTML = '';
         let questionItem = document.createElement('li');
@@ -126,22 +148,38 @@
         let submitButton = document.createElement('button');
         submitButton.textContent = 'Submit';
         submitButton.classList.add('btn', 'btn-primary');
-        submitButton.onclick = submitResponse;
+        submitButton.onclick = this.submitResponse.bind(this);
         ul.appendChild(submitButton);
-    }
+    },
 
-    function submitResponse() {
+    submitResponse() {
         const selectedResponses = Array.from(document.querySelectorAll('input[name="response"]:checked')).map(input => input.value);
-        ws.send(JSON.stringify({ action: 'submit_response', questionId: currentQuestionId, responses: selectedResponses }));
-        requestNextQuestion();
-    }
+        this.ws.send(JSON.stringify({ action: 'submit_response', questionId: this.currentQuestionId, responses: selectedResponses }));
+        this.requestNextQuestion();
+    },
 
-    function displayEndMessage() {
+    displayEndMessage() {
         const ul = document.getElementById('chat-message-list');
         let messageItem = document.createElement('li');
         messageItem.classList.add('chat-message');
         messageItem.innerHTML = `<div class="message">Thank you for completing the survey.</div>`;
         ul.appendChild(messageItem);
+    },
+
+    append_message(message) {
+        const element = document.createElement("div");
+        element.className = "chat-message"; // 메시지 스타일링 목적
+
+        const wrapper = document.createElement("div");
+        wrapper.textContent = message;
+        element.appendChild(wrapper);
+
+        this.chat_messages_tag.appendChild(element);
+        this.chat_messages_tag.scrollTop = this.chat_messages_tag.scrollHeight; // scroll to the bottom
     }
+};
+
+surveyHandler.init();
+
 </script>
 {% endblock %}

@@ -2,7 +2,6 @@
 {% load static %}
 {% load django_bootstrap5 %}
 
-
 {% block head %}
 <style>
     .bd-placeholder-img {
@@ -11,42 +10,42 @@
         -webkit-user-select: none;
         -moz-user-select: none;
         user-select: none;
-      }
+    }
 
-      @media (min-width: 768px) {
+    @media (min-width: 768px) {
         .bd-placeholder-img-lg {
-          font-size: 3.5rem;
+            font-size: 3.5rem;
         }
-      }
+    }
 
-      .b-example-divider {
+    .b-example-divider {
         width: 100%;
         height: 3rem;
         background-color: rgba(0, 0, 0, .1);
         border: solid rgba(0, 0, 0, .15);
         border-width: 1px 0;
         box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-      }
+    }
 
-      .b-example-vr {
+    .b-example-vr {
         flex-shrink: 0;
         width: 1.5rem;
         height: 100vh;
-      }
+    }
 
-      .bi {
+    .bi {
         vertical-align: -.125em;
         fill: currentColor;
-      }
+    }
 
-      .nav-scroller {
+    .nav-scroller {
         position: relative;
         z-index: 2;
         height: 2.75rem;
         overflow-y: hidden;
-      }
+    }
 
-      .nav-scroller .nav {
+    .nav-scroller .nav {
         display: flex;
         flex-wrap: nowrap;
         padding-bottom: 1rem;
@@ -55,9 +54,9 @@
         text-align: center;
         white-space: nowrap;
         -webkit-overflow-scrolling: touch;
-      }
+    }
 
-      .btn-bd-primary {
+    .btn-bd-primary {
         --bd-violet-bg: #712cf9;
         --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
 
@@ -72,15 +71,15 @@
         --bs-btn-active-color: var(--bs-btn-hover-color);
         --bs-btn-active-bg: #5a23c8;
         --bs-btn-active-border-color: #5a23c8;
-      }
+    }
 
-      .bd-mode-toggle {
+    .bd-mode-toggle {
         z-index: 1500;
-      }
+    }
 
-      .bd-mode-toggle .dropdown-menu .active .bi {
+    .bd-mode-toggle .dropdown-menu .active .bi {
         display: block !important;
-      }
+    }
 </style>
 {% endblock %}
 
@@ -97,22 +96,57 @@
 
 <div class="container py-4">
     <div class="pb-3 mb-4">
-      <div class="h-100 p-5 bg-body-tertiary border rounded-3">
-        <ul class="noto-sans-kr-main">
-            {% for response in responses %}
-            <li>{{ response.question.text }}: {{ response }}</li>
-            {% empty %}
-            <li>진단 결과가 없습니다.</li>
-            {% endfor %}
-        </ul>
-        <br />
-        <center><span class="ibm-plex-sans-kr-regular ">수면 진단 결과가 유의미했나요?</span></center>
-        <br>
-        <center><button class="btn btn-outline-secondary me-3" type="button">네</button><button class="btn btn-outline-secondary" type="button">아니오</button></center>
-        <hr>
-        <br>
-        <center><button class="btn btn-outline-secondary me-4" type="button">Dr.A와 대화해보기</button><button class="btn btn-outline-secondary" type="button">실시간 채팅해보기</button></center>
-      </div>
+        <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+            <ul class="noto-sans-kr-main">
+                {% for response in responses %}
+                <li>{{ response.question.text }}: {{ response }}</li>
+                {% empty %}
+                <li>진단 결과가 없습니다.</li>
+                {% endfor %}
+            </ul>
+            <br />
+            <center><span class="ibm-plex-sans-kr-regular ">수면 진단 결과가 유의미했나요?</span></center>
+            <br>
+            <center><button class="btn btn-outline-secondary me-3" type="button">네</button><button class="btn btn-outline-secondary" type="button">아니오</button></center>
+            <hr>
+            <br>
+            <center><a href="{% url 'dr:drai' %}"><button class="btn btn-outline-secondary me-4" type="button">Dr.A와 대화해보기</button></a><a href="{% url 'chat:index' %}"><button class="btn btn-outline-secondary" type="button">실시간 채팅해보기</button></a></center>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1" aria-label="First">
+                        <span aria-hidden="true">&laquo;&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {% endif %}
+                {% for num in page_obj.paginator.page_range %}
+                <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                </li>
+                {% endfor %}
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
+                        <span aria-hidden="true">&raquo;&raquo;</span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
     </div>
 </div>
 

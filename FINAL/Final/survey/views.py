@@ -8,6 +8,7 @@ import random
 from django.contrib.auth.decorators import login_required
 
 from django.shortcuts import render, redirect
+from django.core.paginator import Paginator
 
 def start_survey(request):
     if request.method == "POST":
@@ -92,3 +93,17 @@ def view_results(request):
     user_id = request.user.id
     responses = Response.objects.filter(user_id=user_id)
     return render(request, 'survey/result.html', {'responses': responses})
+
+
+def sleep_results(request):
+    user_id = request.user.id
+    responses = Response.objects.filter(user_id=user_id)
+    paginator = Paginator(responses, 24)  # 페이지당 5개의 응답
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {
+        'user': request.user,
+        'page_obj': page_obj,
+        'responses': responses
+    }
+    return render(request, 'survey/result.html', context)
