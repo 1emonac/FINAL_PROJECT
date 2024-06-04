@@ -1,15 +1,135 @@
 {% extends "base.html" %}
 {% load static %}
+{% load django_bootstrap5 %}
+
+
 {% block head %}
-<!--헤드에 들어갈 나머지 코드들을 입력해주세요-->
+<style>
+    .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      .b-example-divider {
+        width: 100%;
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
+
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+      }
+
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+      }
+
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .btn-bd-primary {
+        --bd-violet-bg: #712cf9;
+        --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+
+        --bs-btn-font-weight: 600;
+        --bs-btn-color: var(--bs-white);
+        --bs-btn-bg: var(--bd-violet-bg);
+        --bs-btn-border-color: var(--bd-violet-bg);
+        --bs-btn-hover-color: var(--bs-white);
+        --bs-btn-hover-bg: #6528e0;
+        --bs-btn-hover-border-color: #6528e0;
+        --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+        --bs-btn-active-color: var(--bs-btn-hover-color);
+        --bs-btn-active-bg: #5a23c8;
+        --bs-btn-active-border-color: #5a23c8;
+      }
+
+      .bd-mode-toggle {
+        z-index: 1500;
+      }
+
+      .bd-mode-toggle .dropdown-menu .active .bi {
+        display: block !important;
+      }
+</style>
 {% endblock %}
+
 {% block content %}
-<h2>Survey Results</h2>
-<ul>
-    {% for response in responses %}
-    <li>{{ response.question.text }}: {{ response }}</li>
-    {% empty %}
-    <li>No responses recorded.</li>
-    {% endfor %}
-</ul>
+<div class="my-5">
+    <div class="p-4 text-center bg-body-tertiary">
+        <div class="container">
+            <h1 class="text-body-emphasis ibm-plex-sans-kr-regular ">{{ user }}님의 수면 진단 결과</h1>
+            <p class="col-lg-8 mx-auto lead noto-sans-kr-main" id="currentTime"></p>
+            <h4 class="noto-sans-kr-main">결과지입니당당숭구리당당</h4>
+        </div>
+    </div>
+</div>
+
+<div class="container py-4">
+    <div class="pb-3 mb-4">
+      <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+        <ul class="noto-sans-kr-main">
+            {% for response in responses %}
+            <li>{{ response.question.text }}: {{ response }}</li>
+            {% empty %}
+            <li>진단 결과가 없습니다.</li>
+            {% endfor %}
+        </ul>
+        <br />
+        <center><span class="ibm-plex-sans-kr-regular ">수면 진단 결과가 유의미했나요?</span></center>
+        <br>
+        <center><button class="btn btn-outline-secondary me-3" type="button">네</button><button class="btn btn-outline-secondary" type="button">아니오</button></center>
+        <hr>
+        <br>
+        <center><button class="btn btn-outline-secondary me-4" type="button">Dr.A와 대화해보기</button><button class="btn btn-outline-secondary" type="button">실시간 채팅해보기</button></center>
+      </div>
+    </div>
+</div>
+
+<script>
+    function displayTime() {
+        var now = new Date();
+        var year = now.getFullYear();
+        var month = (now.getMonth() + 1).toString().padStart(2, '0');
+        var day = now.getDate().toString().padStart(2, '0');
+        var formattedTime = year + '년 ' + month + '월 ' + day + '일';
+        document.getElementById('currentTime').textContent = formattedTime;
+    }
+
+    window.onload = function() {
+        displayTime();
+        setInterval(displayTime, 1000);
+    };
+</script>
+
 {% endblock %}
