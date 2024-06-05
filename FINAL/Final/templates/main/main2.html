@@ -1,0 +1,497 @@
+{% extends "base.html" %}
+{% load static %}
+{% block head %} 
+<style>
+    .featurette .col-md-6 {
+        flex: 1 1 60%;
+    }
+    .featurette .col-md-2 {
+        flex: 1 1 35%;
+        color: #ffffff;
+    }
+    .featurette-heading {
+        margin-top: 150px;
+    }
+    iframe {
+        width: 100%;
+        height: 500px;
+    }
+    .cta2 {
+        background-color: #3a2420;
+    }
+    .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
+    .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
+    .map_wrap {position:relative;width:100%;height:80vh;}
+    #menu_wrap {position:absolute;top:0;left:0;bottom:0;width:300px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
+    .bg_white {background:#fff;}
+    #menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
+    #menu_wrap .option{text-align: center;}
+    #menu_wrap .option p {margin:10px 0;}  
+    #menu_wrap .option button {margin-left:5px;}
+    #placesList li {list-style: none;}
+    #placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px;}
+    #placesList .item span {display: block;margin-top:4px;}
+    #placesList .item h5, #placesList .item .info {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+    #placesList .item .info{padding:10px 0 10px 55px;}
+    #placesList .info .gray {color:#8a8a8a;}
+    #placesList .info .jibun {padding-left:26px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;}
+    #placesList .info .tel {color:#009900;}
+    #placesList .item .markerbg {float:left;position:absolute;width:36px; height:37px;margin:10px 0 0 10px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;}
+    #placesList .item .marker_1 {background-position: 0 -10px;}
+    #placesList .item .marker_2 {background-position: 0 -56px;}
+    #placesList .item .marker_3 {background-position: 0 -102px}
+    #placesList .item .marker_4 {background-position: 0 -148px;}
+    #placesList .item .marker_5 {background-position: 0 -194px;}
+    #placesList .item .marker_6 {background-position: 0 -240px;}
+    #placesList .item .marker_7 {background-position: 0 -286px;}
+    #placesList .item .marker_8 {background-position: 0 -332px;}
+    #placesList .item .marker_9 {background-position: 0 -378px;}
+    #placesList .item .marker_10 {background-position: 0 -423px;}
+    #placesList .item .marker_11 {background-position: 0 -470px;}
+    #placesList .item .marker_12 {background-position: 0 -516px;}
+    #placesList .item .marker_13 {background-position: 0 -562px;}
+    #placesList .item .marker_14 {background-position: 0 -608px;}
+    #placesList .item .marker_15 {background-position: 0 -654px;}
+    #pagination {margin:10px auto;text-align: center;}
+    #pagination a {display:inline-block;margin-right:10px;}
+    #pagination .on {font-weight: bold; cursor: default;color:#777;}
+    .map-section .select ul li#sleep_clinic {
+    visibility: hidden;
+    position: relative;
+    }
+    .map-section .select ul li#sleep_clinic::before {
+        content: " ";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        visibility: visible;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="d-flex align-items-center">
+    <div class="container text-center position-relative ibm-plex-sans-kr-regular " data-aos="fade-in" data-aos-delay="200">
+      <h1>Catch Our Dreams</h1>
+      <h2>잠잡GO와 함께 편안한 수면을 잡아보세요!</h2>
+      <a href="{% url 'sleep:team' %}" class="btn-get-started scrollto">ABOUT US</a>
+    </div>
+  </section><!-- End Hero -->
+
+  <main id="main">
+
+    <!-- ======= About Section ======= -->
+    <section id="about" class="about">
+      <div class="container">
+
+        <div class="row content">
+          <div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
+            <h2 class="ibm-plex-sans-kr-regular">"다들 안녕히,<br>주무시고 계십니까?"</h2>
+            <h4 class="noto-sans-kr-main">아이부터 노인까지,<br>누구나 '잘 자는' 사회가 필요합니다</h4>
+          </div>
+          <div class="col-lg-6 pt-4 pt-lg-0" data-aos="fade-left" data-aos-delay="200">
+            <p class="noto-sans-kr-main" style="text-align: justify;">
+                　양질의 수면 유지를 위해 관리와 치료 인식을 개선해야 한다는 임상 전문가들의 공통된 의견이 나왔습니다. 수면 부족의 사회경제적 영향이 커지면서 그 중요성이 더욱 강조되고 있지만, 여전히 인식은 낮습니다. 
+                <br><br>
+                　현재 우리나라는 수면 위생의 인식 확대가 필요합니다. 수면 위생은 잠을 잘 자기 위한 습관과 환경을 의미합니다. 젊은 성인들이 중장년에 비해 수면 위생이 불량하고, 수면에 나쁜 행동에는 성별 차이도 관측되고 있습니다.
+                
+            </p>
+            <ul>
+              <li class="noto-sans-kr-main"><i class="ri-check-double-line"></i> 수면 시간과 기상 시간의 규칙성을 유지하세요.</li>
+              <li class="noto-sans-kr-main"><i class="ri-check-double-line"></i> 수면 환경을 편안하게 만들어 소음 제거, 적절한 온도와 조명을 유지하세요.</li>
+              <li class="noto-sans-kr-main"><i class="ri-check-double-line"></i> 카페인, 알콜, 니코틴을 피하고, 잠자기 전에 과도한 식사와 스트레스를 피하세요.</li>
+            </ul>
+            <p class="noto-sans-kr-main" style="text-align: justify;">
+                　모든 연령대에서 불면증을 가진 사람들은 수면 위생이 좋지 않다는 연구 결과가 있습니다. 수면 위생을 실천하면 불면증 예방에 도움이 된다는 것을 알아야 합니다. 수면은 건강의 3대 요소 중 하나로, 뇌 건강에 중요한 역할을 하고 있습니다. 수면 문제가 개인을 넘어 사회적 문제로 확대되고 있어 국가 차원의 관리와 지원 정책이 필요합니다.
+                <br><br>
+                　수면 부족 문제는 개인의 건강을 넘어 사회 전체의 문제로 다루어져야 합니다. 좋은 수면 습관을 갖추는 것이 무엇보다 중요합니다.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End About Section -->
+
+    <!-- ======= Counts Section ======= -->
+    <section id="counts" class="counts">
+      <div class="container">
+
+        <div class="row counters">
+
+          <div class="col-lg-3 col-6 text-center">
+            <span data-purecounter-start="0" data-purecounter-end="14" data-purecounter-duration="1" class="purecounter"></span>
+            <p>Students</p>
+          </div>
+
+          <div class="col-lg-3 col-6 text-center">
+            <span data-purecounter-start="0" data-purecounter-end="3" data-purecounter-duration="1" class="purecounter"></span>
+            <p>Projects</p>
+          </div>
+
+          <div class="col-lg-3 col-6 text-center">
+            <span data-purecounter-start="0" data-purecounter-end="181" data-purecounter-duration="1" class="purecounter"></span>
+            <p>days</p>
+          </div>
+
+          <div class="col-lg-3 col-6 text-center">
+            <span data-purecounter-start="0" data-purecounter-end="4344" data-purecounter-duration="1" class="purecounter"></span>
+            <p>Hours</p>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Counts Section -->
+
+    <!-- ======= Why Us Section ======= -->
+    <section id="why-us" class="why-us">
+      <div class="container">
+
+        <div class="row">
+          <div class="col-lg-4 d-flex align-items-stretch" data-aos="fade-right">
+            <div class="content ">
+                <br>
+              <h3 class="ibm-plex-sans-kr-regular" style="text-align: center;">About Sleep</h3>
+              <br>
+              <p class="noto-sans-kr-main" style="text-align: justify;">
+                수면은 몸과 마음의 회복을 위한 필수적인 과정입니다. 그러나 수면장애는 이 자연스러운 회복을 방해하며,　피로와 건강 문제를 야기할 수 있습니다.
+              </p>
+              <br>
+              <div class="text-center">
+                <a href="{% url 'sleep:define' %}" class="more-btn noto-sans-kr-main">수면에 대하여 알아보기<i class="bx bx-chevron-right"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-8 d-flex align-items-stretch">
+            <div class="icon-boxes d-flex flex-column justify-content-center">
+              <div class="row">
+                <div class="col-xl-4 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+                  <div class="icon-box mt-4 mt-xl-0">
+                    <img src="{% static 'media/image/sleep2.png' %}" alt="Featurette Image" class="img-fluid mx-auto" width="150" height="150">
+                    <h5 class="ibm-plex-sans-kr-regular">잠은 꼭 자야 하나요?</h5>
+                    <p class="noto-sans-kr-main">잠은 신체와 뇌 기능 회복, 에너지 관리, 다양한 생체 기능 유지, 학습과 기억 정리에 필수적입니다.　충분한 잠은 정신 및 신체 질환　예방과 청소년의 건강한 성장 발달에도 중요한 역할을 합니다.</p>
+                  </div>
+                </div>
+                <div class="col-xl-4 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="200">
+                  <div class="icon-box mt-4 mt-xl-0">
+                    <img src="{% static 'media/image/step.png' %}" alt="Featurette Image" class="img-fluid mx-auto" width="150" height="150">
+                    <h5 class="ibm-plex-sans-kr-regular">잠에도 단계가<br>있다고 하던데요?</h5>
+                    <p class="noto-sans-kr-main">잠은 렘수면과 비렘수면으로 나뉘며, 비렘수면은 신체 회복을 돕고, 렘수면은 꿈을 꾸며 뇌 기능이 활발해지는 단계입니다. </p>
+                  </div>
+                </div>
+                <div class="col-xl-4 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="300">
+                  <div class="icon-box mt-4 mt-xl-0">
+                    <img src="{% static 'media/image/dream.png' %}" alt="Featurette Image" class="img-fluid mx-auto" width="150" height="150">
+                    <h5 class="ibm-plex-sans-kr-regular">꿈이란 무엇인가요?</h5>
+                    <br>
+                    <p class="noto-sans-kr-main">꿈은 무의식적 소망이 상징화된 것으로, 잠자는 동안 억압된 욕망이 드러난다고 정신분석 이론은 해석합니다. </p>
+                  </div>
+                </div>
+              </div>
+            </div><!-- End .content-->
+          </div>
+        </div>
+
+      </div>
+      
+    </section><!-- End Why Us Section -->
+    <!-- ======= Cta Section ======= -->
+    <section  class="cta2">
+    </section><!-- End Cta Section -->
+
+    <!-- ======= Services Section ======= -->
+    <section id="services" class="services section-bg">
+      <div class="container">
+
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="section-title" data-aos="fade-right">
+              <h2>Services</h2>
+              <p>Eunoianest는 여러분의 편안한 수면을 위해<br>다양한 서비스를 제공하고 있습니다.</p>
+            </div>
+          </div>
+          <div class="col-lg-8">
+            <div class="row">
+              <div class="col-md-6 d-flex align-items-stretch">
+                <div class="icon-box" data-aos="zoom-in" data-aos-delay="100">
+                    <img src="{% static 'media/image/sleepsurvey.png' %}" alt="Featurette Image" class="img-fluid mx-auto" width="100" height="100">
+                  <h4><a class="ibm-plex-sans-kr-regular ">수면 진단 챗봇</a></h4>
+                  <p class="noto-sans-kr-main">Eunoianest의 수면 진단 챗봇을 통해 수면 상태를 간편하게 진단받아보세요. 맞춤형 솔루션으로 더 나은 수면을 위한<br>첫 걸음을 시작하세요.</p>
+                </div>
+              </div>
+
+              <div class="col-md-6 d-flex align-items-stretch mt-4 mt-lg-0">
+                <div class="icon-box" data-aos="zoom-in" data-aos-delay="200">
+                    <img src="{% static 'media/image/sleepresult.png' %}" alt="Featurette Image" class="img-fluid mx-auto" width="100" height="100">
+                  <h4><a class="ibm-plex-sans-kr-regular ">수면 진단 결과</a></h4>
+                  <p class="noto-sans-kr-main">수면 진단 챗봇을 사용한 후, 수면 상태를 분석한 결과<br>페이지를 확인해보세요. 나의 수면 패턴과 상태를 쉽게<br>이해할 수 있습니다.</p>
+                </div>
+              </div>
+
+              <div class="col-md-6 d-flex align-items-stretch mt-4">
+                <div class="icon-box" data-aos="zoom-in" data-aos-delay="300">
+                    <img src="{% static 'media/image/chat.png' %}" alt="Featurette Image" class="img-fluid mx-auto" width="100" height="100">
+                  <h4><a class="ibm-plex-sans-kr-regular ">실시간 채팅</a></h4>
+                  <p class="noto-sans-kr-main">수면으로 고민하는 분들을 위한 실시간 채팅방입니다.<br>같은 고민을 가진 사람들과 이야기를 나눠보세요. 함께라면 더 나은 수면을 위한 해결책을 찾을 수 있습니다</p>
+                </div>
+              </div>
+
+              <div class="col-md-6 d-flex align-items-stretch mt-4">
+                <div class="icon-box" data-aos="zoom-in" data-aos-delay="400">
+                    <img src="{% static 'media/image/dra.png' %}" alt="Featurette Image" class="img-fluid mx-auto" width="100" height="100">
+                  <h4><a class="ibm-plex-sans-kr-regular ">Dr.A 상담</a></h4>
+                  <p class="noto-sans-kr-main">수면 장애에 대해 병원 방문 전에 Eunoianest가<br>제공하는 AI 닥터와 상담해보세요.<br>편안하게 수면 문제를 이야기하며 초기 조언을 받아볼 수<br>있습니다.</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End Services Section -->
+
+    <!-- ======= 명언 Section ======= -->
+    <section id="testimonials" class="testimonials section-bg">
+      <div class="container">
+
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="section-title" data-aos="fade-right">
+              <h2 class="ibm-plex-sans-kr-regular ">작은 E-마디</h2>
+              <p class="noto-sans-kr-main">{{ user }}님의 수면이 행복할 수 있도록<br>Eunoianest가 돕겠습니다</p>
+            </div>
+          </div>
+          <div class="col-lg-8" data-aos="fade-up" data-aos-delay="100">
+
+            <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
+              <div class="swiper-wrapper">
+
+                <div class="swiper-slide">
+                  <div class="testimonial-item">
+                    <p>
+                    <br><br><br>
+                      <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                      슬픔은 푹 자는 것, 목욕, 한 잔의 와인으로 완화될 수 있다
+                      <br>Sorrow can be alleviated by good sleep, a bath and a glass of wine.
+                      <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                    </p>
+                    <br>
+                    <h3>토마스 아퀴나스</h3>
+                    <h4>Thomas Aquinas</h4>
+                  </div>
+                </div><!-- End testimonial item -->
+
+                <div class="swiper-slide">
+                  <div class="testimonial-item">
+                    <p>
+                      <br><br><br>
+                      <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                      피곤한 정신으로는 계획을 제대로 세울 수 없다. 먼저 잠을 청한 후, 나중에 계획하라.<br>
+                      Tired minds don’t plan well. Sleep first, plan later.
+                      <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                    </p>
+                    <br>
+                    <h3>월터 라이쉬</h3>
+                    <h4>Walter Reisch</h4>
+                  </div>
+                </div><!-- End testimonial item -->
+
+                <div class="swiper-slide">
+                  <div class="testimonial-item">
+                    <p>
+                        <br><br><br>
+                      <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                      행복은 충분한 수면으로 이루어져 있다. 　오직 충분한 수면, 그 이상 그 이하도 아니다.<br>
+                      Happiness consists of getting enough sleep. Just that, nothing more.
+                      <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                    </p>
+                    <br>
+                    <h3>로버트 앤슨 하인라인</h3>
+                    <h4>Robert Anson Heinlein</h4>
+                  </div>
+                </div><!-- End testimonial item -->
+
+                <div class="swiper-slide">
+                  <div class="testimonial-item">
+                    <p>
+                        <br><br><br>
+                      <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                      일찍 자고, 일찍 일어 나는 것은 사람을 　건강하고, 부요하고, 지혜롭게 만든다.<br>
+                      Early to bed and early to rise makes a man healthy, wealthy, and wise.
+                      <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                    </p>
+                    <br>
+                    <h3>벤자민 프랭클린</h3>
+                    <h4>Benjamin Franklin</h4>
+                  </div>
+                </div><!-- End testimonial item -->
+
+                <div class="swiper-slide">
+                  <div class="testimonial-item">
+                    <p>
+                        <br><br><br>
+                      <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                      절망에서 희망으로 건너가는<br>최상의 다리는 밤에 꿀잠을 자는 것이다.<br>
+                      The best bridge between despair and hope is a good night’s sleep.
+                      <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                    </p>
+                    <br>
+                    <h3>E. 조셉 코스만</h3>
+                    <h4>Eli Joseph Cossman</h4>
+                  </div>
+                </div><!-- End testimonial item -->
+
+              </div>
+              <div class="swiper-pagination"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End 명언 Section -->
+
+    <!-- ======= Cta Section ======= -->
+    <section id="cta" class="cta">
+        <div class="container">
+            <div class="row featurette">
+                <div class="col-md-6">
+                    <iframe width="800" height="500" src="https://www.youtube.com/embed/FoO7Pmx0bE4?autoplay=1&mute=1&si=sy4V_DXUSDFRvYYs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <div class="col-md-2">
+                    <h2 class="featurette-heading fw-normal lg-1 ibm-plex-sans-kr-regular" style="text-align: right; color: #ffffff;">잘자요, {{ user }}님</h2>
+                    <br><br>
+                    <p class="noto-sans-kr-main" style="text-align: right;">　지친 일상 속, 때로는 즐거운 콘텐츠와 함께 편안한 밤을 보내보세요. Eunoianest의 추천 영상이 {{ user }}님의 하루 스트레스를<br>날리실 수 있도록 도와드리겠습니다. 오늘도 수고했어요.<br><br>당신의 모든 노력이 쌓여 더 나은 내일을 만듭니다.😊</p>
+                </div>
+                </div>
+        </div>
+    </section><!-- End Cta Section -->
+
+
+    <!-- ======= Latest News Section ======= -->
+    <section class="section-news section-t8">
+    <div class="container">
+        <div class="row">
+        <div class="col-md-12">
+            <div class="title-wrap d-flex justify-content-between">
+            <div class="title-box">
+                <h2 class="title-a ibm-plex-sans-kr-regular">E-나들이</h2>
+            </div>
+            <div class="title-link noto-sans-kr-main">
+                <a href="https://www.foresttrip.go.kr/index.jsp">🌲숲나들e 보러가기
+                <span class="bi bi-chevron-right"></span>
+                </a>
+            </div>
+            </div>
+        </div>
+        </div>
+        <br>
+        <div id="news-carousel" class="swiper">
+        <div class="swiper-wrapper">
+
+            <div class="carousel-item-c swiper-slide">
+            <div class="card-box-b card-shadow news-box">
+                <div class="img-box-b">
+                <img src="{% static 'media/image/seoulwalk2.png' %}" alt="" class="img-b img-fluid">
+                </div>
+                <div class="card-overlay">
+                <div class="card-header-b noto-sans-kr-main">
+                    <div class="card-category-b">
+                    <a href="https://gil.seoul.go.kr/walk/main.jsp" class="category-b " style="color:black;">둘레길</a>
+                    </div>
+                    <div class="card-title-b">
+                    <h2 class="title-2">
+                        <a>서울 둘레길</a>
+                    </h2>
+                    </div>
+                    <div class="card-date">
+                    <a href="https://gil.seoul.go.kr/walk/main.jsp"><span class="category-b">➡ 둘러보기</span></a>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div><!-- End carousel item -->
+
+        <div class="carousel-item-c swiper-slide">
+        <div class="card-box-b card-shadow news-box">
+            <div class="img-box-b">
+            <img src="{% static 'media/image/rest.png' %}" alt="" class="img-b img-fluid">
+            </div>
+            <div class="card-overlay">
+            <div class="card-header-b noto-sans-kr-main">
+                <div class="card-category-b">
+                <a href="https://www.foresttrip.go.kr/indvz/main.do?hmpgId=0101" class="category-b">자연휴양림</a>
+                </div>
+                <div class="card-title-b">
+                <h2 class="title-2">
+                    <a>국립 유명산 자연휴양림</a>
+                </h2>
+                </div>
+                <div class="card-date">
+                <a href="https://www.foresttrip.go.kr/indvz/main.do?hmpgId=0101"><span class="category-b">➡ 둘러보기</span></a>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div><!-- End carousel item -->
+
+        <div class="carousel-item-c swiper-slide">
+        <div class="card-box-b card-shadow news-box">
+            <div class="img-box-b">
+            <img src="{% static 'media/image/park.png' %}" alt="" class="img-b img-fluid">
+            </div>
+            <div class="card-overlay">
+            <div class="card-header-b noto-sans-kr-main">
+                <div class="card-category-b">
+                <a href="https://www.insiseol.or.kr/park/songdo/facility/central.jsp" class="category-b">공원</a>
+                </div>
+                <div class="card-title-b">
+                <h2 class="title-2">
+                    <a>송도 센트럴파크</a>
+                </h2>
+                </div>
+                <div class="card-date">
+                <a href="https://www.insiseol.or.kr/park/songdo/facility/central.jsp"><span class="category-b">➡ 둘러보기</span></a>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div><!-- End carousel item -->
+
+        <div class="carousel-item-c swiper-slide">
+        <div class="card-box-b card-shadow news-box">
+            <div class="img-box-b">
+            <img src="{% static 'media/image/forest.png' %}" alt="" class="img-b img-fluid">
+            </div>
+            <div class="card-overlay">
+            <div class="card-header-b noto-sans-kr-main">
+                <div class="card-category-b">
+                <a href="https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=bc23387a-1c9a-4a0a-86f6-ae779baae904" class="category-b">숲</a>
+                </div>
+                <div class="card-title-b">
+                <h2 class="title-2">
+                    <a>인제 자작나무 숲</a>
+                </h2>
+                </div>
+                <div class="card-date">
+                <a href="https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=bc23387a-1c9a-4a0a-86f6-ae779baae904"><span class="category-b">➡ 둘러보기</span></a>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div><!-- End carousel item -->
+
+        </div>
+        </div>
+
+        <div class="news-carousel-pagination carousel-pagination"></div>
+    </div>
+    </section><!-- End Latest News Section -->
+
+  </main><!-- End #main -->
+  <br />
+  <br />
+{% endblock %}

@@ -17,7 +17,7 @@ def video(request):
     return render(request, "main/videomain.html")
 
 def main(request):    
-    return render(request, "main/main.html")
+    return render(request, "main/main2.html")
 
 def define(request):    
     return render(request, "feed/define.html")
@@ -29,7 +29,7 @@ def result(request):
     return render(request, "feed/result.html")
 
 def team(request):    
-    return render(request, "business/team.html")
+    return render(request, "business/team2.html")
 
 # map.html
 def map(request):

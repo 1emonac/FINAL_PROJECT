@@ -46,7 +46,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["192.168.3.2", "127.0.0.1"]
+ALLOWED_HOSTS = ["jamjobgo.store", "192.168.3.2", "127.0.0.1", "3.37.218.60"]
 
 # Application definition
 
