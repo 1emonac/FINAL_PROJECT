@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+
 {% block head %}
 <style>
 </style>
@@ -12,7 +13,26 @@
     <section id="breadcrumbs" class="breadcrumbs">
         <br><br>
     </section>
-    
+    <br><br>
+    <section class="section-about">
+        <div class="container">
+        <div class="row">
+            <div class="col-sm-12 position-relative">
+            <div class="about-img-box" style="margin-top: -100px;">
+                <img src="{% static 'media/image/define3.png' %}" alt="" class="img-fluid">
+            </div>
+        </div>
+        <div class="sinse-box" style="width: 515px; height: 240px; margin-left: 550px;">
+            <h3 class="sinse-title ibm-plex-sans-kr-regular" style="color:#ffffff">수면과
+            <span></span>
+            <br> 수면 장애
+            </h3>
+            <p class="noto-sans-kr-main" style="color: #ffffff;"><strong>수면</strong>은 신체와 정신의 회복을 위한 자연스러운 과정이고,<br>
+                <strong>수면 장애</strong>는 면의 질, 양, 또는 시간에 문제가 생겨<br>일상생활에 지장을 초래하는 상태입니다.</p>
+        </div>
+        </div>
+    </section>
+
     <section>
         <div class="container featurette-container">
             <div class="row featurette">
@@ -93,6 +113,7 @@
                     <img src="{% static 'media/image/dream.png' %}" alt="Featurette Image" class="img-fluid mx-auto" width="500" height="500">
                 </div>
             </div>
+            
         </div>
     
         <hr class="featurette-divider">
