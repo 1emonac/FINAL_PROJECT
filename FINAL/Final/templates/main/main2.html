@@ -17,56 +17,7 @@
         height: 500px;
     }
     .cta2 {
-        background-color: #3a2420;
-    }
-    .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
-    .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
-    .map_wrap {position:relative;width:100%;height:80vh;}
-    #menu_wrap {position:absolute;top:0;left:0;bottom:0;width:300px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
-    .bg_white {background:#fff;}
-    #menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
-    #menu_wrap .option{text-align: center;}
-    #menu_wrap .option p {margin:10px 0;}  
-    #menu_wrap .option button {margin-left:5px;}
-    #placesList li {list-style: none;}
-    #placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px;}
-    #placesList .item span {display: block;margin-top:4px;}
-    #placesList .item h5, #placesList .item .info {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
-    #placesList .item .info{padding:10px 0 10px 55px;}
-    #placesList .info .gray {color:#8a8a8a;}
-    #placesList .info .jibun {padding-left:26px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;}
-    #placesList .info .tel {color:#009900;}
-    #placesList .item .markerbg {float:left;position:absolute;width:36px; height:37px;margin:10px 0 0 10px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;}
-    #placesList .item .marker_1 {background-position: 0 -10px;}
-    #placesList .item .marker_2 {background-position: 0 -56px;}
-    #placesList .item .marker_3 {background-position: 0 -102px}
-    #placesList .item .marker_4 {background-position: 0 -148px;}
-    #placesList .item .marker_5 {background-position: 0 -194px;}
-    #placesList .item .marker_6 {background-position: 0 -240px;}
-    #placesList .item .marker_7 {background-position: 0 -286px;}
-    #placesList .item .marker_8 {background-position: 0 -332px;}
-    #placesList .item .marker_9 {background-position: 0 -378px;}
-    #placesList .item .marker_10 {background-position: 0 -423px;}
-    #placesList .item .marker_11 {background-position: 0 -470px;}
-    #placesList .item .marker_12 {background-position: 0 -516px;}
-    #placesList .item .marker_13 {background-position: 0 -562px;}
-    #placesList .item .marker_14 {background-position: 0 -608px;}
-    #placesList .item .marker_15 {background-position: 0 -654px;}
-    #pagination {margin:10px auto;text-align: center;}
-    #pagination a {display:inline-block;margin-right:10px;}
-    #pagination .on {font-weight: bold; cursor: default;color:#777;}
-    .map-section .select ul li#sleep_clinic {
-    visibility: hidden;
-    position: relative;
-    }
-    .map-section .select ul li#sleep_clinic::before {
-        content: " ";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        visibility: visible;
+      backcground-color: #000000;
     }
 </style>
 {% endblock %}
@@ -198,8 +149,18 @@
       </div>
       
     </section><!-- End Why Us Section -->
+
     <!-- ======= Cta Section ======= -->
-    <section  class="cta2">
+    <section id="cta" class="cta">
+      <div class="container">
+
+        <div class="text-center" data-aos="zoom-in">
+          <h3>EUNOIANEST</h3>
+          <p> 편안한 수면을 위해 ㅊi얼s...☆</p>
+          {% comment %} <a class="cta-btn" href="#">Call To Action</a> {% endcomment %}
+        </div>
+
+      </div>
     </section><!-- End Cta Section -->
 
     <!-- ======= Services Section ======= -->
@@ -355,7 +316,7 @@
     </section><!-- End 명언 Section -->
 
     <!-- ======= Cta Section ======= -->
-    <section id="cta" class="cta">
+    <section id="cta" class="cta2" style="background-color: #424242;">
         <div class="container">
             <div class="row featurette">
                 <div class="col-md-6">
@@ -490,6 +451,103 @@
         <div class="news-carousel-pagination carousel-pagination"></div>
     </div>
     </section><!-- End Latest News Section -->
+
+    <!-- Recent Posts Section -->
+    <section id="recent-posts" class="recent-posts section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Eunoianest 수면 이야기</h2>
+        <p>수면과 관련된 뉴스와 이야기를 한 번에 읽어 보세요.</p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <article>
+
+              <div class="post-img">
+                <img src="assets/img/blog/blog-1.jpg" alt="" class="img-fluid">
+              </div>
+
+              <p class="post-category">Politics</p>
+
+              <h2 class="title">
+                <a href="blog-details.html">Dolorum optio tempore voluptas dignissimos</a>
+              </h2>
+
+              <div class="d-flex align-items-center">
+                <img src="assets/img/blog/blog-author.jpg" alt="" class="img-fluid post-author-img flex-shrink-0">
+                <div class="post-meta">
+                  <p class="post-author">Maria Doe</p>
+                  <p class="post-date">
+                    <time datetime="2022-01-01">Jan 1, 2022</time>
+                  </p>
+                </div>
+              </div>
+
+            </article>
+          </div><!-- End post list item -->
+
+          <div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <article>
+
+              <div class="post-img">
+                <img src="assets/img/blog/blog-2.jpg" alt="" class="img-fluid">
+              </div>
+
+              <p class="post-category">Sports</p>
+
+              <h2 class="title">
+                <a href="blog-details.html">Nisi magni odit consequatur autem nulla dolorem</a>
+              </h2>
+
+              <div class="d-flex align-items-center">
+                <img src="assets/img/blog/blog-author-2.jpg" alt="" class="img-fluid post-author-img flex-shrink-0">
+                <div class="post-meta">
+                  <p class="post-author">Allisa Mayer</p>
+                  <p class="post-date">
+                    <time datetime="2022-01-01">Jun 5, 2022</time>
+                  </p>
+                </div>
+              </div>
+
+            </article>
+          </div><!-- End post list item -->
+
+          <div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+            <article>
+
+              <div class="post-img">
+                <img src="assets/img/blog/blog-3.jpg" alt="" class="img-fluid">
+              </div>
+
+              <p class="post-category">Entertainment</p>
+
+              <h2 class="title">
+                <a href="blog-details.html">Possimus soluta ut id suscipit ea ut in quo quia et soluta</a>
+              </h2>
+
+              <div class="d-flex align-items-center">
+                <img src="assets/img/blog/blog-author-3.jpg" alt="" class="img-fluid post-author-img flex-shrink-0">
+                <div class="post-meta">
+                  <p class="post-author">Mark Dower</p>
+                  <p class="post-date">
+                    <time datetime="2022-01-01">Jun 22, 2022</time>
+                  </p>
+                </div>
+              </div>
+
+            </article>
+          </div><!-- End post list item -->
+
+        </div><!-- End recent posts list -->
+
+      </div>
+
+    </section><!-- /Recent Posts Section -->
 
   </main><!-- End #main -->
   <br />

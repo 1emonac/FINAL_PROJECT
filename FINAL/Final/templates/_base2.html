@@ -19,14 +19,18 @@
 
    <!-- Vendor CSS Files -->
    <link href="{% static 'mainvendor/aos/aos.css' %}" rel="stylesheet">
+   <link href="{% static 'mainvendor/aos/aos2.css' %}" rel="stylesheet">
    <link href="{% static 'bootstrap/bootstrap-5.3.3-dist/css/bootstrap.min.css' %}" rel="stylesheet">
    <link href="{% static 'mainvendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
    <link href="{% static 'mainvendor/bootstrap-icons/bootstrap-icons2.css' %}" rel="stylesheet">
+   <link href="{% static 'mainvendor/bootstrap-icons/bootstrap-icons3.css' %}" rel="stylesheet">
    <link href="{% static 'mainvendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
    <link href="{% static 'mainvendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+   <link href="{% static 'mainvendor/glightbox/css/glightbox.min2.css' %}" rel="stylesheet">
    <link href="{% static 'mainvendor/remixicon/remixicon.css' %}" rel="stylesheet">
    <link href="{% static 'mainvendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
    <link href="{% static 'mainvendor/swiper/swiper-bundle.min2.css' %}" rel="stylesheet">
+   <link href="{% static 'mainvendor/swiper/swiper-bundle.min3.css' %}" rel="styles3heet">
    <link href="{% static 'mainvendor/animate.css/animate.min.css' %}" rel="stylesheet">
 
    <!-- Template Main CSS File -->
@@ -48,14 +52,16 @@
             font-weight: 400;
             font-style: normal;
         }
+        .greeting-text {
+          font-size: 15px;
+          margin-right: 3px;
+        }
     </style>
     {% block head %}{% endblock %}
     {% block base_extra-style %}{% endblock %}
 </head>
 
 <body>
-
-  <!-- ======= Header ======= -->
   <header id="header" class="fixed-top d-flex align-items-center">
     <div class="container">
       <div class="header-container d-flex align-items-center justify-content-between">
@@ -65,43 +71,38 @@
 
         <nav id="navbar" class="navbar">
           <ul>
-            <li><a class="nav-link scrollto active ibm-plex-sans-kr-regular" href="{% url 'sleep:main' %}">Home</a></li>
-            <li><a class="nav-link active ibm-plex-sans-kr-regular" href="{% url 'sleep:team' %}">Team</a></li>
-            <li><a class="nav-link active ibm-plex-sans-kr-regular" href="{% url 'sleep:define' %}">About Sleep</a></li>
-            <li class="dropdown ibm-plex-sans-kr-regular"><a href="#"><span>Services</span> <i class="bi bi-chevron-down"></i></a>
+            <li><a class="active ibm-plex-sans-kr-regular" href="{% url 'sleep:main' %}" ><strong>Home</strong></a></li>
+            <li><a class="active ibm-plex-sans-kr-regular" href="{% url 'sleep:team' %}"><strong>Team</strong></a></li>
+            <li><a class="active ibm-plex-sans-kr-regular" href="{% url 'sleep:define' %}"><strong>About Sleep</strong></a><li>
+            <li class="dropdown ibm-plex-sans-kr-regular"><a href=""><span><strong>Services</strong></span> <i class="bi bi-chevron-down"></i></a>
               <ul>
                 <li class="dropdown ibm-plex-sans-kr-regular"><a href="{% url 'survey:survey' %}"><span>수면 진단 챗봇</span> <i class="bi bi-chevron-right"></i></a>
-                  <ul>
-                    <li><a href="{% url 'survey:result' %}">수면 진단 결과</a></li>
-                  </ul>
+                  <ul><li><a href="{% url 'survey:result' %}">수면 진단 결과</a></li></ul>
                 </li>
                 <li><a href="{% url 'chat:index' %}">실시간 채팅</a></li>
-                <li><a href="{% url 'dr:drai' %}">Dr.A 상담</a></li>
+                <li><a href="{% url 'dr:list' %}">Dr.A 상담</a></li>
               </ul>
             </li>
-            <li><a class="nav-link active" href="{% url 'sleep:clinic' %}">Clinic</a></li>
-
-
-            <li><div class="getstarted scrollto">
-                {% if user.is_authenticated %}
-                <strong class="greeting-text ibm-plex-sans-kr-regular">반갑습니다 {{ user }} 님</strong>
-                <a class="btn btn-custom" href="{% url 'users:profile' %}">마이페이지</a>
-                <a class="btn btn-custom" href="{% url 'users:logout' %}">로그아웃</a>
-                <a class="btn btn-custom" onclick="showPrompt()">회원탈퇴</a>
-                {% else %}
-                <a href="{% url 'users:login' %}" class="btn btn-custom">로그인/회원가입</a>
-                {% endif %}
-            </div></li>
+            <li><a class="active ibm-plex-sans-kr-regular" href="{% url 'sleep:blist' %}"><strong>Blog</strong></a><li>
+            <li><a class="nav-link active" href="{% url 'sleep:clinic' %}"><strong>Clinic</strong></a></li>
           </ul>
+          
+          {% if user.is_authenticated %}
+          <strong class="greeting-text ibm-plex-sans-kr-regular">반갑습니다 {{ user }} 님</strong>
+          <a class="getstarted ibm-plex-sans-kr-regular" href="{% url 'users:profile' %}">마이페이지</a>
+          <a class="getstarted ibm-plex-sans-kr-regular" href="{% url 'users:logout' %}">로그아웃</a>
+          <a class="getstarted ibm-plex-sans-kr-regular" onclick="showPrompt()">회원탈퇴</a>
+          {% else %}
+          <a href="{% url 'users:login' %}" class="getstarted ibm-plex-sans-kr-regular">로그인/회원가입</a>
+          {% endif %}
+
           <i class="bi bi-list mobile-nav-toggle"></i>
-        </nav><!-- .navbar -->
-        
-      </div><!-- End Header Container -->
+        </nav>
+      </div>
     </div>
-  </header><!-- End Header -->
+  </header>
 
   {% block base_content %}{% endblock %}
-  <!-- ======= Footer ======= -->
   <footer id="footer">
 
     <div class="footer-top">
@@ -125,6 +126,7 @@
               <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'sleep:main' %}">Home</a></li>
               <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'sleep:team' %}">About us</a></li>
               <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'sleep:define' %}">About Sleep</a></li>
+              <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'sleep:blist' %}">Blog</a></li>
               <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'sleep:clinic' %}">Clinic</a></li>
             </ul>
           </div>
@@ -135,7 +137,7 @@
               <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'survey:survey' %}">수면 진단 챗봇</a></li>
               <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'survey:result' %}">수면 진단 결과</a></li>
               <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'chat:index' %}">실시간 채팅</a></li>
-              <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'dr:drai' %}">Dr.A 상담</a></li>
+              <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'dr:list' %}">Dr.A 상담</a></li>
             </ul>
           </div>
         </div>
@@ -152,31 +154,65 @@
           Cooperate with <a href="https://g-sa.koreaisacademy.com/?ACE_REF=adwords_g&ACE_KW=%EC%BD%94%EB%A6%AC%EC%95%84it%EC%95%84%EC%B9%B4%EB%8D%B0%EB%AF%B8&gad_source=1&gclid=EAIaIQobChMItLfaqZvDhgMVYB97Bx0fswSoEAAYASAAEgIOifD_BwE">코리아IT아카데미</a>
         </div>
       </div>
-      <!-- <div class="social-links text-center text-md-right pt-3 pt-md-0">
-        <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-        <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-        <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-        <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-        <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-      </div> -->
+      <div class="social-links text-center text-md-right pt-3 pt-md-0">
+        <a href="https://x.com/?lang=ko" class="twitter"><i class="bx bxl-twitter"></i></a>
+        <a href="https://www.facebook.com/?locale=ko_KR" class="facebook"><i class="bx bxl-facebook"></i></a>
+        <a href="https://www.instagram.com/" class="instagram"><i class="bx bxl-instagram"></i></a>
+        <a href="https://skype.daesung.com/main.asp" class="google-plus"><i class="bx bxl-skype"></i></a>
+        <a href="https://kr.linkedin.com/" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+      </div>
     </div>
   </footer><!-- End Footer -->
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
-  <script src="{% static 'mainvendor/purecounter/purecounter_vanilla.js' %}"></script>
   <script src="{% static 'mainvendor/aos/aos.js' %}"></script>
+  <script src="{% static 'mainvendoraos/aos2.js' %}"></script>
   <script src="{% static 'mainvendor/glightbox/js/glightbox.min.js' %}"></script>
-  <script src="{% static 'mainvendor/glightbox/js/glightbox.min.js' %}"></script>
-  <script src="{% static 'mainvendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+  <script src="{% static 'mainvendor/glightbox/js/glightbox.min2.js' %}"></script>
+  <script src="{% static 'mainvendor/purecounter/purecounter_vanilla.js' %}"></script>
+  <script src="{% static 'mainvendor/purecounter/purecounter_vanilla2.js' %}"></script>
+  <script src="{% static 'mainvendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+  <script src="{% static 'mainvendor/isotope-layout/isotope.pkgd.min2.js' %}"></script>
   <script src="{% static 'mainvendor/swiper/swiper-bundle.min.js' %}"></script>
   <script src="{% static 'mainvendor/swiper/swiper-bundle.min2.js' %}"></script>
+  <script src="{% static 'mainvendor/swiper/swiper-bundle.min3.js' %}"></script>
+  
   <!-- <script src="{% static 'mainvendor/php-email-form/validate.js' %}"></script> -->
 
   <!-- Template Main JS File -->
+  <script>
+    function showPrompt() {
+      var inputValue = prompt("아이디를 한 번 더 입력하면 탈퇴가 가능합니다.");  
+      if (inputValue) {
+        $.ajax({
+          url: '/users/signout/',
+          type: 'POST',
+          data: {
+            'username': inputValue,
+            'csrfmiddlewaretoken': '{{ csrf_token }}' 
+          },
+          success: function(response) {
+            if (response.success) {
+              alert(response.message);
+              window.location.reload();
+            } else {
+              alert(response.message);
+            }
+          },
+          error: function(error) {
+            console.error('Error:', error);
+            alert('계정 삭제 중 오류가 발생했습니다.');
+          }
+        });
+      }
+    }
+  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="{% static 'js/newmain.js' %}"></script>
   <script src="{% static 'js/newmain2.js' %}"></script>
+  <script src="{% static 'js/newmain3.js' %}"></script>
   
   
   {% block base_extra-script %}{% endblock %}

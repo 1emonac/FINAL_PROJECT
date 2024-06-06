@@ -34,7 +34,7 @@ def login_view2(request):
                 login(request, user)
                 return redirect("/sleep/main")
             else:
-                form.add_error(None, "이걸 틀리냐 진짜 오휴")
+                form.add_error(None, "아이디 또는 비밀번호가 일치하지 않습니다.")
 
         form2 = SignupForm()
         # 실패한 경우 다시 LoginForm 을 사용한 로그 페이지 렌더링

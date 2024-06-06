@@ -1,11 +1,26 @@
 {% extends "base_chat.html" %}
+{% block extra-style %}
+<style>
+    .content {
+        display: flex;
+        flex-direction: column;  /* 내부 요소를 세로로 정렬 */
+        align-items: center;  /* 가운데 정렬 */
+        justify-content: center;  /* 상하 중앙 정렬 */
+        width: 100%;  /* 너비를 100%로 설정 */
+        margin: auto;  /* 자동으로 마진을 설정하여 중앙에 위치 */
+        }
+</style>
+{% endblock %}
 
 {% block content %}
-    <h2>{{ room.name }} 삭제하기</h2>
+<div class="content" style="margin-top: 220px; margin-bottom: 160px;">
+    <h2 class="ibm-plex-sans-kr-regular">"{{ room.name }}" 채팅방 삭제하기</h2>
+    <br>
 
     <form action="" method="post">
         {% csrf_token %}
-        <div class="alert alert-danger">삭제하시겠습니까?</div>
-        <input type="submit" class="btn btn-danger" value="삭제하겠습니다." />
+        <div class="alert alert-danger noto-sans-kr-main">삭제하시겠습니까?</div>
+        <center><input type="submit" class="btn btn-danger noto-sans-kr-main" value="삭제하겠습니다." /></center>
     </form>
+</div>
 {% endblock %}

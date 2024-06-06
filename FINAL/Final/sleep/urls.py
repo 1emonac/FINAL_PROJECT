@@ -11,4 +11,6 @@ urlpatterns = [
     path('team/', views.team, name='team'),
     path('clinic/', views.map, name='clinic'),
     path("video/", views.video, name="video"),
+    path("bloglist/", views.bloglist, name="blist"),
+    path("blogdetail/", views.blogdetail, name="bdetail"),
 ]

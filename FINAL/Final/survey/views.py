@@ -32,7 +32,7 @@ def start_survey(request):
             next_question = Question.objects.get(pk=next_question_id)
             return render(request, 'survey/survey.html', {'question': next_question})
         else:
-            return render(request, 'survey/result.html')
+            return render(request, 'survey/survey.html')
     else:
         questions_ids = list(Question.objects.order_by('id').values_list('id', flat=True))
         request.session['questions_ids'] = questions_ids
@@ -42,7 +42,7 @@ def start_survey(request):
             first_question = Question.objects.get(pk=first_question_id)
             return render(request, 'survey/survey.html', {'question': first_question})
         else:
-            return render(request, 'survey/result.html')
+            return render(request, 'survey/survey.html')
 
 
     

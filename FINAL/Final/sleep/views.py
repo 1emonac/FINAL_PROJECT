@@ -20,7 +20,7 @@ def main(request):
     return render(request, "main/main2.html")
 
 def define(request):    
-    return render(request, "feed/define.html")
+    return render(request, "feed/define2.html")
 
 def chatbot(request):    
     return render(request, "feed/chatbot.html")
@@ -30,6 +30,12 @@ def result(request):
 
 def team(request):    
     return render(request, "business/team2.html")
+
+def bloglist(request):    
+    return render(request, "feed/blog_list.html")
+
+def blogdetail(request):    
+    return render(request, "feed/blog_detail.html")
 
 # map.html
 def map(request):

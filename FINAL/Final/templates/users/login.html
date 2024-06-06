@@ -1,4 +1,5 @@
 {% load static %}
+{% load django_bootstrap5 %}
 <!DOCTYPE html>
 <html lang="ko">
     <head>
@@ -16,6 +17,32 @@
         <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/carousel/">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
         <link href="{% static 'css/login.css' %}" rel="stylesheet"  type="text/css" />
+
+        <!-- Favicons -->
+        <link href="{% static 'mainvendor/img/favicon.png' %}" rel="icon">
+        <link href="{% static 'mainvendor/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+        <!-- Vendor CSS Files -->
+        <link href="{% static 'mainvendor/aos/aos.css' %}" rel="stylesheet">
+        <link href="{% static 'mainvendor/aos/aos2.css' %}" rel="stylesheet">
+        <link href="{% static 'bootstrap/bootstrap-5.3.3-dist/css/bootstrap.min.css' %}" rel="stylesheet">
+        <link href="{% static 'mainvendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+        <link href="{% static 'mainvendor/bootstrap-icons/bootstrap-icons2.css' %}" rel="stylesheet">
+        <link href="{% static 'mainvendor/bootstrap-icons/bootstrap-icons3.css' %}" rel="stylesheet">
+        <link href="{% static 'mainvendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+        <link href="{% static 'mainvendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+        <link href="{% static 'mainvendor/glightbox/css/glightbox.min2.css' %}" rel="stylesheet">
+        <link href="{% static 'mainvendor/remixicon/remixicon.css' %}" rel="stylesheet">
+        <link href="{% static 'mainvendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+        <link href="{% static 'mainvendor/swiper/swiper-bundle.min2.css' %}" rel="stylesheet">
+        <link href="{% static 'mainvendor/swiper/swiper-bundle.min3.css' %}" rel="styles3heet">
+        <link href="{% static 'mainvendor/animate.css/animate.min.css' %}" rel="stylesheet">
+
+        <!-- Template Main CSS File -->
+        <link href="{% static 'css/newmain.css' %}" rel="stylesheet">
 
         <style>
             .header-center {
@@ -51,27 +78,58 @@
     </head>
 
     <body>
-        <header class="p-3 text-bg header-center">
-            <div class="container d-flex justify-content-center">
-                <a class="navbar-brand" href="{% url 'sleep:main' %}">
-                    <img src="{% static 'media/image/flogo2.png' %}" alt="Logo" style="height: 100px;">
-                </a>
+        <header id="header" class="fixed-top d-flex align-items-center">
+            <div class="container">
+              <div class="header-container d-flex align-items-center justify-content-between">
+                <div class="logo">
+                  <a href="{% url 'sleep:main' %}"><img src="{% static 'media/image/flogo3.png' %}" alt="" class="img-fluid"></a>
+                </div>
+        
+                <nav id="navbar" class="navbar">
+                  <ul>
+                    <li><a class="active ibm-plex-sans-kr-regular" href="{% url 'sleep:main' %}" ><strong>Home</strong></a></li>
+                    <li><a class="active ibm-plex-sans-kr-regular" href="{% url 'sleep:team' %}"><strong>Team</strong></a></li>
+                    <li><a class="active ibm-plex-sans-kr-regular" href="{% url 'sleep:define' %}"><strong>About Sleep</strong></a><li>
+                    <li class="dropdown ibm-plex-sans-kr-regular"><a href=""><span><strong>Services</strong></span> <i class="bi bi-chevron-down"></i></a>
+                      <ul>
+                        <li class="dropdown ibm-plex-sans-kr-regular"><a href="{% url 'survey:survey' %}"><span>수면 진단 챗봇</span> <i class="bi bi-chevron-right"></i></a>
+                          <ul><li><a href="{% url 'survey:result' %}">수면 진단 결과</a></li></ul>
+                        </li>
+                        <li><a href="{% url 'chat:index' %}">실시간 채팅</a></li>
+                        <li><a href="{% url 'dr:list' %}">Dr.A 상담</a></li>
+                      </ul>
+                    </li>
+                    <li><a class="active ibm-plex-sans-kr-regular" href="{% url 'sleep:blist' %}"><strong>Blog</strong></a><li>
+                    <li><a class="nav-link active" href="{% url 'sleep:clinic' %}"><strong>Clinic</strong></a></li>
+                  </ul>
+                  
+                  {% if user.is_authenticated %}
+                  <strong class="greeting-text ibm-plex-sans-kr-regular">반갑습니다 {{ user }} 님</strong>
+                  <a class="getstarted ibm-plex-sans-kr-regular" href="{% url 'users:profile' %}">마이페이지</a>
+                  <a class="getstarted ibm-plex-sans-kr-regular" href="{% url 'users:logout' %}">로그아웃</a>
+                  <a class="getstarted ibm-plex-sans-kr-regular" onclick="showPrompt()">회원탈퇴</a>
+                  {% else %}
+                  <a href="{% url 'users:login' %}" class="getstarted ibm-plex-sans-kr-regular">로그인/회원가입</a>
+                  {% endif %}
+        
+                  <i class="bi bi-list mobile-nav-toggle"></i>
+                </nav>
               </div>
             </div>
           </header>
 
-        <section class="user">
+        <section class="user" style="margin-top: 80px;">
             <div class="user_options-container">
             <div class="user_options-text">
                 <div class="user_options-unregistered">
                 <h2 class="user_unregistered-title">Eunoianest와 함께 편안한 수면시간을 보내세요</h2>
-                <p class="user_unregistered-text">Banjo tote bag bicycle rights, High Life sartorial cray craft beer whatever street art fap.</p>
+                <p class="user_unregistered-text">{{ user }}님, Time to go to bed.</p>
                 <button class="user_unregistered-signup" id="signup-button">회원가입</button>
                 </div>
         
                 <div class="user_options-registered">
                 <h2 class="user_registered-title">Eunoianest와 떠나볼까요?</h2>
-                <p class="user_registered-text">Banjo tote bag bicycle rights, High Life sartorial cray craft beer whatever street art fap.</p>
+                <p class="user_registered-text">Let's go to bed, together</p>
                 <button class="user_registered-login" id="login-button">로그인</button>
                 </div>
             </div>
@@ -80,7 +138,7 @@
                 <div class="user_forms-login">
                     <form action="{% url 'users:login2' %}" method="POST" id="login" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <h2 class="forms_title">로그인</h2>
+                        <h2 class="forms_title" style="color: #009970;">로그인</h2>
                         {% if form.non_field_errors %}
                             <div class="errors">
                                 {% for error in form.non_field_errors %}
@@ -96,15 +154,15 @@
                         </fieldset>    
                         {% endfor %}
                         <div class="forms_buttons">
-                            <p class="forms_buttons-forgot">비밀번호를 잊어버리셨나요? 새로 만드세요~</p>
-                            <input type="submit" value="로그인" class="forms_buttons-action">
+                            {% comment %} <p class="forms_buttons-forgot">비밀번호를 잊어버리셨나요? 새로 만드세요~</p> {% endcomment %}
+                            <input type="submit" value="로그인" class="btn btn-success" style="margin-top: -10px; width: 120px; height: 45px; margin-left: auto;">
                         </div>
                     </form>
                 </div>
 
                 <div class="user_forms-signup"  style="height:82%; overflow-y: auto">
                     <form method="post" action="{% url 'users:signup' %}" class="forms_form">
-                        <h2 class="forms_title">회원가입</h2>
+                        <h2 class="forms_title" style="color: #009970;">회원가입</h2>
                         <div></div>
                         {% csrf_token %}
                         {% for field in form2 %}
@@ -118,7 +176,7 @@
                         </fieldset>
                         {% endfor %}
                         <div class="forms_buttons">
-                            <input type="submit" value="회원가입" class="forms_buttons-action">
+                            <input type="submit" value="회원가입" class="btn btn-success" style="margin-top: -20px; width: 120px;">
                         </div>
                     </form>
                 </div>
@@ -127,13 +185,78 @@
         </section>
 
         <!-- FOOTER -->
-      <footer class="footer-bg">
-        <div class="footer-content">
-            <p class="float-end"><a href="#">Back to top</a></p>
-            <p>&copy; 2024, Final Project TEAM JamJOBGO &middot; <a href="https://g-sa.koreaisacademy.com/?ACE_REF=adwords_g&ACE_KW=%EC%BD%94%EB%A6%AC%EC%95%84it&gad_source=1&gclid=Cj0KCQjwxqayBhDFARIsAANWRnTgHrK-sMcRhVpFBCnpfv1F2omvCrlEE6GJ5xs0JoQs0DfkhzefFWkaAhbVEALw_wcB">Privacy</a></p>
-        </div>
-      </footer>
-      
+        <footer id="footer">
+
+            <div class="footer-top">
+              <div class="container">
+                <div class="row">
+        
+                  <div class="col-lg-3 col-md-6 footer-contact ibm-plex-sans-kr-regular ">
+                    <h3>Eunoianest</h3>
+                    <p>
+                      서울특별시 마포구 <br>
+                      서강로 136<br>
+                      아이비타워 2층 C Class <br><br>
+                      <strong>Phone:</strong> +82 2-313-7300<br>
+                      <strong>Email:</strong> eunoianest@koreait.com<br>
+                    </p>
+                  </div>
+        
+                  <div class="col-lg-2 col-md-6 footer-links">
+                    <h4 class="ibm-plex-sans-kr-regular ">바로가기</h4>
+                    <ul>
+                      <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'sleep:main' %}">Home</a></li>
+                      <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'sleep:team' %}">About us</a></li>
+                      <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'sleep:define' %}">About Sleep</a></li>
+                      <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'sleep:blist' %}">Blog</a></li>
+                      <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'sleep:clinic' %}">Clinic</a></li>
+                    </ul>
+                  </div>
+        
+                  <div class="col-lg-3 col-md-6 footer-links">
+                    <h4 class="ibm-plex-sans-kr-regular ">제공되는 서비스</h4>
+                    <ul>
+                      <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'survey:survey' %}">수면 진단 챗봇</a></li>
+                      <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'survey:result' %}">수면 진단 결과</a></li>
+                      <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'chat:index' %}">실시간 채팅</a></li>
+                      <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'dr:list' %}">Dr.A 상담</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+            <div class="container d-md-flex py-4">
+              <div class="me-md-auto text-center text-md-start">
+                <div class="copyright">
+                  &copy; Copyright <strong><span>2024 Final Project TEAM JamJOBGO</span></strong>. All Rights Reserved
+                </div>
+                <div class="credits">
+                
+                  Cooperate with <a href="https://g-sa.koreaisacademy.com/?ACE_REF=adwords_g&ACE_KW=%EC%BD%94%EB%A6%AC%EC%95%84it%EC%95%84%EC%B9%B4%EB%8D%B0%EB%AF%B8&gad_source=1&gclid=EAIaIQobChMItLfaqZvDhgMVYB97Bx0fswSoEAAYASAAEgIOifD_BwE">코리아IT아카데미</a>
+                </div>
+              </div>
+              <div class="social-links text-center text-md-right pt-3 pt-md-0">
+                <a href="https://x.com/?lang=ko" class="twitter"><i class="bx bxl-twitter"></i></a>
+                <a href="https://www.facebook.com/?locale=ko_KR" class="facebook"><i class="bx bxl-facebook"></i></a>
+                <a href="https://www.instagram.com/" class="instagram"><i class="bx bxl-instagram"></i></a>
+                <a href="https://skype.daesung.com/main.asp" class="google-plus"><i class="bx bxl-skype"></i></a>
+                <a href="https://kr.linkedin.com/" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+              </div>
+            </div>
+          </footer><!-- End Footer -->
+
+    <script src="{% static 'mainvendor/aos/aos.js' %}"></script>
+    <script src="{% static 'mainvendoraos/aos2.js' %}"></script>
+    <script src="{% static 'mainvendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static 'mainvendor/glightbox/js/glightbox.min2.js' %}"></script>
+    <script src="{% static 'mainvendor/purecounter/purecounter_vanilla.js' %}"></script>
+    <script src="{% static 'mainvendor/purecounter/purecounter_vanilla2.js' %}"></script>
+    <script src="{% static 'mainvendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'mainvendor/isotope-layout/isotope.pkgd.min2.js' %}"></script>
+    <script src="{% static 'mainvendor/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'mainvendor/swiper/swiper-bundle.min2.js' %}"></script>
+    <script src="{% static 'mainvendor/swiper/swiper-bundle.min3.js' %}"></script>
     <script src="{% static 'js/login.js' %}"></script>
     {% if signup_failed %}
     <script>
@@ -146,5 +269,6 @@
         });
     </script>
     {% endif %}
+    <script src="{% static 'js/newmain.js' %}"></script>
 </body>
 </html>

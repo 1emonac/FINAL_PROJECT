@@ -15,6 +15,7 @@
         margin: 0.4em 0;
         display: inline-block;
         white-space: pre-wrap;
+        text-align: left;
     }
 
     .chat-message.me {
@@ -33,12 +34,20 @@
         font-weight: bold;
         text-align: center;
         font-size: 1.3rem;
+        backcground-color: #3a2420;
+    }
+    .row2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Viewport height를 100%로 설정 */
+        margin: 0; /* 기본 margin 제거 */
     }
     
 </style>
     <br />
-    <div class="row">
-        <div class="col-sm-12">
+    <div class="row2">
+       <div class="col-sm-7" style="margin-top: 100px; margin-bottom: 50px;">
             <div class="card" style="height: 700px;">
                 <div class="card-header">
                     Dr.A와의 대화
@@ -61,7 +70,7 @@
         </div>
     </div>
 
-    {{ roleplayingroom.pk|json_script:"room-pk" }}
+    {% comment %} {{ roleplayingroom.pk|json_script:"room-pk" }} {% endcomment %}
 
     <script>
         (function() {

@@ -149,7 +149,9 @@ h6 {
 * Desktop Navigation 
 */
 .navbar {
+  display: flex;
   padding: 0;
+  justify-content: space-between;  /* 양 끝에 배치 */
 }
 
 .navbar ul {
@@ -158,11 +160,21 @@ h6 {
   display: flex;
   list-style: none;
   align-items: center;
-  margin-right: auto;
+}
+
+.navbar ul li {
+  display: flex;
+  justify-content: space-between;  /* 항목들을 일정한 간격으로 배치 */
+  list-style: none;  /* 기본 목록 스타일 제거 */
+  padding: 0;  /* 기본 패딩 제거 */
+  margin: 0;  /* 기본 마진 제거 */
+  margin-right: 10px;
+  
 }
 
 .navbar li {
   position: relative;
+  margin-right: auto;
 }
 
 .navbar a,
@@ -176,7 +188,7 @@ h6 {
   font-size: 13px;
   font-weight: 500;
   text-transform: uppercase;
-  font-family: "Poppins", sans-serif;
+  /* font-family: "ibm-plex-sans-kr-regular", sans-serif; */
   white-space: nowrap;
   transition: 0.3s;
 }
@@ -185,7 +197,7 @@ h6 {
 .navbar a:focus i {
   font-size: 12px;
   line-height: 0;
-  margin-left: 5px;
+  /* margin-left: 5px; */
 }
 
 .navbar a:hover,
@@ -193,21 +205,22 @@ h6 {
 .navbar .active:focus,
 .navbar li:hover>a {
   color: #009970;
+  margin-right: auto;
 }
 
 .navbar .getstarted,
 .navbar .getstarted:focus {
   background: #009970;
-  padding: 10px 25px;
-  margin-left: 30px;
-  margin-right: 15px;
+  padding: 6px 15px;
+  margin-left: 2px;
+  margin-right: 2px;
   border-radius: 50px;
   color: #fff;
 }
 
 .navbar .getstarted:hover,
 .navbar .getstarted:focus:hover {
-  color: #fff;
+  color: #fff; 
   background: #00b383;
 }
 
@@ -661,7 +674,7 @@ section {
 # Cta
 --------------------------------------------------------------*/
 .cta {
-  background: linear-gradient(rgba(2, 2, 2, 0.7), rgba(0, 0, 0, 0.7)), url("../img/cta-bg.jpg") fixed center center;
+  background: linear-gradient(rgba(2, 2, 2, 0.7), rgba(0, 0, 0, 0.7)), url("../media/image/mainf.jpg") fixed center center;
   background-size: cover;
   padding: 60px 0;
 }

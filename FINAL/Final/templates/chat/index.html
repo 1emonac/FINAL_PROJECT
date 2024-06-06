@@ -1,6 +1,38 @@
 {% extends "base_chat.html" %}
 {% load static %}
 
+{% block extra-style %}
+<style>
+    /* 모달 스타일 */
+    .modal {
+        display: none; 
+    }
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 10px;
+        border: 5px solid #888;
+        width: 30%;
+    }
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 20px;
+        font-weight: bold;
+    }
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    /* 텍스트 스타일 */
+    .room-name {
+        font-size: 3rem; /* 원하는 크기로 조정 */
+    }
+</style>
+{% endblock %}
+
 {% block content %}
     <!-- 로그인 모달 -->
     <div id="loginModal" class="modal">
@@ -9,43 +41,18 @@
             <center>
                 <h2>로그인 필요</h2>
                 <p>이 작업을 수행하려면 로그인이 필요합니다.</p>
-                <a href="/users/login/" class="login-button btn btn-primary">로그인</a>
-                <a href="/chat/" class="btn btn-primary">채팅방 목록으로 이동</a>
+                <a href="/users/login/" class="login-button btn btn-success">로그인</a>
+                <a href="/chat/" class="btn btn-success">채팅방 목록으로 이동</a>
                 <p></p>
             </center>
         </div>
     </div>
 
-    <style>
-        /* 모달 스타일 */
-        .modal {
-            display: none; 
-        }
-        .modal-content {
-            background-color: #fefefe;
-            margin: 5% auto;
-            padding: 10px;
-            border: 5px solid #888;
-            width: 30%;
-        }
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 20px;
-            font-weight: bold;
-        }
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        /* 텍스트 스타일 */
-        .room-name {
-            font-size: 3rem; /* 원하는 크기로 조정 */
-        }
-    </style>
+<section id="breadcrumbs" class="breadcrumbs">
+    <br><br>
+</section>
 
+<div class="container" style="margin-top: 150px; margin-bottom: 170px;">
     <div class="my-3 p-3 bg-body rounded shadow-sm">
         <h4 class="border-bottom pb-2 mb-0 ibm-plex-sans-kr-regular">채팅방 목록</h4>
         {% for room in room_list %}
@@ -54,43 +61,46 @@
                 <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
                     <div class="d-flex justify-content-between">
                         <strong class="text-dark mt-2 noto-sans-kr-main display-7">{{ room.name }}</strong>
-                        <a href="{% url 'chat:room_chat' room.pk %}" class="protected-link btn btn-primary">입장</a>
+                        <a href="{% url 'chat:room_chat' room.pk %}" class="protected-link btn btn-success">입장</a>
                     </div>
                 </div>
             </div>
         {% endfor %}
         <small class="d-block text-end mt-3">
-            <a href="{% url 'chat:room_new' %}" class="protected-link btn btn-primary">새 채팅방 만들기</a>
+            <a href="{% url 'chat:room_new' %}" class="protected-link btn btn-success">새 채팅방 만들기</a>
         </small>
     </div>
+</div>
+{% endblock %}
 
-    <script>
-       const userId = "{{ user.username|default:0 }}";
-        // 로그인 여부 확인 함수
-        function checkLogin(event) {
-            // 유저 아이디가 없으면 로그인되지 않은 것으로 간주
-            if (!userId || userId == 0) {
-                // 로그인되지 않은 경우 모달 창 표시
-                event.preventDefault();
-                document.getElementById('loginModal').style.display = 'block';
-            }
+{% block extra-script %}
+<script>
+    const userId = "{{ user.username|default:0 }}";
+    // 로그인 여부 확인 함수
+    function checkLogin(event) {
+        // 유저 아이디가 없으면 로그인되지 않은 것으로 간주
+        if (!userId || userId == 0) {
+            // 로그인되지 않은 경우 모달 창 표시
+            event.preventDefault();
+            document.getElementById('loginModal').style.display = 'block';
         }
+    }
 
-        // 모든 링크에 대해 클릭 이벤트 리스너 추가
-        document.querySelectorAll('.protected-link').forEach(function(link) {
-            link.addEventListener('click', checkLogin);
-        });
+    // 모든 링크에 대해 클릭 이벤트 리스너 추가
+    document.querySelectorAll('.protected-link').forEach(function(link) {
+        link.addEventListener('click', checkLogin);
+    });
 
-        // 모달 닫기 버튼 클릭 시 모달 숨김
-        document.querySelector('.close').onclick = function() {
+    // 모달 닫기 버튼 클릭 시 모달 숨김
+    document.querySelector('.close').onclick = function() {
+        document.getElementById('loginModal').style.display = 'none';
+    };
+
+    // 모달 외부 클릭 시 모달 숨김
+    window.onclick = function(event) {
+        if (event.target == document.getElementById('loginModal')) {
             document.getElementById('loginModal').style.display = 'none';
-        };
-
-        // 모달 외부 클릭 시 모달 숨김
-        window.onclick = function(event) {
-            if (event.target == document.getElementById('loginModal')) {
-                document.getElementById('loginModal').style.display = 'none';
-            }
-        };
-    </script>
+        }
+    };
+</script>
 {% endblock %}

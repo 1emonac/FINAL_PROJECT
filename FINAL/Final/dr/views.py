@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.contrib.admin.views.decorators import staff_member_required
 from django.views.generic import DetailView
@@ -14,3 +15,6 @@ class SleepClinicRoomDetailView(DetailView):
         return get_object_or_404(SleepClinicRoom, pk=FIXED_ROOM_PK)
 
 sleep_clinic_room_detail = SleepClinicRoomDetailView.as_view()
+
+def list(request):    
+    return render(request, "dr/dr_list.html")
