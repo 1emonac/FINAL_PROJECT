@@ -1,0 +1,17 @@
+.featurette .col-md-6 {
+    flex: 1 1 60%;
+}
+.featurette .col-md-2 {
+    flex: 1 1 35%;
+    color: #ffffff;
+}
+.featurette-heading {
+    margin-top: 150px;
+}
+iframe {
+    width: 100%;
+    height: 500px;
+}
+.cta2 {
+  backcground-color: #000000;
+}

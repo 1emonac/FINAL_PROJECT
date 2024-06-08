@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     "chat",
     "dr",
     "survey",
+    "blogs",
 ]
 
 MIDDLEWARE = [

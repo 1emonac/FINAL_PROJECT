@@ -1,5 +1,4 @@
-from typing import List, TypedDict, Literal
-
+from typing import TypedDict, Literal
 from django.conf import settings
 from django.db import models
 from django.urls import reverse
@@ -15,7 +14,7 @@ class SleepClinicRoom(models.Model):
         ordering = ["-pk"]
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    situation = models.CharField(max_length=100, verbose_name="상황")
+    situation = models.CharField(max_length=100, verbose_name="상황", default="기본 상황")
     situation_kr = models.CharField(
         max_length=100,
         blank=True,

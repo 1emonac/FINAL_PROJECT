@@ -1,0 +1,405 @@
+{% extends "base.html" %}
+{% load static %}
+{% block head%}
+    <script src="{% static 'js/team.js' %}"></script>
+    <style>
+    * {
+      border: 0;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    :root {
+      --hue: 223;
+      --bg: hsl(var(--hue), 10%, 90%);
+      --fg: hsl(var(--hue), 10%, 10%);
+      --primary: hsl(var(--hue), 90%, 50%);
+      --trans-dur: 0.3s;
+      --trans-timing: cubic-bezier(0.65, 0, 0.35, 1);
+    }
+    a {
+      color: var(--primary);
+      transition: color var(--trans-dur);
+    }
+    body,
+    button {
+      color: var(--fg);
+      font: 1em/1.5 "IBM Plex Sans", sans-serif;
+    }
+    
+    h1 {
+      font-size: 2em;
+      margin: 0 0 3rem;
+      padding-top: 1.5rem;
+      text-align: center;
+    }
+    .btn {
+      background-color: var(--fg);
+      border-radius: 0.25em;
+      color: var(--bg);
+      cursor: pointer;
+      padding: 0.375em 0.75em;
+      transition: background-color calc(var(--trans-dur) / 2) linear,
+        color var(--trans-dur);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn:hover {
+      background-color: hsl(var(--hue), 10%, 50%);
+    }
+    .btn-group {
+      display: flex;
+      gap: 0.375em;
+      margin-bottom: 1.5em;
+    }
+    .timeline {
+      margin: auto;
+      padding: 0 1.5em;
+      width: 100%;
+      max-width: 36em;
+    }
+    .timeline__arrow {
+      background-color: transparent;
+      border-radius: 0.25em;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-inline-end: 0.25em;
+      outline: transparent;
+      width: 2em;
+      height: 2em;
+      transition: background-color calc(var(--trans-dur) / 2) linear,
+        color var(--trans-dur);
+      -webkit-appearance: none;
+      appearance: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .timeline__arrow:focus-visible,
+    .timeline__arrow:hover {
+      background-color: hsl(var(--hue), 10%, 50%, 0.4);
+    }
+    .timeline__arrow-icon {
+      display: block;
+      pointer-events: none;
+      transform: rotate(-90deg);
+      transition: transform var(--trans-dur) var(--trans-timing);
+      width: 100%;
+      height: auto;
+    }
+    .timeline__date {
+      font-size: 0.833em;
+      line-height: 2.4;
+    }
+    .timeline__dot {
+      background-color: currentColor;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+      margin: 0.625em 0;
+      margin-inline-end: 1em;
+      position: relative;
+      width: 0.75em;
+      height: 0.75em;
+    }
+    .timeline__item {
+      position: relative;
+      padding-bottom: 2.25em;
+    }
+    .timeline__item:not(:last-child):before {
+      background-color: currentColor;
+      content: "";
+      display: block;
+      position: absolute;
+      top: 1em;
+      left: 2.625em;
+      width: 0.125em;
+      height: 100%;
+      transform: translateX(-50%);
+    }
+    [dir="rtl"] .timeline__arrow-icon {
+      transform: rotate(90deg);
+    }
+    [dir="rtl"] .timeline__item:not(:last-child):before {
+      right: 2.625em;
+      left: auto;
+      transform: translateX(50%);
+    }
+    .timeline__item-header {
+      display: flex;
+    }
+    .timeline__item-body {
+      border-radius: 0.375em;
+      overflow: hidden;
+      margin-top: 0.5em;
+      margin-inline-start: 4em;
+      height: 0;
+    }
+    .timeline__item-body-content {
+      background-color: hsl(var(--hue), 10%, 50%, 0.2);
+      opacity: 0;
+      padding: 0.5em 0.75em;
+      visibility: hidden;
+      transition: opacity var(--trans-dur) var(--trans-timing),
+        visibility var(--trans-dur) steps(1, end);
+    }
+    .timeline__meta {
+      width: 100%;
+    }
+    .timeline__title {
+      font-size: 1.5em;
+      line-height: 1.333;
+    }
+    /* Expanded state */
+    .timeline__item-body--expanded {
+      height: auto;
+    }
+    .timeline__item-body--expanded .timeline__item-body-content {
+      opacity: 1;
+      visibility: visible;
+      transition-delay: var(--trans-dur), 0s;
+    }
+    .timeline__arrow[aria-expanded="true"] .timeline__arrow-icon {
+      transform: rotate(0);
+    }
+    </style>
+{% endblock%}
+{% block content %}
+<main>
+    <div class="my-5">
+        <div class="p-3 text-center bg-body-tertiary">
+            <div class="container">
+                <h1 class="text-body-emphasis ibm-plex-sans-kr-regular ">수면과 수면장애</h1>
+                <center><p class="col-lg-8 mx-auto lead noto-sans-kr-main" style="color: #021931;">
+                    <strong>수면</strong>은 신체와 정신의 회복을 위한 자연스러운 과정이며, 렘수면과 비렘수면으로 나뉩니다.<br><strong>수면장애</strong>는 수면의 질, 양, 또는 시간에 문제가 생겨 일상생활에 지장을 초래하는 상태입니다.
+                </p></center>
+            </div>
+        </div>
+    </div>
+
+    <div class="container featurette-container">
+        <div class="row featurette">
+            <div class="col-md-7" style="margin-top: -20px;">
+                <center><h3 class="featurette-heading fw-normal lh-1 ibm-plex-sans-kr-regular">잠은 꼭 자야 하나요?</h3></center>
+                <br />
+                <br />
+                <p class="lead noto-sans-kr-main" style="text-align: justify;">　　잠은 우리 삶의 약 3분의 1을 차지하며, 겉으로는 수동적으로 보이지만 몸 안에서는 중요한 기능이 활발하게 이루어집니다. <strong>잠을 통해 신체와 근육의 기능이 회복되고, 생체 에너지가 효율적으로 관리 및 저장</strong>됩니다. 이는 뇌, 심혈관, 위장관, 호흡, 면역, 내분비,　대사, 성 기능 등 다양한 생체 기능을 안정적으로 유지시킵니다. 또한, <strong>잠은 학습과 기억, 감정 조절에도 중요한 역할</strong>을 합니다. 낮에 학습한 정보는 잠을 자는 동안 정리되어 중요한 정보는 장기 기억으로 전환되고, 불필요한 기억과 감정은 정화됩니다. 충분한 잠은 정신 및 신체 질환을 예방하고, 아동 청소년의 건강한 성장 발달에도 필수적입니다.</p>
+            </div>
+            <div class="col-md-5" style="margin-top: 20px;">
+                <img src="{% static 'media/image/sleep2.png' %}" alt="Featurette Image" class="img-fluid mx-auto" width="500" height="500">
+            </div>
+        </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="container featurette-container">
+        <div class="row featurette">
+            <div class="col-md-5">
+                <img src="{% static 'media/image/rythme.png' %}" alt="Featurette Image" class="img-fluid mx-auto" width="500" height="500">
+            </div>
+            <div class="col-md-7" style="margin-top: -20px;">
+                <h3 class="featurette-heading fw-normal lh-1 ibm-plex-sans-kr-regular" style="text-align: right;">잠은 어떻게 조절되나요?</h3>
+                <br />
+                <br />
+                <p class="lead noto-sans-kr-main" style="text-align: justify;">
+                　　<strong>잠은 우리 몸의 '생체 시계'와 일정한 잠을 유지하려는 힘에 의해 조절</strong>됩니다. 중추시계는 뇌에 위치하며, 말초시계는 온몸에 분포해 있습니다. 중추시계는 약 24시간 주기로 유전자 발현, 단백질 합성, 호르몬 분비, 체온 등을 조절해 생체 기능을 지구의 24시간 주기에 맞춥니다. 이 과정에서 <strong>빛이 중요한 역할</strong>을 합니다. 밤에 빛이 감소하면 수면 유도 호르몬이 증가하고, 아침에 빛이 증가하면 감소합니다. 깨어 있는 시간이 길어질수록 잠을 유도하는 힘이 강해지며, 잠을 자는 동안에는 이 힘이 사라져 각성을 유지할 수 있습니다.</p>
+            </div>
+        </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="container featurette-container">
+        <div class="row featurette">
+            <div class="col-md-7" style="margin-top: -60px;">
+                <h4 class="featurette-heading fw-normal lh-1 ibm-plex-sans-kr-regular">언제 자고 일어나는 것이 좋을까요?<br>얼마나 자는 것이 좋을까요? </h4>
+                <br />
+                <p class="lead noto-sans-kr-main" style="text-align: justify;">　　<strong>성인은 평균적으로 7-8시간, 아동 청소년은 9-10시간의 수면이 필요</strong>하지만, 개인마다 최소 필요 수면 시간은 다릅니다. 개인에게 필요한 최소 수면 시간은 다음 날 피곤하지 않고 일상 활동을 할 수 있는 정도의 수면 시간입니다. 어떤 사람은 4시간만 자도 충분한 반면, 다른 사람은 10시간 이상 자야 합니다.
+                    <br />
+                    <br />
+                    　　수면의 양뿐 아니라 언제 자는지도 중요합니다. <strong>생체 시계는 적절한 빛 자극을 통해 하루 주기에 맞춰 조율되며, 이는 건강한 생체 기능을 유지하는 데 필수적</strong>입니다. 늦게 자고 늦게 일어나거나 밤낮이 바뀌는 생활은 생체 시계의 정상적인 작동을 방해해 정서적, 신체적 문제를 일으킬 수 있습니다.</p>
+            </div>
+            <div class="col-md-5">
+                <img src="{% static 'media/image/wakeup.png' %}" alt="Featurette Image" class="img-fluid mx-auto" width="500" height="500">
+            </div>
+        </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="container featurette-container">
+        <div class="row featurette">
+            <div class="col-md-5">
+                <img src="{% static 'media/image/step.png' %}" alt="Featurette Image" class="img-fluid mx-auto" width="500" height="500">
+            </div>
+            <div class="col-md-7" style="margin-top: -50px;">
+                <h4 class="featurette-heading fw-normal lh-1 ibm-plex-sans-kr-regular" style="text-align: right;">잠에도 단계가 있다고 하던데요?</h4>
+                <br />
+                <br />
+                <p class="lead noto-sans-kr-main" style="text-align: justify;">　　잠은 빠른눈운동(rapid eye movement, REM)의 유무에 따라 크게 렘(REM)수면과 비렘수면으로 나뉘며, 두 가지 잠의 상태에 따라 몸에서 일어나는 변화가 다릅니다.<br><br>　　<strong>비렘수면</strong>은 생리적 기능이 저하되는 상태로, 1단계(얕은 잠)에서 3단계(깊은 잠)로 진행됩니다. 깊은 잠은 신체 기능 회복에 매우 중요합니다. <strong>렘수면</strong>은 꿈을 많이 꾸는 상태로, 주로 수면 후반부에 나타납니다. 이때 혈압, 심장박동, 호흡 등이 깨어 있을 때와 비슷하게 활발하지만, 근육은 이완되어 움직이지 않습니다. 비렘수면과 렘수면은 약 90-120분 주기로 반복되어, 하룻밤에 약 5회 정도 주기가 나타납니다.</p>
+            </div>
+        </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="container featurette-container">
+        <div class="row featurette">
+            <div class="col-md-7" style="margin-top: -100px;">
+                <center><h4 class="featurette-heading fw-normal lh-1 ibm-plex-sans-kr-regular">꿈이란 무엇인가요?</h4></center>
+                <br />
+                <br />
+                <p class="lead noto-sans-kr-main" style="text-align: justify;">　　우리는 잠을 자는 동안 능동적인 정신적 활동을 멈추지만, 그 가운데 꿈이라는 정신적 활동이 감지됩니다. 꿈은 현실과 닮았으면서도 비논리적이고 비이성적인 특성이 많아 예로부터 조상이나 신의 계시로 여겨지기도 했습니다.<br><br>　　프로이드의 '꿈의 해석'으로도 많이 알려져 있는 정신분석 이론에서는 꿈을 무의식적 소망이 상징화된 것으로 해석합니다. 깨어 있을 때 억압된 소망이나 욕망이 잠을 자는 동안 드러난다는 것입니다.<br><br>　　<strong>뇌는 학습하거나 경험한 것을 자는 동안 재현하고 재정리하여 기존의 기억들과 통합하는데, 꿈은 이러한 과정의 파생물</strong>일 수 있습니다. 그러나 꿈의 생물학적 기전이나 기능은 아직 많이 밝혀지지 않았습니다. 꿈 자체가 뇌에 해로운 영향은 없지만, 스트레스, 약물, 뇌의 퇴행성 변화 등으로 생생한 꿈이 많아질 수 있습니다. 반복적인 악몽으로 고통을 느끼거나 꿈 내용을 실제 행동으로 옮긴다면 의학적 평가가 필요합니다.</p>
+            </div>
+            <div class="col-md-5" style="margin-top: 40px;">
+                <img src="{% static 'media/image/dream.png' %}" alt="Featurette Image" class="img-fluid mx-auto" width="500" height="500">
+            </div>
+        </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <svg display="none">
+        <symbol id="arrow">
+          <polyline points="7 10,12 15,17 10" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+        </symbol>
+    </svg>
+    <h1 class="noto-sans-kr-main">수면장애의 종류</h1>
+    <div id="timeline" class="timeline">
+      <div class="btn-group">
+        <button class="btn ibm-plex-sans-kr-regular" type="button" data-action="expand">모두 보기</button>
+        <button class="btn ibm-plex-sans-kr-regular" type="button" data-action="collapse">요약 보기</button>
+      </div>
+
+      <div class="timeline__item">
+        <div class="timeline__item-header">
+          <button class="timeline__arrow" type="button" id="item1" aria-labelledby="item1-name" aria-expanded="false" aria-controls="item1-ctrld" aria-haspopup="true" data-item="1">
+            <svg class="timeline__arrow-icon" viewBox="0 0 24 24" width="24px" height="24px">
+              <use href="#arrow" />
+            </svg>
+          </button>
+          <span class="timeline__dot"></span>
+          <span id="item1-name" class="timeline__meta">
+            <time class="timeline__date">01</time><br>
+            <strong class="timeline__title ibm-plex-sans-kr-regular">불면증</strong>
+          </span>
+        </div>
+        <div class="timeline__item-body" id="item1-ctrld" role="region" aria-labelledby="item1" aria-hidden="true">
+          <div class="timeline__item-body-content">
+            <p class="timeline__item-p noto-sans-kr-main" style="text-align: justify;">불면증이란 잠들기까지 너무 오래 걸리거나, 잠 든 후 자주 깨거나, 새벽에 너무 일찍 깨어 다시 잠들기 어렵거나, 자고 일어나도 개운하지 않은 상태를 말합니다. 이러한 불면증상과 함께 낮 시간 동안의 기능장애를 동반하는 상태를 불면질환 또는 불면장애라 합니다. 우울, 불안 등 정서증상에 동반된 불면증이나 야간 호흡곤란, 야간 천식발작 등 신체증상에 동반된 불면증, 특별한 원인을 알 수 없는 일차 불면증 등이 있습니다. 국내 성인의 20% 이상이 불면을 호소할 만큼 흔합니다. 불면증은 남자보다 여자에서 좀 더 흔하며 노인인구에서 불면증을 포함한 수면질환이 중대한 건강문제임이 널리 알려져 있습니다.</p>
+          </div>
+        </div>
+      </div>
+      <div class="timeline__item">
+        <div class="timeline__item-header">
+          <button class="timeline__arrow" type="button" id="item2" aria-labelledby="item2-name" aria-expanded="false" aria-controls="item2-ctrld" aria-haspopup="true" data-item="2">
+            <svg class="timeline__arrow-icon" viewBox="0 0 24 24" width="24px" height="24px">
+              <use href="#arrow" />
+            </svg>
+          </button>
+          <span class="timeline__dot"></span>
+          <span id="item2-name" class="timeline__meta">
+            <time class="timeline__date">02</time><br>
+            <strong class="timeline__title ibm-plex-sans-kr-regular">수면호흡장애</strong>
+          </span>
+        </div>
+
+        <div class="timeline__item-body" id="item2-ctrld" role="region" aria-labelledby="item2" aria-hidden="true">
+          <div class="timeline__item-body-content">
+            <p class="timeline__item-p noto-sans-kr-main" style="text-align: justify;">	자는 도중 호흡이 멈추거나 호흡이 얕아지는 사건이 반복적으로 나타나는 질환으로, 폐쇄성 수면무호흡증이 가장 대표적입니다. 이러한 호흡사건이 반복되면 수면의 질이 저하되고, 자는 동안 체내 산소 공급이 원활하게 되지 않아 심혈관계, 뇌혈관계 합병증의 위험성이 높아집니다. 코골이, 아침 두통, 낮 시간의 피로감, 짜증, 주간졸림, 집중력 및 기억력 감퇴 등의 증상을 흔히 호소하게 되지만, 주관적 증상이 전혀 없을 수도 있습니다. 남성, 비만, 늘어진 목 젓 또는 큰 혀, 큰 목둘레, 중년 이상의 연령, 적거나 뒤로 들어간 턱, 비중격만곡, 가족력 등의 특징이 있는 경우 폐쇄성 수면무호흡증이 발생할 가능성이 높다고 알려져 있습니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline__item">
+        <div class="timeline__item-header">
+          <button class="timeline__arrow" type="button" id="item3" aria-labelledby="item3-name" aria-expanded="false" aria-controls="item3-ctrld" aria-haspopup="true" data-item="3">
+            <svg class="timeline__arrow-icon" viewBox="0 0 24 24" width="24px" height="24px">
+              <use href="#arrow" />
+            </svg>
+          </button>
+          <span class="timeline__dot"></span>
+          <span id="item3-name" class="timeline__meta">
+            <time class="timeline__date" datetime="2001-09-09">03</time><br>
+            <strong class="timeline__title ibm-plex-sans-kr-regular">수면과다증</strong>
+          </span>
+        </div>
+
+        <div class="timeline__item-body" id="item3-ctrld" role="region" aria-labelledby="item3" aria-hidden="true">
+          <div class="timeline__item-body-content">
+            <p class="timeline__item-p noto-sans-kr-main" style="text-align: justify;">	수면과다증은 과도한 주간 졸림을 특징으로 하며, 대표적으로 기면증, 행동으로 유발된 수면부족증후군(Behaviorally induced insufficient sleep)이 이에 속합니다. 그러나 과도한 주간 졸림이 있다면 불면증이나 수면호흡장애 등에 의한 것이 아닌지 먼저 확인해보아야 합니다. 기면증은 주간 졸림, 웃음이나 농담, 분노 감정에 의해 촉발되어 근육의 힘이 빠지는 탈력발작, 수면마비, 입면 시 혹은 출면 시 환각과 야간수면장애 등이 나타날 수 있습니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline__item">
+        <div class="timeline__item-header">
+          <button class="timeline__arrow" type="button" id="item4" aria-labelledby="item4-name" aria-expanded="false" aria-controls="item4-ctrld" aria-haspopup="true" data-item="4">
+            <svg class="timeline__arrow-icon" viewBox="0 0 24 24" width="24px" height="24px">
+              <use href="#arrow" />
+            </svg>
+          </button>
+          <span class="timeline__dot"></span>
+          <span id="item4-name" class="timeline__meta">
+            <time class="timeline__date" datetime="2009-02-13">04</time><br>
+            <strong class="timeline__title ibm-plex-sans-kr-regular">수면-각성주기의 장애</strong>
+          </span>
+        </div>
+
+        <div class="timeline__item-body" id="item4-ctrld" role="region" aria-labelledby="item4" aria-hidden="true">
+          <div class="timeline__item-body-content">
+            <p class="timeline__item-p noto-sans-kr-main" style="text-align: justify;">우리 몸의 생체시계 리듬이 환경의 밤낮 리듬과 일치하지 않아 적절한 시간대에 잠을 잘 수 없고, 깨어있고자 하는 시간대에는 과도한 졸림이 생기는 상태입니다. 현대 사회에서는 실내 활동시간의 증가, 야간 빛 노출과 야간 활동의 증가, 교대근무의 증가 등으로 수면-각성주기 장애가 늘어나고 있습니다. 청소년에서는 지나치게 늦게 잠들고 늦게 일어나는 수면위상 지연증후군이 비교적 흔하고, 노인에서는 이른 저녁 시간부터 졸려 새벽 내내 깨어 있게 되는 수면위상 전진증후군이 비교적 흔하게 나타납니다. 시차 증후군, 교대근무 수면장애, 백야나 극야가 지속되는 환경에서의 비24시간 주기 수면각성장애 등 역시 이에 속합니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline__item">
+        <div class="timeline__item-header">
+          <button class="timeline__arrow" type="button" id="item5" aria-labelledby="item5-name" aria-expanded="false" aria-controls="item5-ctrld" aria-haspopup="true" data-item="5">
+            <svg class="timeline__arrow-icon" viewBox="0 0 24 24" width="24px" height="24px">
+              <use href="#arrow" />
+            </svg>
+          </button>
+          <span class="timeline__dot"></span>
+          <span id="item5-name" class="timeline__meta">
+            <time class="timeline__date" datetime="2033-05-18">05</time><br>
+            <strong class="timeline__title ibm-plex-sans-kr-regular">사건수면</strong>
+          </span>
+        </div>
+
+        <div class="timeline__item-body" id="item5-ctrld" role="region" aria-labelledby="item5" aria-hidden="true">
+          <div class="timeline__item-body-content">
+            <p class="timeline__item-p noto-sans-kr-main" style="text-align: justify;">사건수면이란 우리가 잠자는 도중이나 잠이 덜 깬 상태에서 일어나는 비정상적인 행동이나 생리적 사건을 말합니다.
+                수면보행증(몽유병), 야경증, 수면마비(가위눌림), 수면섭식장애, 악몽장애, 아뇨증, 렘수면행동장애, 하지불안증후군 등 다양한 사건수면이 있습니다. 각 현상마다 의학적 심각성이나 자연 경과가 다릅니다. 특히 자는 동안 위험한 행동을 보이는 경우에는 크게 다칠 수 있으므로 안전한 침실환경을 유지하고, 동반질환을 적절히 평가하는 것이 중요합니다. </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline__item">
+        <div class="timeline__item-header">
+          <button class="timeline__arrow" type="button" id="item6" aria-labelledby="item6-name" aria-expanded="false" aria-controls="item6-ctrld" aria-haspopup="true" data-item="6">
+            <svg class="timeline__arrow-icon" viewBox="0 0 24 24" width="24px" height="24px">
+              <use href="#arrow" />
+            </svg>
+          </button>
+          <span class="timeline__dot"></span>
+          <span id="item6-name" class="timeline__meta">
+            <time class="timeline__date" datetime="2038-01-19">06</time><br>
+            <strong class="timeline__title ibm-plex-sans-kr-regular">기면증</strong>
+          </span>
+        </div>
+
+        <div class="timeline__item-body" id="item6-ctrld" role="region" aria-labelledby="item6" aria-hidden="true">
+          <div class="timeline__item-body-content">
+            <p class="timeline__item-p noto-sans-kr-main" style="text-align: justify;">기면증은 낮 동안 참을 수 없는 과도한 졸림을 특징으로 하는 질환입니다. 피로와 졸림은 혼동되어 사용되기도 하지만 졸림은 피로와는 다르며, 잠으로 빠져드는 경향 혹은 각성을 유지하기 힘든 상태로 정의할 수 있습니다. 과도한 주간 졸림은 불충분한 야간 수면, 뇌의 수면조절 중추 영역의 신경학적 이상, 야간수면 분절, 혹은 개인의 일주기 리듬 등과 연관됩니다. 이 중 기면증은 수면조절 중추의 신경학적 이상과 관련이 있으며, 자가면역체계의 이상과 하이포크레틴의 부족이 기저 원인인 것으로 밝혀져 있습니다. 하이포크레틴은 뇌의 시상하부에서 분비되는 신경호르몬의 한 종류로서 각성을 유지하는 역할을 합니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <center><a href="https://www.nct.go.kr/distMental/rating/rating01_5_1.do" class="btn ibm-plex-sans-kr-regular">
+        국립정신건강센터-국가트라우마센터 더 알아보기✔
+    </a></center>
+</main>
+<br />
+<br />
+<br />
+{% endblock %}

@@ -1,114 +1,88 @@
 {% extends "base.html" %}
 {% load static %}
-{% block head%}
-  <script src="{% static 'js/team.js' %}"></script>
+{% block head %}
+<link href="{% static 'css/team.css' %}" rel="stylesheet">
+{% endblock %}
 
-  <style>
-    main {
-      margin-bottom: 100px; /* footer와의 간격을 위한 하단 마진 */
-    }
-    * {
-      border: 0;
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    :root {
-      --hue: 223;
-      --bg: hsl(var(--hue), 10%, 90%);
-      --fg: hsl(var(--hue), 10%, 10%);
-      --primary: hsl(var(--hue), 90%, 50%);
-      --trans-dur: 0.3s;
-      --trans-timing: cubic-bezier(0.65, 0, 0.35, 1);
-    }
-    a {
-      color: var(--primary);
-      transition: color var(--trans-dur);
-    }
-    body,
-    button {
-      color: var(--fg);
-      font: 1em/1.5 "IBM Plex Sans", sans-serif;
-    }
-    
-    h1 {
-      font-size: 2em;
-      margin: 0 0 3rem;
-      padding-top: 1.5rem;
-      text-align: center;
-    }
-    .btn {
-      background-color: var(--fg);
-      border-radius: 0.25em;
-      color: var(--bg);
-      cursor: pointer;
-      padding: 0.375em 0.75em;
-      transition: background-color calc(var(--trans-dur) / 2) linear,
-        color var(--trans-dur);
-      -webkit-tap-highlight-color: transparent;
-    }
-    .btn:hover {
-      background-color: hsl(var(--hue), 10%, 50%);
-    }
-    .btn-group {
-      display: flex;
-      gap: 0.375em;
-      margin-bottom: 1.5em;
-    }
-
-  </style>
-
-{% endblock%}
 {% block content %}
-  <!-- 글 내용 -->
-  <main>
-    <div class="my-5">
-      <div class="p-4 text-center bg-body-tertiary">
-          <div class="container">
-              <h1 class="text-body-emphasis ibm-plex-sans-kr-regular ">Final Project Team JamJOB-GO</h1>
-              <p class="col-lg-8 mx-auto lead noto-sans-kr-main" style="color: #021931;">
-                   2023.12.27 ~ 2024.06.24<br>
-                   빅데이터를 활용한 AI챗봇&광학기술 개발자 과정<br>
-                   코리아IT아카데미 신촌점 C class
-              </p>
-          </div>
+<main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <!-- <section class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>ABOUT US</h2>
+          <ol>
+            <li><a href="{% url 'sleep:main' %}">Home</a></li>
+            <li>Team</li>
+          </ol>
+        </div>
+
       </div>
-    </div>
-    <br />
-    <br />
-    <div class="container featurette-container ibm-plex-sans-kr-regular">
-        <div class="row featurette">
-            <div class="col-md-7">
-                <center><h2 class="featurette-heading fw-normal lh-1"><strong>잠 JOB GO</strong></h2></center>
-                <br />
-                <center><h2><span class="text-body-secondary">We are</span></h2></center>
-                <br />
-                <center><p class="lead">수면과 관련있는 '잠'과 취업을 위한 '잡(Job)',<br>그리고 활동적인 느낌의 'GO'를 결합하여,<br>동적이고 에너지 넘치는 팀</p></center>
-            </div>
-            <div class="col-md-5">
-              <img src="{% static 'media/image/jamjobgo.png' %}"  alt="Featurette Image" class="img-fluid mx-auto" width="500" height="500">
+    </section>End Breadcrumbs -->
+
+    <section class="inner-page">
+        <div class="container-fluid">
+            <div class="my-5">
+                <div class="p-4 text-center" style="margin-top: 100px;">
+                    <div class="container" style="color: #3f3f3f;">
+                        <h1 class="ibm-plex-sans-kr-regular">Final Project Team JamJOB-GO</h1>
+                        <p class="col-lg-8 mx-auto lead noto-sans-kr-main">
+                                2023.12.27 ~ 2024.06.24<br>
+                                빅데이터를 활용한 AI챗봇&광학기술 개발자 과정<br>
+                                코리아IT아카데미 신촌점 C class
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
+    <!-- ======= About Section ======= -->
+    <section class="section-about">
+        <div class="container">
+        <div class="row">
+            <div class="col-sm-12 position-relative">
+            <div class="about-img-box" style="margin-top: -100px;">
+                <img src="{% static 'media/image/main2.png' %}" alt="" class="img-fluid">
+            </div>
 
-    <hr class="featurette-divider">
+            <div class="sinse-box">
+                <h3 class="sinse-title ibm-plex-sans-kr-regular" style="color:#ffffff">잠 JOB GO
+                <span></span>
+                <br> We are
+                </h3>
+                <p class="noto-sans-kr-main" style="color: #ffffff;">수면과 관련있는 '잠'과 취업을 위한 '잡(Job)',<br>그리고 활동적인 느낌의 'GO'를 결합하여,<br>동적이고 에너지 넘치는 팀</p>
+            </div>
+            </div>
 
-    <div class="container featurette-container ibm-plex-sans-kr-regular">
-      <div class="row featurette">
-          <div class="col-md-5">
-              <img src="{% static 'media/image/elogo.png' %}" alt="Featurette Image" class="img-fluid mx-auto" width="500" height="500">
-          </div>
-          <div class="col-md-7">
-              <center><h2 class="featurette-heading fw-normal lh-1"><strong>Eunoianest</strong></h2></center>
-              <br />
-              <center><h2><span class="text-body-secondary">Eunoia는</span></h2></center>
-              <br />
-              <center><p class="lead">그리스어로 '아름다운 사고’ 라는 의미와 보금자리(Nest) 를 결합한 이름으로,<br>
-                사용자의 정신 건강을 지원하고 긍정적인 생각을 촉진하여<br>안전하고 편안한 환경을 제공하는 챗봇을 상징</p></center>
-          </div>
-      </div>
-    </div>
-  </main>
-
-  <script src="{% static 'js/team.js' %}"></script>
+            <div class="col-md-12 section-t8 position-relative">
+            <div class="row">
+                <div class="col-md-6 col-lg-5" style="margin-top: -100px; margin-bottom:-80px;">
+                <img src="{% static 'media/image/elogo.png' %}" alt="" class="img-fluid">
+                </div>
+                <div class="col-lg-2  d-none d-lg-block position-relative" style="margin-top: 30px;">
+                <div class="title-vertical d-flex justify-content-start">
+                    <span class="ibm-plex-sans-kr-regular">Beautiful Thinking, Good Sleep</span>
+                </div>
+                </div>
+                <div class="col-md-6 col-lg-5 section-md-t3">
+                <div class="title-box-d" style="margin-top:-20px;">
+                    <h3 class="title-d ibm-plex-sans-kr-regular">Eunoia
+                    <span class="color-d ibm-plex-sans-kr-regular" style="color:#3f3f3f">nest</span>
+                    <br> <p  style="color:#009970;">Eunoia는</p>
+                    </h3>
+                </div>
+                <p class="color-text-a noto-sans-kr-main" style="margin-top: 30px;" >
+                    그리스어로 '아름다운 사고’ 라는 의미와 보금자리(Nest) 를 결합한 이름으로,<br>
+                    사용자의 정신 건강을 지원하고 긍정적인 생각을 촉진하여<br>안전하고 편안한 환경을 제공하는 챗봇을 상징
+                </p>
+                </div>
+            </div>
+            </div>
+            
+        </div>
+        </div>
+    </section>
+</main><!-- End #main -->
 {% endblock %}

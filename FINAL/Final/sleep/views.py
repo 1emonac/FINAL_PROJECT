@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 
 from users.forms import *
 from .models import *
+from blogs.models import Post  # Blog 모델 임포트
 
 from api import address
 from private_file import key
@@ -17,10 +18,14 @@ def video(request):
     return render(request, "main/videomain.html")
 
 def main(request):    
-    return render(request, "main/main2.html")
+    posts = Post.objects.all().order_by('-pk')  # 모든 블로그 포스트 가져오기
+    context = {
+        'posts': posts,
+        }
+    return render(request, 'main/main.html', context)
 
 def define(request):    
-    return render(request, "feed/define2.html")
+    return render(request, "feed/define.html")
 
 def chatbot(request):    
     return render(request, "feed/chatbot.html")
@@ -29,7 +34,7 @@ def result(request):
     return render(request, "feed/result.html")
 
 def team(request):    
-    return render(request, "business/team2.html")
+    return render(request, "business/team.html")
 
 def bloglist(request):    
     return render(request, "feed/blog_list.html")

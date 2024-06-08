@@ -1,190 +1,221 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="ko" data-bs-theme="auto">
-  <head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.122.0">
-    <title>Eunoianest</title>
+<head>
+   <meta charset="utf-8">
+   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/navbars/">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
-    <link href="{% static 'bootstrap/bootstrap-5.3.3-dist/css/bootstrap.min.css' %}" rel="stylesheet">
-    
+   <title>Eunoianest</title>
+   <meta content="" name="description">
+   <meta content="" name="keywords">
+
+   <!-- Favicons -->
+   <link href="{% static 'mainvendor/img/favicon.png' %}" rel="icon">
+   <link href="{% static 'mainvendor/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+   <!-- Google Fonts -->
+   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+   <!-- Vendor CSS Files -->
+   <link href="{% static 'mainvendor/aos/aos.css' %}" rel="stylesheet">
+   <link href="{% static 'mainvendor/aos/aos2.css' %}" rel="stylesheet">
+   <link href="{% static 'bootstrap/bootstrap-5.3.3-dist/css/bootstrap.min.css' %}" rel="stylesheet">
+   <link href="{% static 'mainvendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+   <link href="{% static 'mainvendor/bootstrap-icons/bootstrap-icons2.css' %}" rel="stylesheet">
+   <link href="{% static 'mainvendor/bootstrap-icons/bootstrap-icons3.css' %}" rel="stylesheet">
+   <link href="{% static 'mainvendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+   <link href="{% static 'mainvendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+   <link href="{% static 'mainvendor/glightbox/css/glightbox.min2.css' %}" rel="stylesheet">
+   <link href="{% static 'mainvendor/remixicon/remixicon.css' %}" rel="stylesheet">
+   <link href="{% static 'mainvendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+   <link href="{% static 'mainvendor/swiper/swiper-bundle.min2.css' %}" rel="stylesheet">
+   <link href="{% static 'mainvendor/swiper/swiper-bundle.min3.css' %}" rel="styles3heet">
+   <link href="{% static 'mainvendor/animate.css/animate.min.css' %}" rel="stylesheet">
+
+   <!-- Template Main CSS File -->
+   <link href="{% static 'css/newmain.css' %}" rel="stylesheet">
+
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
-      @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&family=Noto+Sans+KR:wght@100..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&family=Noto+Sans+KR:wght@100..900&display=swap');
 
-      body, html {
-        height: 100%;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .ibm-plex-sans-kr-regular {
+        .ibm-plex-sans-kr-regular {
         font-family: "IBM Plex Sans KR", sans-serif;
         font-weight: 600;
         font-style: normal;
-      }
-
-      .noto-sans-kr-main {
-        font-family: "Noto Sans KR", sans-serif;
-        font-optical-sizing: auto;
-        font-weight: 400;
-        font-style: normal;
-      }
-
-      .navbar-nav .nav-link {
-        color: black !important; /* 네비게이션 바 텍스트 색상 */
-        font-size: 1.25rem; /* 폰트 사이즈 */
-        margin-right: 1px;
-      }
-      
-      .navbar-nav .nav-link.active {
-        color: black !important; /* 활성화된 네비게이션 바 텍스트 색상 */
-      }
-      .custom-container {
-        height: 120px; /* 원하는 높이로 설정 */
-      }
-      .btn-custom {
-        background-color: white !important; /* 버튼 배경 색상 */
-        color: black !important; /* 버튼 텍스트 색상 */
-        border: 1.2px solid rgb(62, 85, 121) !important; /* 버튼 테두리 색상 */
-        padding: 4px 7px; /* 버튼의 내부 여백을 줄입니다 */
-        font-size: 12px; 
-      }
-
-      .footer-bg {
-        background-color: #f7f7f7; /* 회색 배경 색상 */
-        padding: 20px 0; /* 위아래 여백 추가 */
-        width: 100%; /* 전체 너비 설정 */
-      }
-
-      .footer-content {
-        max-width: 1200px; /* 컨테이너 최대 너비 설정 */
-        margin: 0 auto; /* 중앙 정렬 */
-        padding: 0 15px; /* 좌우 패딩 */
-      }
-
-      .float-end {
-        float: right;
-      }
-
-      .main-content {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .content {
-        flex: 1;
-      }
-      .greeting-text {
-        font-size: 18px; /* 원하는 글씨 크기로 설정 */
-        padding: 10px;
-     }
-    </style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-      function showPrompt() {
-        var inputValue = prompt("아이디를 한 번 더 입력하면 탈퇴가 가능합니다.");  
-        if (inputValue) {
-          $.ajax({
-            url: '/users/signout/',
-            type: 'POST',
-            data: {
-              'username': inputValue,
-              'csrfmiddlewaretoken': '{{ csrf_token }}' 
-            },
-            success: function(response) {
-              if (response.success) {
-                alert(response.message);
-                window.location.reload();
-              } else {
-                alert(response.message);
-              }
-            },
-            error: function(error) {
-              console.error('Error:', error);
-              alert('계정 삭제 중 오류가 발생했습니다.');
-            }
-          });
         }
-      }
-    </script>
 
-    <link href="{% static 'css/carousel.css' %}" rel="stylesheet"  type="text/css" />
+        .noto-sans-kr-main {
+            font-family: "Noto Sans KR", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 400;
+            font-style: normal;
+        }
+        .greeting-text {
+          font-size: 15px;
+          margin-right: 3px;
+        }
+    </style>
     {% block head %}{% endblock %}
-  </head>
+    {% block base_extra-style %}{% endblock %}
+</head>
 
-  <body>
-    <br />
-    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar ibm-plex-sans-kr-regular" aria-label="Ninth navbar example">
-      <div class="container-xl custom-container">
-        <a class="navbar-brand" href="{% url 'sleep:main' %}">
-          <img src="{% static 'media/image/flogo2.png' %}" alt="Logo" style="height: 80px;">
-        </a>
+<body>
+  <header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container">
+      <div class="header-container d-flex align-items-center justify-content-between">
+        <div class="logo">
+          <a href="{% url 'sleep:main' %}"><img src="{% static 'media/image/flogo3.png' %}" alt="" class="img-fluid"></a>
+        </div>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample07XL" aria-controls="navbarsExample07XL" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-  
-        <div class="collapse navbar-collapse" id="navbarsExample07XL">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item noto-sans-kr-main">
-              <a class="nav-link" aria-current="page" href="{% url 'sleep:main' %}">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'sleep:team' %}">TEAM</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'sleep:define' %}">ABOUT SLEEP</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">BUSINESS</a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'survey:survey' %}">CHATBOT</a></li>
-                <li><a class="dropdown-item" href="{% url 'chat:index' %}">CHATTING</a></li>
-                <li><a class="dropdown-item" href="{% url 'dr:drai' %}">DR.AI</a></li>
+        <nav id="navbar" class="navbar">
+          <ul>
+            <li><a class="active ibm-plex-sans-kr-regular" href="{% url 'sleep:main' %}" ><strong>Home</strong></a></li>
+            <li><a class="active ibm-plex-sans-kr-regular" href="{% url 'sleep:team' %}"><strong>Team</strong></a></li>
+            <li><a class="active ibm-plex-sans-kr-regular" href="{% url 'sleep:define' %}"><strong>About Sleep</strong></a><li>
+            <li class="dropdown ibm-plex-sans-kr-regular"><a href=""><span><strong>Services</strong></span> <i class="bi bi-chevron-down"></i></a>
+              <ul>
+                <li class="dropdown ibm-plex-sans-kr-regular"><a href="{% url 'survey:survey' %}"><span>수면 진단 챗봇</span> <i class="bi bi-chevron-right"></i></a>
+                  <ul><li><a href="{% url 'survey:result' %}">수면 진단 결과</a></li></ul>
+                </li>
+                <li><a href="{% url 'chat:index' %}">실시간 채팅</a></li>
+                <li><a href="{% url 'dr:list' %}">Dr.A 상담</a></li>
               </ul>
             </li>
-            <li class="nav-item noto-sans-kr-main">
-              <a class="nav-link" aria-current="page" href="{% url 'sleep:clinic' %}">CLINIC</a>
-            </li>
+            <li><a class="active ibm-plex-sans-kr-regular" href="{% url 'blog:list' %}"><strong>Blog</strong></a><li>
+            <li><a class="nav-link active" href="{% url 'sleep:clinic' %}"><strong>Clinic</strong></a></li>
           </ul>
-        
-          <div class="text-end ibm-plex-sans-kr-regular">
-            {% if user.is_authenticated %}
-              <strong class="greeting-text ibm-plex-sans-kr-regular">반갑습니다 {{ user }} 님</strong>
-              <a class="btn btn-custom" href="{% url 'users:profile' %}">마이페이지</a>
-              <a class="btn btn-custom" href="{% url 'users:logout' %}">로그아웃</a>
-              <a class="btn btn-custom" onclick="showPrompt()">회원탈퇴</a>
-            {% else %}
-              <a href="{% url 'users:login' %}" class="btn btn-custom">로그인/회원가입</a>
-            {% endif %}
+          
+          {% if user.is_authenticated %}
+          <strong class="greeting-text ibm-plex-sans-kr-regular">반갑습니다 {{ user }} 님</strong>
+          <a class="getstarted ibm-plex-sans-kr-regular" href="{% url 'users:profile' %}">마이페이지</a>
+          <a class="getstarted ibm-plex-sans-kr-regular" href="{% url 'users:logout' %}">로그아웃</a>
+          <a class="getstarted ibm-plex-sans-kr-regular" onclick="showPrompt()">회원탈퇴</a>
+          {% else %}
+          <a href="{% url 'users:login' %}" class="getstarted ibm-plex-sans-kr-regular">로그인/회원가입</a>
+          {% endif %}
+
+          <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  {% block base_content %}{% endblock %}
+  <footer id="footer">
+
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6 footer-contact ibm-plex-sans-kr-regular ">
+            <h3>Eunoianest</h3>
+            <p>
+              서울특별시 마포구 <br>
+              서강로 136<br>
+              아이비타워 2층 C Class <br><br>
+              <strong>Phone:</strong> +82 2-313-7300<br>
+              <strong>Email:</strong> eunoianest@koreait.com<br>
+            </p>
+          </div>
+
+          <div class="col-lg-2 col-md-6 footer-links">
+            <h4 class="ibm-plex-sans-kr-regular ">바로가기</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'sleep:main' %}">Home</a></li>
+              <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'sleep:team' %}">About us</a></li>
+              <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'sleep:define' %}">About Sleep</a></li>
+              <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'blog:list' %}">Blog</a></li>
+              <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'sleep:clinic' %}">Clinic</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4 class="ibm-plex-sans-kr-regular ">제공되는 서비스</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'survey:survey' %}">수면 진단 챗봇</a></li>
+              <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'survey:result' %}">수면 진단 결과</a></li>
+              <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'chat:index' %}">실시간 채팅</a></li>
+              <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'dr:list' %}">Dr.A 상담</a></li>
+            </ul>
           </div>
         </div>
       </div>
-    </nav>
-
-    <div class="main-content">
-      <div class="container-xl content">
-        {% block base_extra-style %}{% endblock %}
-        {% block base_content %}{% endblock %}
-      </div>
-      <footer class="footer-bg">
-        <div class="footer-content">
-          <p class="float-end"><a href="#">Back to top</a></p>
-          <p>&copy; 2024, Final Project TEAM JamJOBGO &middot; <a href="https://g-sa.koreaisacademy.com/?ACE_REF=adwords_g&ACE_KW=%EC%BD%94%EB%A6%AC%EC%95%84it&gad_source=1&gclid=Cj0KCQjwxqayBhDFARIsAANWRnTgHrK-sMcRhVpFBCnpfv1F2omvCrlEE6GJ5xs0JoQs0DfkhzefFWkaAhbVEALw_wcB">코리아IT아카데미 알아보기</a></p>
-        </div>
-      </footer>
     </div>
-    {% block base_extra-script %}{% endblock %}
-  </body>
+
+    <div class="container d-md-flex py-4">
+      <div class="me-md-auto text-center text-md-start">
+        <div class="copyright">
+          &copy; Copyright <strong><span>2024 Final Project TEAM JamJOBGO</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+        
+          Cooperate with <a href="https://g-sa.koreaisacademy.com/?ACE_REF=adwords_g&ACE_KW=%EC%BD%94%EB%A6%AC%EC%95%84it%EC%95%84%EC%B9%B4%EB%8D%B0%EB%AF%B8&gad_source=1&gclid=EAIaIQobChMItLfaqZvDhgMVYB97Bx0fswSoEAAYASAAEgIOifD_BwE">코리아IT아카데미</a>
+        </div>
+      </div>
+      <div class="social-links text-center text-md-right pt-3 pt-md-0">
+        <a href="https://x.com/?lang=ko" class="twitter"><i class="bx bxl-twitter"></i></a>
+        <a href="https://www.facebook.com/?locale=ko_KR" class="facebook"><i class="bx bxl-facebook"></i></a>
+        <a href="https://www.instagram.com/" class="instagram"><i class="bx bxl-instagram"></i></a>
+        <a href="https://skype.daesung.com/main.asp" class="google-plus"><i class="bx bxl-skype"></i></a>
+        <a href="https://kr.linkedin.com/" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'mainvendor/aos/aos.js' %}"></script>
+  <script src="{% static 'mainvendor/aos/aos2.js' %}"></script>
+  <script src="{% static 'mainvendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'mainvendor/glightbox/js/glightbox.min2.js' %}"></script>
+  <script src="{% static 'mainvendor/purecounter/purecounter_vanilla.js' %}"></script>
+  <script src="{% static 'mainvendor/purecounter/purecounter_vanilla2.js' %}"></script>
+  <script src="{% static 'mainvendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+  <script src="{% static 'mainvendor/isotope-layout/isotope.pkgd.min2.js' %}"></script>
+  <script src="{% static 'mainvendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{% static 'mainvendor/swiper/swiper-bundle.min2.js' %}"></script>
+  <script src="{% static 'mainvendor/swiper/swiper-bundle.min3.js' %}"></script>
+  
+  <!-- <script src="{% static 'mainvendor/php-email-form/validate.js' %}"></script> -->
+
+  <!-- Template Main JS File -->
+  <script>
+    function showPrompt() {
+      var inputValue = prompt("아이디를 한 번 더 입력하면 탈퇴가 가능합니다.");  
+      if (inputValue) {
+        $.ajax({
+          url: '/users/signout/',
+          type: 'POST',
+          data: {
+            'username': inputValue,
+            'csrfmiddlewaretoken': '{{ csrf_token }}' 
+          },
+          success: function(response) {
+            if (response.success) {
+              alert(response.message);
+              window.location.reload();
+            } else {
+              alert(response.message);
+            }
+          },
+          error: function(error) {
+            console.error('Error:', error);
+            alert('계정 삭제 중 오류가 발생했습니다.');
+          }
+        });
+      }
+    }
+  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="{% static 'js/newmain.js' %}"></script>
+  <script src="{% static 'js/newmain2.js' %}"></script>
+  <script src="{% static 'js/newmain3.js' %}"></script>
+  
+  
+  {% block base_extra-script %}{% endblock %}
+</body>
+
 </html>

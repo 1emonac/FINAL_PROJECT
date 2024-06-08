@@ -1,0 +1,40 @@
+#chat-message-list {
+    padding: 0;
+    list-style: none;
+}
+.chat-message .message {
+    background-color: #3b3b3d;
+    color: #e1e1e1;
+    border-radius: 0.8em;
+    padding: 0.4em;
+    margin: 0.4em 0;
+    display: inline-block;
+    white-space: pre-wrap;
+    text-align: left;
+}
+
+.chat-message.me {
+    text-align: right;
+}
+.chat-message.me .message {
+    background-color: #1f8cff;
+    color: #fff;
+    text-align: left;
+}
+/* 텍스트 스타일 */
+.room-name {
+    font-size: 3rem; /* 원하는 크기로 조정 */
+}
+.card-header{
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.3rem;
+    background-color: #ffffff;
+}
+.row2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Viewport height를 100%로 설정 */
+    margin: 0; /* 기본 margin 제거 */
+}

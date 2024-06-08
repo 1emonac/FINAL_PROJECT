@@ -3,14 +3,12 @@ from typing import List
 import os
 import openai
 from channels.generic.websocket import JsonWebsocketConsumer
-from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 from openai.types.chat import ChatCompletion
 
 from dr.models import SleepClinicRoom, GptMessage
 
-OPENAI_CLIENT = openai.OpenAI(api_key=os.environ.get("OPENAI_API_KEY"), )
-
-FIXED_ROOM_PK = 1  # 고정된 방의 Primary Key
+OPENAI_CLIENT = openai.OpenAI(api_key=os.environ.get("OPENAI_API_KEY"),)
 
 class SleepClinicRoomConsumer(JsonWebsocketConsumer):
     def __init__(self, *args, **kwargs):
@@ -19,18 +17,15 @@ class SleepClinicRoomConsumer(JsonWebsocketConsumer):
 
     def connect(self):
         room = self.get_room()
-        if room is None:
-            self.close()
-        else:
-            self.accept()
-            self.gpt_messages = room.get_initial_messages()
-            assistant_message = self.get_query()
-            self.send_json(
-                {
-                    "type": "assistant-message",
-                    "message": assistant_message,
-                }
-            )
+        self.accept()
+        self.gpt_messages = room.get_initial_messages()
+        assistant_message = self.get_query()
+        self.send_json(
+            {
+                "type": "assistant-message",
+                "message": assistant_message,
+            }
+        )
 
     def receive_json(self, content_dict, **kwargs):
         if content_dict["type"] == "user-message":
@@ -50,10 +45,16 @@ class SleepClinicRoomConsumer(JsonWebsocketConsumer):
             )
 
     def get_room(self):
-        try:
-            room = SleepClinicRoom.objects.get(pk=FIXED_ROOM_PK)
-        except SleepClinicRoom.DoesNotExist:
-            room = None
+        room, created = SleepClinicRoom.objects.get_or_create(
+            pk=1,
+            defaults={
+                'user': self.scope["user"],  # 현재 접속한 사용자를 기본값으로 설정
+                'situation': '기본 상황',
+                'situation_kr': '기본 상황 (한국어)',
+                'my_role': '환자',
+                'gpt_role': '수면클리닉 의사'
+            }
+        )
         return room
 
     def get_query(self, command_query: str = None, user_query: str = None) -> str:
