@@ -1,0 +1,19 @@
+[
+    {
+        "type": "text",
+        "question": "How many hours do you sleep on average?",
+        "key": "sleep_hours"
+    },
+    {
+        "type": "choice",
+        "question": "How would you rate your sleep quality?",
+        "choices": ["Poor", "Average", "Good"],
+        "key": "sleep_quality"
+    },
+    {
+        "type": "multiple",
+        "question": "Do you experience any of the following? (Select all that apply)",
+        "choices": ["Insomnia", "Snoring", "Nightmares", "Sleepwalking"],
+        "key": "sleep_issues"
+    }
+]

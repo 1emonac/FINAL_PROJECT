@@ -1,0 +1,115 @@
+{% extends "base_chat.html" %}
+{% load static %}
+
+{% block head %}
+<style>
+#chat-message-list {
+    padding: 0;
+    list-style: none;
+}
+.chat-message .message {
+    background-color: #3b3b3d;
+    color: #e1e1e1;
+    border-radius: 0.8em;
+    padding: 0.4em;
+    margin: 0.4em 0;
+    display: inline-block;
+    white-space: pre-wrap;
+    text-align: left;
+}
+
+.chat-message.me {
+    text-align: right;
+}
+.chat-message.me .message {
+    background-color: #1f8cff;
+    color: #fff;
+    text-align: left;
+}
+.survey-chat {
+    background-color: white; /* 흰색 배경 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 검은색 그림자 */
+    border-radius: 4px; /* 모서리를 약간 둥글게 */
+    padding: 16px; /* 내부 여백 */
+    margin: 16px; /* 외부 여백 */
+}
+.survey-circle {
+    background-color: white; /* 흰색 배경 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 검은색 그림자 */
+    border-radius: 12px; /* 둥근 네모 모양 */
+    padding: 5px 12px; /* 내부 여백 */
+    display: inline-block; /* 텍스트 크기에 맞춤 */
+    margin: 12px; /* 외부 여백 */
+    font-size: 14px; /* 텍스트 크기 설정 */
+}
+
+
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row2">
+   <div class="col-sm-7" style="margin-top: 100px; margin-bottom: 50px;">
+        <div class="card" style="height: 700px;">
+            <div class="card-header">
+                Dr.A와의 대화
+            </div>
+           
+            <div class="card-body">
+                <ul id="chat-message-list">
+                    <div class="chat-message message">
+                        안녕하세요! 수면 진단 설문조사 챗봇입니다. 시작해 볼게요!
+                    </div>
+                </ul>
+                <div class="survey-chat col-sm-4">
+                    <div>
+                    어제 밤 잠을 잘 주무셨나요?
+                    </div>
+                    <br>
+                    <button type="button" class="btn btn-success" onclick="onButtonClick('{type: "TEXT", "displayText": 네, "postback":"0"}', this)"><span>네</span></button>
+                    <button type="button" class="btn btn-success" onclick="onButtonClick('{type: "TEXT", "displayText": 아니오, "postback":"1"}', this)"><span>아니오</span></button>
+                </div>
+
+                <div class="survey-chat col-sm-4">
+                    <div>
+                    스트레스를 얼만큼 받으셨나요?
+                    </div>
+                    <br>
+                    <span class="survey-circle">매우 많이</span>
+                    <button type="button" class="btn btn-success" onclick="onButtonClick('{type: "TEXT", "displayText": 1, "postback":"0"}', this)"><span>1</span></button>
+                    <button type="button" class="btn btn-success" onclick="onButtonClick('{type: "TEXT", "displayText": 2, "postback":"1"}', this)"><span>2</span></button>
+                    <button type="button" class="btn btn-success" onclick="onButtonClick('{type: "TEXT", "displayText": 3, "postback":"2"}', this)"><span>3</span></button>
+                    <button type="button" class="btn btn-success" onclick="onButtonClick('{type: "TEXT", "displayText": 4, "postback":"3"}', this)"><span>4</span></button>
+                    <button type="button" class="btn btn-success" onclick="onButtonClick('{type: "TEXT", "displayText": 5, "postback":"4"}', this)"><span>5</span></button>
+                    <span class="survey-circle">전혀 안 받음</span>
+                </div>
+
+                <div class="survey-chat col-sm-4">
+                    <div>
+                    하루동안 긴장을 많이 하셨나요?
+                    </div>
+                    <br>
+                    <button type="button" class="btn btn-success" onclick="onButtonClick('{type: "TEXT", "displayText": 1, "postback":"0"}', this)"><span>1</span></button>
+                    <button type="button" class="btn btn-success" onclick="onButtonClick('{type: "TEXT", "displayText": 2, "postback":"1"}', this)"><span>2</span></button>
+                    <button type="button" class="btn btn-success" onclick="onButtonClick('{type: "TEXT", "displayText": 3, "postback":"2"}', this)"><span>3</span></button>
+                    <button type="button" class="btn btn-success" onclick="onButtonClick('{type: "TEXT", "displayText": 4, "postback":"3"}', this)"><span>4</span></button>
+                    <button type="button" class="btn btn-success" onclick="onButtonClick('{type: "TEXT", "displayText": 5, "postback":"4"}', this)"><span>5</span></button>
+                    <button type="button" class="btn btn-success" onclick="onButtonClick('{type: "TEXT", "displayText": 6, "postback":"5"}', this)"><span>6</span></button>
+                    <button type="button" class="btn btn-success" onclick="onButtonClick('{type: "TEXT", "displayText": 7, "postback":"6"}', this)"><span>7</span></button>
+                </div>
+            </div>
+            
+            <div class="card-footer">
+                <div class="d-flex gap-2">
+                    <form id="message-form" class="d-flex gap-1 flex-grow-1">
+                        <input type="text"
+                            name="message"
+                            placeholder="메시지를 입력하세요."
+                            class="form-control flex-grow-1" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

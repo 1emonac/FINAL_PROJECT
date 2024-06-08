@@ -1,61 +1,78 @@
+# survey/consumers.py
+
 import json
-from django.db import transaction
+import os
 from channels.generic.websocket import WebsocketConsumer
-from .models import Question, Choice, Response
+from .models import Response
+from django.contrib.auth.models import User
+from django.conf import settings
 
-class SurveyConsumer(WebsocketConsumer):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
+class ChatConsumer(WebsocketConsumer):
     def connect(self):
+        self.room_name = 'survey_chat'
+        self.room_group_name = 'chat_%s' % self.room_name
+        self.questions = self.load_questions()
+        self.current_question_index = 0
+        self.responses = {}
+
         self.accept()
+        self.send_question()
+
+    def disconnect(self, close_code):
+        pass
 
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
-        message_type = text_data_json['type']
+        message_type = text_data_json.get('type')
 
-        if message_type == 'get_question':
-            question_id = text_data_json['question_id']
-            try:
-                question = self.get_question(question_id)
-                choices = self.get_choices(question_id)
-                
-                # Send question and choices to the user
+        if message_type == 'user-message':
+            message = text_data_json['message']
+            current_question = self.questions[self.current_question_index - 1]
+            self.responses[current_question['key']] = message
+
+            if self.current_question_index < len(self.questions):
+                self.send_question()
+            else:
                 self.send(text_data=json.dumps({
-                    'question': question.text,
-                    'choices': choices,  # 변경됨
-                    'type': question.question_type
+                    'type': 'assistant-message',
+                    'message': '설문조사가 완료되었습니다. 감사합니다!'
                 }))
-            except Question.DoesNotExist:
-                self.send(text_data=json.dumps({'error': 'Question not found'}))
+                self.save_responses()
+        else:
+            self.send(text_data=json.dumps({
+                'type': 'error',
+                'message': 'Unknown message type.'
+            }))
 
-        elif message_type == 'submit_response':
-            user_id = text_data_json['user_id']
-            question_id = text_data_json['question_id']
-            choice_ids = text_data_json.get('choice_ids', [])
-            text_response = text_data_json.get('text_response', '')
+    def send_question(self):
+        question = self.questions[self.current_question_index]
+        self.current_question_index += 1
 
-            # Store response
-            self.store_response(question_id, user_id, text_response, choice_ids)
+        if question['type'] == 'text':
+            self.send(text_data=json.dumps({
+                'type': 'assistant-message',
+                'message': question['question']
+            }))
+        elif question['type'] == 'choice':
+            choices = ', '.join(question['choices'])
+            self.send(text_data=json.dumps({
+                'type': 'assistant-message',
+                'message': f"{question['question']} (Choices: {choices})"
+            }))
+        elif question['type'] == 'multiple':
+            choices = ', '.join(question['choices'])
+            self.send(text_data=json.dumps({
+                'type': 'assistant-message',
+                'message': f"{question['question']} (Multiple choices: {choices})"
+            }))
 
-    def get_question(self, question_id):
-        return Question.objects.get(pk=question_id)
+    def load_questions(self):
+        file_path = os.path.join(settings.BASE_DIR, 'survey', 'data', 'questions.json')
+        with open(file_path, 'r') as f:
+            questions = json.load(f)
+        return questions
 
-    def get_choices(self, question_id):
-        choices = Choice.objects.filter(question_id=question_id)
-        return [{'id': choice.id, 'text': choice.choice_text} for choice in choices]
-
-    def store_response(self, question_id, user_id, text_response, choice_ids):
-        question = Question.objects.get(pk=question_id)
-        response = Response(question=question, user_id=user_id)
-        with transaction.atomic():
-            response.save()
-
-            if question.question_type == 'text':
-                response.text_response = text_response
-            elif question.question_type in ['choice', 'multiple']:
-                for choice_id in choice_ids:
-                    choice = Choice.objects.get(pk=choice_id)
-                    response.choice_responses.add(choice)
-
-            response.save()
+    def save_responses(self):
+        user = self.scope['user']
+        for key, response in self.responses.items():
+            Response.objects.create(user=user if user.is_authenticated else None, response=response)

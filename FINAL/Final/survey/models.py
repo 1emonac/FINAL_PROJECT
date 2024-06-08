@@ -1,30 +1,18 @@
 from django.db import models
+from django.conf import settings
 
 class Question(models.Model):
-    text = models.TextField(help_text="Enter the question text.")
-    question_type = models.CharField(max_length=20, choices=(('text', 'Text'), ('choice', 'Choice'), ('multiple', 'Multiple')))
+    question_text = models.CharField(max_length=200)
+    question_type = models.CharField(max_length=50)  # 예: text, choice, multiple
+    choices = models.TextField(blank=True)  # 선택형 질문의 선택지들을 저장
 
     def __str__(self):
-        return self.text
-
-class Choice(models.Model):
-    question = models.ForeignKey(Question, related_name='choices', on_delete=models.CASCADE)
-    choice_text = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.choice_text
+        return self.question_text
 
 class Response(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    text_response = models.TextField(blank=True, null=True)
-    choice_responses = models.ManyToManyField(Choice, blank=True)
-    user_id = models.IntegerField()
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
+    response = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        responses = self.choice_responses.all()
-        if self.text_response:
-            return self.text_response
-        elif responses:
-            return ', '.join([choice.choice_text for choice in responses])
-        else:
-            return 'No response'
+        return self.response
