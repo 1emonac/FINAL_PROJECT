@@ -23,3 +23,7 @@ def result_view(request):
 
 def example(request):
     return render(request, 'survey/survey3.html')
+
+def example2(request):
+    return render(request, 'survey/survey4.html')
+
