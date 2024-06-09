@@ -1,5 +1,4 @@
 {% extends "base_chat.html" %}
-
 {% block extra-style %}
     <style>
         .chat-message > div {
@@ -22,8 +21,8 @@
             text-align: left;
         }
     </style>
+    <link href="{% static 'css/test.css' %}" rel="stylesheet">
 {% endblock %}
-
 {% block content %}
     {# TODO: 웹소켓으로 실시간 채팅 기능 구현하기#}
 <section style="margin-top: 40px; margin-bottom: 50px;">   

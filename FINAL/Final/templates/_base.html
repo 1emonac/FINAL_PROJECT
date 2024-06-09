@@ -74,13 +74,13 @@
             <li><a class="active ibm-plex-sans-kr-regular" href="{% url 'sleep:main' %}" ><strong>Home</strong></a></li>
             <li><a class="active ibm-plex-sans-kr-regular" href="{% url 'sleep:team' %}"><strong>Info</strong></a></li>
             <li><a class="active ibm-plex-sans-kr-regular" href="{% url 'sleep:define' %}"><strong>About Sleep</strong></a><li>
-            <li class="dropdown ibm-plex-sans-kr-regular"><span><strong>SERVICES</strong></span> <i class="bi bi-chevron-down"></i>
+            <li class="dropdown ibm-plex-sans-kr-regular"><a><span><strong>SERVICES</strong></span></a> <i class="bi bi-chevron-down"></i>
               <ul>
                 <li class="dropdown ibm-plex-sans-kr-regular"><a href="{% url 'survey:survey' %}"><span>수면 진단 챗봇</span> <i class="bi bi-chevron-right"></i></a>
                   <ul><li><a href="{% url 'survey:result' %}">수면 진단 결과</a></li></ul>
                 </li>
                 <li><a href="{% url 'chat:index' %}">실시간 채팅</a></li>
-                <li><a href="{% url 'dr:list' %}">Dr.A 상담</a></li>
+                <li><a href="{% url 'dr:list' %}">Dr.Eunoia 상담</a></li>
               </ul>
             </li>
             <li><a class="active ibm-plex-sans-kr-regular" href="{% url 'blog:list' %}"><strong>Blog</strong></a><li>

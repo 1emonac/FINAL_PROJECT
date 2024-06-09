@@ -28,7 +28,7 @@ class SleepClinicRoom(models.Model):
         return reverse("sleep_clinic_room_detail", args=[self.pk])
 
     def get_initial_messages(self):
-        gpt_name = "Dr.A"
+        gpt_name = "Dr.Eunoia"
         situation_kr = self.situation_kr or self.situation
 
         system_message = (
