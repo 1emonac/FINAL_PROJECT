@@ -54,7 +54,7 @@
         }
         .greeting-text {
           font-size: 15px;
-          margin-right: 3px;
+          margin-right: 5px;
         }
     </style>
     {% block head %}{% endblock %}
@@ -74,17 +74,17 @@
             <li><a class="active ibm-plex-sans-kr-regular" href="{% url 'sleep:main' %}" ><strong>Home</strong></a></li>
             <li><a class="active ibm-plex-sans-kr-regular" href="{% url 'sleep:team' %}"><strong>Info</strong></a></li>
             <li><a class="active ibm-plex-sans-kr-regular" href="{% url 'sleep:define' %}"><strong>About Sleep</strong></a><li>
-            <li class="dropdown ibm-plex-sans-kr-regular"><span><strong>SERVICES</strong></span> <i class="bi bi-chevron-down"></i>
+            <li class="dropdown ibm-plex-sans-kr-regular" style=" margin-left: -15px;"><a><span><strong>SERVICES</strong></span> <i class="bi bi-chevron-down"></i></a>
               <ul>
                 <li class="dropdown ibm-plex-sans-kr-regular"><a href="{% url 'survey:survey' %}"><span>수면 진단 챗봇</span> <i class="bi bi-chevron-right"></i></a>
                   <ul><li><a href="{% url 'survey:result' %}">수면 진단 결과</a></li></ul>
                 </li>
                 <li><a href="{% url 'chat:index' %}">실시간 채팅</a></li>
-                <li><a href="{% url 'dr:list' %}">Dr.A 상담</a></li>
+                <li><a href="{% url 'dr:list' %}">Dr.Eunoia 상담</a></li>
               </ul>
             </li>
             <li><a class="active ibm-plex-sans-kr-regular" href="{% url 'blog:list' %}"><strong>Blog</strong></a><li>
-            <li><a class="nav-link active" href="{% url 'sleep:clinic' %}"><strong>Clinic</strong></a></li>
+            <li><a class="nav-link active" href="{% url 'sleep:clinic' %}" style=" margin-left: -15px;"><strong>Clinic</strong></a></li>
           </ul>
           
           {% if user.is_authenticated %}
@@ -113,7 +113,7 @@
             <h3>Eunoianest</h3>
             <p>
               서울특별시 마포구 <br>
-              서강로 136<br>
+              서강로 136,<br>
               아이비타워 2층 C Class <br><br>
               <strong>Phone:</strong> +82 2-313-7300<br>
               <strong>Email:</strong> eunoianest@koreait.com<br>
@@ -137,7 +137,7 @@
               <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'survey:survey' %}">수면 진단 챗봇</a></li>
               <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'survey:result' %}">수면 진단 결과</a></li>
               <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'chat:index' %}">실시간 채팅</a></li>
-              <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'dr:list' %}">Dr.A 상담</a></li>
+              <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'dr:list' %}">Dr.Eunoia 상담</a></li>
             </ul>
           </div>
         </div>

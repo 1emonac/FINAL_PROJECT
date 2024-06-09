@@ -18,7 +18,7 @@ def video(request):
     return render(request, "main/videomain.html")
 
 def main(request):    
-    posts = Post.objects.all().order_by('-pk')  # 모든 블로그 포스트 가져오기
+    posts = Post.objects.all().order_by('-pk')[:3]  # 모든 블로그 포스트 가져오기
     context = {
         'posts': posts,
         }

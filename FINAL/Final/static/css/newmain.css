@@ -151,7 +151,8 @@ h6 {
 .navbar {
   display: flex;
   padding: 0;
-  justify-content: space-between;  /* 양 끝에 배치 */
+  justify-content: start;
+  position: relative; /* 부모 요소의 위치를 기준으로 드롭다운 메뉴 위치 설정 */
 }
 
 .navbar ul {
@@ -164,17 +165,21 @@ h6 {
 
 .navbar ul li {
   display: flex;
-  justify-content: space-between;  /* 항목들을 일정한 간격으로 배치 */
-  list-style: none;  /* 기본 목록 스타일 제거 */
-  padding: 0;  /* 기본 패딩 제거 */
-  margin: 0;  /* 기본 마진 제거 */
-  margin-right: 10px;
-  
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-right: 15px;
+}
+
+.navbar ul li a {
+  text-decoration: none;
+  color: inherit;
+  padding: 0 10px;
 }
 
 .navbar li {
   position: relative;
-  margin-right: auto;
 }
 
 .navbar a,
@@ -188,16 +193,13 @@ h6 {
   font-size: 13px;
   font-weight: 500;
   text-transform: uppercase;
-  /* font-family: "ibm-plex-sans-kr-regular", sans-serif; */
   white-space: nowrap;
-  transition: 0.3s;
 }
 
 .navbar a i,
 .navbar a:focus i {
   font-size: 12px;
   line-height: 0;
-  /* margin-left: 5px; */
 }
 
 .navbar a:hover,
@@ -205,15 +207,14 @@ h6 {
 .navbar .active:focus,
 .navbar li:hover>a {
   color: #009970;
-  margin-right: auto;
 }
 
 .navbar .getstarted,
 .navbar .getstarted:focus {
   background: #009970;
   padding: 6px 15px;
-  margin-left: 2px;
-  margin-right: 2px;
+  margin-left: 1px;
+  margin-right: 7px;
   border-radius: 50px;
   color: #fff;
 }
@@ -227,8 +228,8 @@ h6 {
 .navbar .dropdown ul {
   display: block;
   position: absolute;
-  left: 14px;
-  top: calc(100% + 30px);
+  left: 0; /* 부모 요소를 기준으로 왼쪽 정렬 */
+  top: calc(100% + 10px); /* 부모 요소 아래에 위치 */
   margin: 0;
   padding: 10px 0;
   z-index: 99;
@@ -267,7 +268,7 @@ h6 {
 
 .navbar .dropdown .dropdown ul {
   top: 0;
-  left: calc(100% - 30px);
+  left: calc(100% - 30px); /* 두 번째 드롭다운의 위치 설정 */
   visibility: hidden;
 }
 
@@ -287,6 +288,7 @@ h6 {
     left: -100%;
   }
 }
+
 
 /**
 * Mobile Navigation 

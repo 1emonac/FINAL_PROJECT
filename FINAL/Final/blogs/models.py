@@ -1,11 +1,12 @@
 from django.db import models
+from ckeditor.fields import RichTextField
 
 # Create your models here.
 
 class Post(models.Model):
     title = models.CharField(max_length=200)
     hook_text = models.CharField(max_length=100, blank=True)
-    content = models.TextField()
+    content = RichTextField()
     
     head_image = models.ImageField(upload_to='blogs/images', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
