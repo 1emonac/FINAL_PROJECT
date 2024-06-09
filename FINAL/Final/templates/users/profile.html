@@ -10,16 +10,18 @@
     <br><br>
 </section>
 
-<div class="content" style="margin-top: 1px;">
-    <div class="card">
-      <div class="firstinfo"><img src="{% static 'media/image/cat3.jpg' %}"/>
-        <div class="profileinfo">
-          <h1>{{ user }}의 프로필</h1>
-          <p class="bio">Last login: {{ user.last_login }}</p>
-          <center><a href="{% url 'survey:result' %}" class="login-button btn btn-primary me-3">진단 결과</a>
-          <a href="{% url 'dr:list' %}" class="btn btn-primary">Dr.Eunoia 대화</a></center>
+<section style="background: linear-gradient(to bottom left, #79C7C5 40%, #F9FBFF 100%);">
+  <div class="content" style="margin-top: 1px;">
+      <div class="card">
+        <div class="firstinfo"><img src="{% static 'media/image/cat3.jpg' %}"/>
+          <div class="profileinfo">
+            <h1>{{ user }}의 프로필</h1>
+            <p class="bio">Last login: {{ user.last_login }}</p>
+            <center><a href="{% url 'survey:result' %}" class="login-button btn btn-primary me-3">진단 결과</a>
+            <a href="{% url 'dr:list' %}" class="btn btn-primary">Dr.Eunoia 대화</a></center>
+          </div>
         </div>
       </div>
-    </div>
-</div>
+  </div>
+</section>
 {% endblock %}

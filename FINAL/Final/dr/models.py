@@ -25,7 +25,7 @@ class SleepClinicRoom(models.Model):
     gpt_role = models.CharField(max_length=100, verbose_name="GPT 역할", default="수면클리닉 의사")
 
     def get_absolute_url(self):
-        return reverse("sleep_clinic_room_detail", args=[self.pk])
+        return reverse("dr_chat", args=[self.pk])
 
     def get_initial_messages(self):
         gpt_name = "Dr.Eunoia"

@@ -1,78 +1,99 @@
-# survey/consumers.py
+from typing import List
 
-import json
 import os
-from channels.generic.websocket import WebsocketConsumer
-from .models import Response
-from django.contrib.auth.models import User
+import openai
+from channels.generic.websocket import JsonWebsocketConsumer
 from django.conf import settings
+from openai.types.chat import ChatCompletion
 
-class ChatConsumer(WebsocketConsumer):
+from dr.models import SleepClinicRoom, GptMessage
+
+OPENAI_CLIENT = openai.OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+
+class SurveyConsumer(JsonWebsocketConsumer):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.gpt_messages: List[GptMessage] = []
+
     def connect(self):
-        self.room_name = 'survey_chat'
-        self.room_group_name = 'chat_%s' % self.room_name
-        self.questions = self.load_questions()
-        self.current_question_index = 0
-        self.responses = {}
+        try:
+            room = self.get_room()
+            self.accept()
+            self.gpt_messages = room.get_initial_messages()
+            assistant_message = self.get_query()
+            self.send_json(
+                {
+                    "type": "assistant-message",
+                    "message": assistant_message,
+                }
+            )
+        except Exception as e:
+            self.send_json(
+                {
+                    "type": "error",
+                    "message": f"Failed to connect: {str(e)}",
+                }
+            )
 
-        self.accept()
-        self.send_question()
-
-    def disconnect(self, close_code):
-        pass
-
-    def receive(self, text_data):
-        text_data_json = json.loads(text_data)
-        message_type = text_data_json.get('type')
-
-        if message_type == 'user-message':
-            message = text_data_json['message']
-            current_question = self.questions[self.current_question_index - 1]
-            self.responses[current_question['key']] = message
-
-            if self.current_question_index < len(self.questions):
-                self.send_question()
+    def receive_json(self, content_dict, **kwargs):
+        try:
+            if content_dict["type"] == "user-message":
+                assistant_message = self.get_query(user_query=content_dict["message"])
+                self.send_json(
+                    {
+                        "type": "assistant-message",
+                        "message": assistant_message,
+                    }
+                )
             else:
-                self.send(text_data=json.dumps({
-                    'type': 'assistant-message',
-                    'message': '설문조사가 완료되었습니다. 감사합니다!'
-                }))
-                self.save_responses()
-        else:
-            self.send(text_data=json.dumps({
-                'type': 'error',
-                'message': 'Unknown message type.'
-            }))
+                self.send_json(
+                    {
+                        "type": "error",
+                        "message": f"Invalid type: {content_dict['type']}",
+                    }
+                )
+        except Exception as e:
+            self.send_json(
+                {
+                    "type": "error",
+                    "message": f"Failed to process message: {str(e)}",
+                }
+            )
 
-    def send_question(self):
-        question = self.questions[self.current_question_index]
-        self.current_question_index += 1
+    def get_room(self):
+        room, created = SleepClinicRoom.objects.get_or_create(
+            pk=1,
+            defaults={
+                'user': self.scope["user"],  # 현재 접속한 사용자를 기본값으로 설정
+                'situation': '기본 상황',
+                'situation_kr': '기본 상황 (한국어)',
+                'my_role': '설문조사 참여자',
+                'gpt_role': '설문조사 질문 안내원'
+            }
+        )
+        return room
 
-        if question['type'] == 'text':
-            self.send(text_data=json.dumps({
-                'type': 'assistant-message',
-                'message': question['question']
-            }))
-        elif question['type'] == 'choice':
-            choices = ', '.join(question['choices'])
-            self.send(text_data=json.dumps({
-                'type': 'assistant-message',
-                'message': f"{question['question']} (Choices: {choices})"
-            }))
-        elif question['type'] == 'multiple':
-            choices = ', '.join(question['choices'])
-            self.send(text_data=json.dumps({
-                'type': 'assistant-message',
-                'message': f"{question['question']} (Multiple choices: {choices})"
-            }))
+    def get_query(self, command_query: str = None, user_query: str = None) -> str:
+        if command_query and user_query:
+            raise ValueError("command_query 인자와 user_query 인자는 동시에 사용할 수 없습니다.")
+        if command_query:
+            self.gpt_messages.append(GptMessage(role="user", content=command_query))
+        if user_query:
+            self.gpt_messages.append(GptMessage(role="user", content=user_query))
 
-    def load_questions(self):
-        file_path = os.path.join(settings.BASE_DIR, 'survey', 'data', 'questions.json')
-        with open(file_path, 'r') as f:
-            questions = json.load(f)
-        return questions
+        try:
+            response: ChatCompletion = OPENAI_CLIENT.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=self.gpt_messages,
+                temperature=1,
+            )
+            response_role = response.choices[0].message.role
+            response_content = response.choices[0].message.content
 
-    def save_responses(self):
-        user = self.scope['user']
-        for key, response in self.responses.items():
-            Response.objects.create(user=user if user.is_authenticated else None, response=response)
+            if not command_query:
+                gpt_message = GptMessage(role=response_role, content=response_content)
+                self.gpt_messages.append(gpt_message)
+            return response_content
+        except Exception as e:
+            return f"Error in getting response from OpenAI: {str(e)}"
+

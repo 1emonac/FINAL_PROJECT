@@ -19,6 +19,7 @@ app_name="survey"
 urlpatterns = [
     path('result/', views.result_view, name='result'),
     path('survey/', views.chat_view, name='survey'),  # Chat URL 추가
-    path('survey3/', views.example, name='survey3'),
+    path('survey3/', views.survey_room, name='survey3'),
     path('survey4/', views.example2, name="survey4"),
+    path('survey5/', views.survey5, name="survey5"),
 ]

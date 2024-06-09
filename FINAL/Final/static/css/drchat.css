@@ -1,68 +1,26 @@
-.card {
-    padding: 0;
-    margin: 0;
-    background: -moz-linear-gradient(-45deg, #183850 0, #183850 25%, #192C46 50%, #22254C 75%, #22254C 100%);
-    background: -webkit-linear-gradient(-45deg, #183850 0, #183850 25%, #192C46 50%, #22254C 75%, #22254C 100%);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-}
-.overflow-scroll {
-    /* Firefox */
-    scrollbar-width: none;
-    /* Webkit (Safari, Chrome) */
-    -ms-overflow-style: none;  /* IE 및 Edge */
-    overflow-y: auto;
-}
-
-.overflow-scroll::-webkit-scrollbar {
-    display: none;
-}
 #chat-message-list {
     padding: 0;
     list-style: none;
 }
-
-#chat-message-list .chat-message.me {
-    text-align: right;
-    margin-left: 80px;
+.chat-message .message {
+    background-color: #3b3b3d;
+    color: #e1e1e1;
+    border-radius: 0.8em;
+    padding: 0.4em;
+    margin: 0.4em 0;
+    display: inline-block;
+    white-space: pre-wrap;
+    text-align: left;
 }
 
-
+.chat-message.me {
+    text-align: right;
+}
 .chat-message.me .message {
-    background-color: rgba(25, 147, 147, 0.2);
-    border-radius: 0.8em;
-    display: inline-block;
-    white-space: pre-wrap;
-    color:  #0AD5C1;
-    
-    margin-left: 40px;
-    padding: 16px 20px 16px 20px;
-    margin: 0 0 20px 0;
-    font: 14px/14px "Noto Sans", sans-serif;
-
-    text-align: right;
-}
-
-.chat-message:not(.me) .message {
-    background-color: rgba(25, 147, 147, 0.2);
-    
-    border-radius: 0.8em;
-    display: inline-block;
-    white-space: pre-wrap;
+    background-color: #1f8cff;
+    color: #fff;
     text-align: left;
-    
-    margin-right: 40px;
-    padding: 16px 20px 16px 20px;
-    margin: 0 0 20px 0;
-    font: 14px/14px "Noto Sans", sans-serif;
-    color: #0EC879;
 }
-
-.chat-message:not(.me) {
-    text-align: left;
-    margin-right: 80px; 
-}
-
 /* 텍스트 스타일 */
 .room-name {
     font-size: 3rem; /* 원하는 크기로 조정 */

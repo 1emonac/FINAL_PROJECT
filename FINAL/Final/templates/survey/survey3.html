@@ -7,7 +7,12 @@
     padding: 0;
     list-style: none;
 }
-.chat-message .message {
+.chat-message {
+    clear: both;
+    margin-bottom: 16px; /* 기본 간격 추가 */
+}
+.chat-message .message,
+.chat-message {
     background-color: #3b3b3d;
     color: #e1e1e1;
     border-radius: 0.8em;
@@ -20,6 +25,9 @@
 
 .chat-message.me {
     text-align: right;
+    margin-left: auto;
+    float: right;
+    margin-bottom: 32px; /* 추가 간격을 줍니다 */
 }
 .chat-message.me .message {
     background-color: #1f8cff;
@@ -31,7 +39,11 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 검은색 그림자 */
     border-radius: 4px; /* 모서리를 약간 둥글게 */
     padding: 16px; /* 내부 여백 */
-    margin: 16px; /* 외부 여백 */
+    margin: 32px 0; /* 외부 여백을 크게 추가하여 간격을 확보합니다 */
+    display: none; /* 처음에는 숨김 처리 */
+}
+.survey-chat + .chat-message.me {
+    margin-top: 32px; /* 추가 간격 */
 }
 .survey-circle {
     background-color: white; /* 흰색 배경 */
@@ -42,8 +54,16 @@
     margin: 12px; /* 외부 여백 */
     font-size: 14px; /* 텍스트 크기 설정 */
 }
-
-
+.chat-message {
+    background-color: black; /* 흰색 배경 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 검은색 그림자 */
+    border-radius: 12px; /* 둥근 네모 모양 */
+    padding: 10px 18px; /* 내부 여백 */
+    display: inline-block; /* 텍스트 크기에 맞춤 */
+    margin: 12px; /* 외부 여백 */
+    font-size: 14px;
+    color: #ffffff;
+}
 </style>
 {% endblock %}
 
@@ -52,50 +72,52 @@
    <div class="col-sm-7" style="margin-top: 100px; margin-bottom: 50px;">
         <div class="card" style="height: 700px;">
             <div class="card-header">
-                Dr.Eunoia와의 대화
+                Dr.A와의 대화
             </div>
            
             <div class="card-body">
                 <ul id="chat-message-list">
-                    <div class="chat-message message">
-                        안녕하세요! 수면 진단 설문조사 챗봇입니다. 시작해 볼게요!
-                    </div>
+                    <li class="chat-message">
+                        <div class="message">안녕하세요! 수면 진단 설문조사 챗봇입니다. 시작해 볼게요!</div>
+                    </li>
                 </ul>
-                <div class="survey-chat col-sm-4">
+                <div class="survey-chat col-sm-4" id="survey1">
                     <div>
                     어제 밤 잠을 잘 주무셨나요?
                     </div>
                     <br>
-                    <button type="button" class="btn btn-success" onclick="onButtonClick('{type: "TEXT", "displayText": 네, "postback":"0"}', this)"><span>네</span></button>
-                    <button type="button" class="btn btn-success" onclick="onButtonClick('{type: "TEXT", "displayText": 아니오, "postback":"1"}', this)"><span>아니오</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"네\", \"postback\":\"0\"}", this)'><span>네</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"아니오\", \"postback\":\"1\"}", this)'><span>아니오</span></button>
                 </div>
 
-                <div class="survey-chat col-sm-4">
+                <div class="survey-chat col-sm-6" id="survey2">
                     <div>
                     스트레스를 얼만큼 받으셨나요?
                     </div>
                     <br>
                     <span class="survey-circle">매우 많이</span>
-                    <button type="button" class="btn btn-success" onclick="onButtonClick('{type: "TEXT", "displayText": 1, "postback":"0"}', this)"><span>1</span></button>
-                    <button type="button" class="btn btn-success" onclick="onButtonClick('{type: "TEXT", "displayText": 2, "postback":"1"}', this)"><span>2</span></button>
-                    <button type="button" class="btn btn-success" onclick="onButtonClick('{type: "TEXT", "displayText": 3, "postback":"2"}', this)"><span>3</span></button>
-                    <button type="button" class="btn btn-success" onclick="onButtonClick('{type: "TEXT", "displayText": 4, "postback":"3"}', this)"><span>4</span></button>
-                    <button type="button" class="btn btn-success" onclick="onButtonClick('{type: "TEXT", "displayText": 5, "postback":"4"}', this)"><span>5</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"1\", \"postback\":\"0\"}", this)'><span>1</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"2\", \"postback\":\"1\"}", this)'><span>2</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"3\", \"postback\":\"2\"}", this)'><span>3</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"4\", \"postback\":\"3\"}", this)'><span>4</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"5\", \"postback\":\"4\"}", this)'><span>5</span></button>
                     <span class="survey-circle">전혀 안 받음</span>
                 </div>
 
-                <div class="survey-chat col-sm-4">
+                <div class="survey-chat col-sm-6" id="survey3">
                     <div>
                     하루동안 긴장을 많이 하셨나요?
                     </div>
                     <br>
-                    <button type="button" class="btn btn-success" onclick="onButtonClick('{type: "TEXT", "displayText": 1, "postback":"0"}', this)"><span>1</span></button>
-                    <button type="button" class="btn btn-success" onclick="onButtonClick('{type: "TEXT", "displayText": 2, "postback":"1"}', this)"><span>2</span></button>
-                    <button type="button" class="btn btn-success" onclick="onButtonClick('{type: "TEXT", "displayText": 3, "postback":"2"}', this)"><span>3</span></button>
-                    <button type="button" class="btn btn-success" onclick="onButtonClick('{type: "TEXT", "displayText": 4, "postback":"3"}', this)"><span>4</span></button>
-                    <button type="button" class="btn btn-success" onclick="onButtonClick('{type: "TEXT", "displayText": 5, "postback":"4"}', this)"><span>5</span></button>
-                    <button type="button" class="btn btn-success" onclick="onButtonClick('{type: "TEXT", "displayText": 6, "postback":"5"}', this)"><span>6</span></button>
-                    <button type="button" class="btn btn-success" onclick="onButtonClick('{type: "TEXT", "displayText": 7, "postback":"6"}', this)"><span>7</span></button>
+                    <span class="survey-circle">여유</span>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"1\", \"postback\":\"0\"}", this)'><span>1</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"2\", \"postback\":\"1\"}", this)'><span>2</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"3\", \"postback\":\"2\"}", this)'><span>3</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"4\", \"postback\":\"3\"}", this)'><span>4</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"5\", \"postback\":\"4\"}", this)'><span>5</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"6\", \"postback\":\"5\"}", this)'><span>6</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"7\", \"postback\":\"6\"}", this)'><span>7</span></button>
+                    <span class="survey-circle">긴장</span>
                 </div>
             </div>
             
@@ -112,4 +134,51 @@
         </div>
     </div>
 </div>
+
+<script>
+function onButtonClick(data, button) {
+    var parsedData = JSON.parse(data);
+    var messageText = parsedData.displayText;
+
+    // 현재 설문 div를 찾음
+    var currentSurvey = button.closest('.survey-chat');
+
+    // 사용자가 선택한 답변을 현재 설문 div 다음에 추가
+    var messageList = document.getElementById('chat-message-list');
+    var newMessage = document.createElement('li');
+    newMessage.classList.add('chat-message', 'me');
+    newMessage.style.marginTop = '32px'; // 간격 추가
+    newMessage.innerHTML = '<div class="message">' + messageText + '</div>';
+    currentSurvey.insertAdjacentElement('afterend', newMessage);
+
+    // 다음 설문을 표시
+    var nextSurvey = currentSurvey.nextElementSibling;
+    while (nextSurvey && !nextSurvey.classList.contains('survey-chat')) {
+        nextSurvey = nextSurvey.nextElementSibling;
+    }
+    if (nextSurvey) {
+        nextSurvey.style.display = 'block';
+    } else {
+        // 모든 설문이 끝났을 때 감사 메시지 출력
+        var thankYouMessage = document.createElement('li');
+        thankYouMessage.classList.add('chat-message');
+        thankYouMessage.innerHTML = '<div class="message">짧은 설문조사에 참여해 주셔서 감사합니다!</div>';
+        newMessage.insertAdjacentElement('afterend', thankYouMessage);
+    }
+
+    // 사용자가 버튼을 눌렀을 때 버튼을 비활성화
+    var buttons = button.parentElement.querySelectorAll('button');
+    buttons.forEach(function(btn) {
+        btn.disabled = true;
+    });
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    // 첫 번째 설문을 표시합니다.
+    var firstSurvey = document.getElementById('survey1');
+    if (firstSurvey) {
+        firstSurvey.style.display = 'block';
+    }
+});
+</script>
 {% endblock %}
