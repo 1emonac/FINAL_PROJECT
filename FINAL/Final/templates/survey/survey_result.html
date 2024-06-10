@@ -1,0 +1,113 @@
+{% extends "base_chat.html" %}
+{% load static %}
+{% block extra-style %}
+    <link href="{% static 'css/survey_result.css' %}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+<section>
+    <div class='left'>
+        <div class='cat'>
+          <div class='ears1'></div>
+          <div class='head1'>
+            <div class='eyes1'></div>
+            <div class='nose1'></div>
+          </div>
+          <div class='body1'>
+            <div class='left-paw1'></div>
+            <div class='right-paw1'></div>
+          </div>
+          <div class='tail1'></div>
+          <div class='PRlaptop'>
+            <div class='PRscreen'></div>
+            <div class='PRkeyboard'></div>
+          </div>
+        </div>
+      </div>
+      <div class='right'>
+        <div class='dog'>
+          <div class='ears2'></div>
+          <div class='head2'>
+            <div class='eyes2'></div>
+            <div class='nose2'></div>
+          </div>
+          <div class='body2'>
+            <div class='left-paw2'></div>
+            <div class='right-paw2'></div>
+          </div>
+          <div class='tail2'></div>
+          <div class='ORlaptop'>
+            <div class='ORscreen'></div>
+            <div class='ORkeyboard'></div>
+          </div>
+        </div>
+      </div>
+</section>
+<section style="margin-top: 40px; margin-bottom: 50px;">
+    <form id="myForm" action="{% url 'survey:result_add' %}" method="POST">
+        {% csrf_token %}
+        {% for i, j in pred_df.items %}
+        <p>{{ j }}</p>
+        <input type="hidden" name="{{ i }}" value="{{ j }}">
+        {% endfor %}
+        <h1>문제가 없을 확률이 {{predict}}% 정도 됩니다.</h1>
+        <div>예측이 올바른 것 같나요?</div>
+        <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"postback\":\"1\"}", this, "predict")'><span>네</span></button>
+        <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"postback\":\"0\"}", this, "predict")'><span>아니요</span></button>
+        {% if user.is_authenticated %}
+        <div></div>
+        <button type="submit" class="btn btn-success" id="submitButton" style="display: none; margin-top: 10px;">저장하시겠습니까</button>
+        {% else %}
+        <div></div>
+        <button href="{% url 'sleep:main' %}" class="btn btn-primary" id="moveToMainButton" style="display: none; margin-top: 10px;">메인 페이지로 이동</button>
+        {% endif %}
+    </form>
+</section>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 5초 후에 양쪽 요소를 화면 밖으로 이동
+            setTimeout(() => {
+                const leftElement = document.querySelector('.left');
+                const rightElement = document.querySelector('.right');
+
+                leftElement.classList.add('hide');
+                rightElement.classList.add('hide');
+
+                // 요소가 완전히 사라진 후에 두 요소 모두 숨김
+                setTimeout(() => {
+                    leftElement.style.display = 'none';
+                    rightElement.style.display = 'none';
+                }, 1000); // 이 숫자는 CSS의 transition duration과 동일해야 함
+
+            }, 3000); // 5초 후에 실행
+        });
+
+
+        // 버튼 클릭 시 실행될 함수
+        function onButtonClick(data, button, prediction) {
+            var parsedData = JSON.parse(data);
+            var messageText = parsedData.postback;
+            // hidden input 요소 생성
+            var hiddenInput = document.createElement("input");
+            hiddenInput.setAttribute("type", "hidden");
+            hiddenInput.setAttribute("name", "predict");
+            hiddenInput.setAttribute("id", "predictInput"); // 필요한 경우 ID도 설정할 수 있습니다.
+            // 숨겨진 입력 요소의 값을 설정
+            hiddenInput.setAttribute("value", messageText); // Django 변수인 predict의 값을 설정
+
+            // 폼 요소를 가져오거나 생성합니다.
+            var form = document.getElementById("myForm");
+                var existingInput = document.getElementById(prediction + "Input");
+            if (existingInput) {
+                existingInput.remove();
+            }
+
+            // 숨겨진 입력 요소를 폼에 추가합니다.
+            form.appendChild(hiddenInput);
+
+            // 예측이 올바른지 여부에 따라 버튼을 표시하거나 숨깁니다.
+            if (messageText) {
+                document.getElementById("submitButton").style.display = "block";
+                document.getElementById("moveToMainButton").style.display = "block";
+        }}
+</script>
+{% endblock %}

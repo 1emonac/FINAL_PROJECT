@@ -98,16 +98,17 @@
     <div class="pb-3 mb-4">
         <div class="h-100 p-5 bg-body-tertiary border rounded-3">
             <ul class="noto-sans-kr-main">
-                {% for response in responses %}
-                <li>{{ response.question.text }}: {{ response }}</li>
+                {% for response in survey %}
+                    {% if response.predict == "0" %}
+                <li>일시 : {{ response.date }}, 잠을 잘 잤는지 유무 : {{ response.survey1 }}, 스트레스 강도 : {{ response.survey2}}, 하루 긴장도 : {{ response.survey3 }} = 잠을 잘 잔 날</li>
+                    {% else %}
+                <li>일시 : {{ response.date }}, 잠을 잘 잤는지 유무 : {{ response.survey1 }}, 스트레스 강도 : {{ response.survey2}}, 하루 긴장도 : {{ response.survey3 }} = 잠을 못 잔 날</li>
+                    {% endif %}
                 {% empty %}
                 <li>진단 결과가 없습니다.</li>
                 {% endfor %}
             </ul>
-            <br />
-            <center><span class="ibm-plex-sans-kr-regular ">수면 진단 결과가 유의미했나요?</span></center>
-            <br>
-            <center><button class="btn btn-outline-secondary me-3" type="button">네</button><button class="btn btn-outline-secondary" type="button">아니오</button></center>
+
             <hr>
             <br>
             <center><a href="{% url 'dr:drai' %}"><button class="btn btn-outline-secondary me-4" type="button">Dr.A와 대화해보기</button></a><a href="{% url 'chat:index' %}"><button class="btn btn-outline-secondary" type="button">실시간 채팅해보기</button></a></center>

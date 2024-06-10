@@ -80,7 +80,7 @@ h6 {
 --------------------------------------------------------------*/
 #header {
   transition: all 0.5s;
-  z-index: 997;
+  z-index: 1000;
   transition: all 0.5s;
   top: 20px;
 }

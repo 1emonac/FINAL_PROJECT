@@ -20,6 +20,7 @@ urlpatterns = [
     path('result/', views.result_view, name='result'),
     # path('survey/', views.chat_view, name='survey'),  # Chat URL 추가
     path('survey/', views.survey_room, name='survey'),
-    path('survey4/', views.example2, name="survey4"),
+    path('survey_result/', views.survey_result, name="survey_result"),
+    path('result_add/', views.result_add, name="result_add"),
     path('survey5/', views.survey5, name="survey5"),
 ]

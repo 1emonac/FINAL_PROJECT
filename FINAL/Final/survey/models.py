@@ -54,3 +54,14 @@ class Message(models.Model):
 
     def __str__(self):
         return f"{self.user}: {self.content}"
+
+
+class Pred(models.Model):
+    user = models.CharField(max_length=255)
+    predict = models.TextField("결과", max_length=1) # 0은 잘 잤다고 평가 1은 잘 못잤다고 평가
+    predict_proba = models.TextField("잘 잤을 확률", max_length=2) # 0은 잘 잤다고 평가 1은 잘 못잤다고 평가
+    survey1 = models.TextField("숙면여부", max_length=1) # 0은 잘 잤다고 평가 1은 잘 못잤다고 평가
+    survey2 = models.TextField("스트레스의 강도", max_length=1) # 1 ~ 5 사이의 값
+    survey3 = models.TextField("긴장의 강도", max_length=1 ) # 1 ~ 7 사이의 값
+    date = models.DateField("일자", auto_now_add=True) 
+    
