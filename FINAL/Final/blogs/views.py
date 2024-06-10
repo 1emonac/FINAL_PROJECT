@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> cb46744a52d08bd58c5e15ec9047541b2f6ccf27
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 from .models import Post
