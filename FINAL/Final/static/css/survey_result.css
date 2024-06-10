@@ -548,7 +548,7 @@ body {
     position: absolute;
     width: 50%; /* 요소의 너비를 50%로 설정하여 화면의 반을 차지하도록 함 */
     height: 100%; /* 요소의 높이를 화면의 100%로 설정 */
-    transition: transform 1s ease-out;
+    transition: transform 0.8s ease-out;
     z-index: 10;
 }
 

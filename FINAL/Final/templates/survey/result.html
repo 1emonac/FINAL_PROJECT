@@ -99,7 +99,7 @@
     <div class="pb-3 mb-4">
         <div class="h-100 p-5 bg-body-tertiary border rounded-3">
             <ul class="noto-sans-kr-main">
-                {% for response in survey %}
+                {% for response in pred_df %}
                     {% if response.predict == "0" %}
                 <li>일시 : {{ response.date }}, 잠을 잘 잤는지 유무 : {{ response.sleep_survey }}, 스트레스 강도(1~5) : {{ response.stress_survey}}, 긍정수치(1~7) : {{ response.positive_survey }} = 개운한 기상을 한 날</li>
                     {% else %}

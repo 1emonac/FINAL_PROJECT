@@ -92,14 +92,14 @@ body ul, body li {
 
 .pieChart--detail--divider {
   stroke: adjust-lightness(#333, 30);
-  stroke-width: 1;
+  stroke-width: 10;
 }
 
 .pieChart--detail--percentage {
   font-size: 42px;
   font-weight: 100;
   fill: #333;
-  stroke-width: 1px;
+  stroke-width: 10;
 }
 
 .pieChart--detail--textContainer {
@@ -181,7 +181,7 @@ body ul, body li {
       <ul>
         <li class="chart">
           <!-- <h3 class="chart--subHeadline">Chart 1</h3> -->
-          <h2 class="chart--headline ibm-plex-sans-kr-regular"><strong>문제가 없을 확률이 {{predict}}% 정도 됩니다.</strong></h2>
+          <h2 class="chart--headline ibm-plex-sans-kr-regular" id="percent_predict" vlaue={{predict}}><strong>개운한 아침을 맞을 {{predict}}% 정도 됩니다.</strong></h2>
           <div id="pieChart">
             <svg id="pieChartSVG">
               <defs>
@@ -215,33 +215,18 @@ body ul, body li {
         {% for i, j in pred_df.items %}
         <input type="hidden" name="{{ i }}" value="{{ j }}">
         {% endfor %}
-<<<<<<< HEAD
-        <h1>문제가 없을 확률이 {{predict}}% 정도 됩니다.</h1>
-        <div>예측이 올바른 것 같나요?</div>
-        <button type="button" class="btn btn-success" style="margin-top: 10px;" onclick='onButtonClick("{\"type\": \"TEXT\", \"postback\":\"1\"}", this, "predict")'><span>네</span></button>
-        <button type="button" class="btn btn-success" style="margin-top: 10px;" onclick='onButtonClick("{\"type\": \"TEXT\", \"postback\":\"0\"}", this, "predict")'><span>아니요</span></button>
-        {% if user.is_authenticated %}
-        <div></div>
-        <button type="submit" class="btn btn-success" id="submitButton" style="display: none; margin-top: 10px;">저장하시겠습니까</button>
-        {% endif %}
-        <div></div>
-        <button href="{% url 'sleep:main' %}" class="btn btn-primary" id="moveToMainButton" style="display: none; margin-top: 10px;">메인 페이지로 이동</button>
-        
-=======
-        <!-- <h1>문제가 없을 확률이 {{predict}}% 정도 됩니다.</h1> -->
+
 
         <div class="noto-sans-kr-main" style="font-size: 17px;">예측이 올바른 것 같나요?</div>
-        <button type="button" class="btn btn-success ibm-plex-sans-kr-regular" style="margin-top: 10px;" onclick='onButtonClick("{\"type\": \"TEXT\", \"postback\":\"1\"}", this, "predict")'><span>네</span></button>
-        <button type="button" class="btn btn-success ibm-plex-sans-kr-regular" style="margin-top: 10px;" onclick='onButtonClick("{\"type\": \"TEXT\", \"postback\":\"0\"}", this, "predict")'><span>아니요</span></button>
+        <button type="button" class="btn btn-success" style="margin-top: 10px;" onclick='onButtonClick("{\"type\": \"TEXT\", \"postback\":\"1\"}", this, "predict")'><span>네</span></button>
+        <button type="button" class="btn btn-success" style="margin-top: 10px;" onclick='onButtonClick("{\"type\": \"TEXT\", \"postback\":\"0\"}", this, "predict")'><span>아니요</span></button>
           
           {% if user.is_authenticated %}
             <div></div>
-            <button type="submit" class="btn btn-success noto-sans-kr-main" id="submitButton" style="display: none; margin-top: 10px;">저장하시겠습니까</button>
-            <button href="{% url 'sleep:main' %}" class="btn btn-primary noto-sans-kr-main" id="moveToMainButton" style="display: none; margin-top: 10px;">메인 페이지로 이동</button>
+            <button type="submit" class="btn btn-success" id="submitButton" style="display: none; margin-top: 10px;">저장하시겠습니까</button>
           {% endif %}
           <div></div>
-        <button href="{% url 'sleep:main' %}" class="btn btn-primary noto-sans-kr-main" id="moveToMainButton" style="display: none; margin-top: 10px;">메인 페이지로 이동</button>
->>>>>>> cb46744a52d08bd58c5e15ec9047541b2f6ccf27
+        <button href="{% url 'sleep:main' %}" class="btn btn-primary" id="moveToMainButton" style="display: none; margin-top: 10px;">메인 페이지로 이동</button>
     </form>
   </center>
 </section>
@@ -261,223 +246,249 @@ body ul, body li {
                 setTimeout(() => {
                     leftElement.style.display = 'none';
                     rightElement.style.display = 'none';
-                }, 1000); // 이 숫자는 CSS의 transition duration과 동일해야 함
+                }, 800); // 이 숫자는 CSS의 transition duration과 동일해야 함
 
-            }, 3000); // 5초 후에 실행
+            }, 2500); // 2.5초 후에 실행
         });
 
 
         // 버튼 클릭 시 실행될 함수
         function onButtonClick(data, button, prediction) {
-            var parsedData = JSON.parse(data);
-            var messageText = parsedData.postback;
-            // hidden input 요소 생성
-            var hiddenInput = document.createElement("input");
-            hiddenInput.setAttribute("type", "hidden");
-            hiddenInput.setAttribute("name", "predict");
-            hiddenInput.setAttribute("id", "predictInput"); // 필요한 경우 ID도 설정할 수 있습니다.
-            // 숨겨진 입력 요소의 값을 설정
-            hiddenInput.setAttribute("value", messageText); // Django 변수인 predict의 값을 설정
+          var parsedData = JSON.parse(data);
+          var messageText = parsedData.postback;
+          // hidden input 요소 생성
+          var hiddenInput = document.createElement("input");
+          hiddenInput.setAttribute("type", "hidden");
+          hiddenInput.setAttribute("name", "predict");
+          hiddenInput.setAttribute("id", "predictInput"); // 필요한 경우 ID도 설정할 수 있습니다.
+          // 숨겨진 입력 요소의 값을 설정
+          hiddenInput.setAttribute("value", messageText); // Django 변수인 predict의 값을 설정
 
-            // 폼 요소를 가져오거나 생성합니다.
-            var form = document.getElementById("myForm");
-                var existingInput = document.getElementById(prediction + "Input");
-            if (existingInput) {
-                existingInput.remove();
-            }
+          // 폼 요소를 가져오거나 생성합니다.
+          var form = document.getElementById("myForm");
+          
+          
+          // 숨겨진 입력 요소를 폼에 추가합니다.
+          form.appendChild(hiddenInput);
+          
+          // 예측이 올바른지 여부에 따라 버튼을 표시하거나 숨깁니다.
+          var submitButton = document.getElementById("submitButton");
+          var moveToMainButton = document.getElementById("moveToMainButton");
 
-            // 숨겨진 입력 요소를 폼에 추가합니다.
-            form.appendChild(hiddenInput);
-
-            // 예측이 올바른지 여부에 따라 버튼을 표시하거나 숨깁니다.
-            if (messageText) {
-                document.getElementById("submitButton").style.display = "block";
-                document.getElementById("moveToMainButton").style.display = "block";
-        }}
-
-
- 
-  ;( function() {
-      var data = {
-        pieChart  : [
-          {
-            color       : 'red',
-            value       : 0.1,
-          },
-          {
-            color       : 'blue',
-            value : 0.9,
+          // submitButton이 존재하는 경우 표시합니다.
+          if (submitButton) {
+              submitButton.style.display = "block";
           }
-        ]
-      };
 
-    var DURATION = 1500;
-    var DELAY    = 500;
-    
-    /**
-     * draw the fancy line chart
-     *
-     * @param {String} elementId elementId
-     * @param {Array}  data      data
-     */
-
-  function drawPieChart( elementId, data ) {
-    // TODO code duplication check how you can avoid that
-    var containerEl = document.getElementById( elementId ),
-        width       = containerEl.clientWidth,
-        height      = width * 0.4,
-        radius      = Math.min( width, height ) / 2,
-        container   = d3.select( containerEl ),
-        svg         = container.select( 'svg' )
-                              .attr( 'width', width )
-                              .attr( 'height', height );
-    var pie = svg.append( 'g' )
-                .attr(
-                  'transform',
-                  'translate(' + width / 2 + ',' + height / 2 + ')'
-                );
-    
-    var detailedInfo = svg.append( 'g' )
-                          .attr( 'class', 'pieChart--detailedInformation' );
-
-    var twoPi   = 2 * Math.PI;
-    var pieData = d3.layout.pie()
-                    .value( function( d ) { return d.value; } );
-
-    var arc = d3.svg.arc()
-                    .outerRadius( radius - 20)
-                    .innerRadius( 0 );
-    
-    var pieChartPieces = pie.datum( data )
-                            .selectAll( 'path' )
-                            .data( pieData )
-                            .enter()
-                            .append( 'path' )
-                            .attr( 'class', function( d ) {
-                              return 'pieChart__' + d.data.color;
-                            } )
-                            .attr( 'filter', 'url(#pieChartInsetShadow)' )
-                            .attr( 'd', arc )
-                            .each( function() {
-                              this._current = { startAngle: 0, endAngle: 0 }; 
-                            } )
-                            .transition()
-                            .duration( DURATION )
-                            .attrTween( 'd', function( d ) {
-                              var interpolate = d3.interpolate( this._current, d );
-                              this._current = interpolate( 0 );
-                    
-                              return function( t ) {
-                                return arc( interpolate( t ) );
-                              };
-                            } )
-                            .each( 'end', function handleAnimationEnd( d ) {
-                              drawDetailedInformation( d.data, this ); 
-                            } );
-
-    drawChartCenter(); 
-    
-    function drawChartCenter() {
-      var centerContainer = pie.append( 'g' )
-                                .attr( 'class', 'pieChart--center' );
-      
-      centerContainer.append( 'circle' )
-                      .attr( 'class', 'pieChart--center--outerCircle' )
-                      .attr( 'r', 0 )
-                      .attr( 'filter', 'url(#pieChartDropShadow)' )
-                      .transition()
-                      .duration( DURATION )
-                      .delay( DELAY )
-                      .attr( 'r', radius - 50 );
-      
-      centerContainer.append( 'circle' )
-                      .attr( 'id', 'pieChart-clippy' )
-                      .attr( 'class', 'pieChart--center--innerCircle' )
-                      .attr( 'r', 0 )
-                      .transition()
-                      .delay( DELAY )
-                      .duration( DURATION )
-                      .attr( 'r', radius - 55 )
-                      .attr( 'fill', '#fff' );
-    }
-    
-    function drawDetailedInformation ( data, element ) {
-      var bBox      = element.getBBox(),
-          infoWidth = width * 0.3,
-          anchor,
-          infoContainer,
-          position;
-      
-      if ( ( bBox.x + bBox.width / 2 ) > 0 ) {
-        infoContainer = detailedInfo.append( 'g' )
-                                    .attr( 'width', infoWidth )
-                                    .attr(
-                                      'transform',
-                                      'translate(' + ( width - infoWidth ) + ',' + ( bBox.height + bBox.y ) + ')'
-                                    );
-        anchor   = 'end';
-        position = 'right';
-      } else {
-        infoContainer = detailedInfo.append( 'g' )
-                                    .attr( 'width', infoWidth )
-                                    .attr(
-                                      'transform',
-                                      'translate(' + 0 + ',' + ( bBox.height + bBox.y ) + ')'
-                                    );
-        anchor   = 'start';
-        position = 'left';
+          // moveToMainButton이 존재하는 경우 표시합니다.
+          if (moveToMainButton) {
+              moveToMainButton.style.display = "block";
+          }
       }
 
-      infoContainer.data( [ data.value * 100 ] )
-                    .append( 'text' )
-                    .text ( '0 %' )
-                    .attr( 'class', 'pieChart--detail--percentage' )
-                    .attr( 'x', ( position === 'left' ? 0 : infoWidth ) )
-                    .attr( 'y', -10 )
-                    .attr( 'text-anchor', anchor )
-                    .transition()
-                    .duration( DURATION )
-                    .tween( 'text', function( d ) {
-                      var i = d3.interpolateRound(
-                        +this.textContent.replace( /\s%/ig, '' ),
-                        d
-                      );
+            ;(function() {
+          // id가 'percent_predict'인 요소를 찾아 그 텍스트 내용을 가져옵니다.
+          var percentElement = document.getElementById('percent_predict');
+          if (!percentElement) {
+              console.error('Element with id "percent_predict" not found.');
+              return;
+          }
 
-                      return function( t ) {
-                        this.textContent = i( t ) + ' %';
-                      };
-                    } );
-      
-      infoContainer.append( 'line' )
-                    .attr( 'class', 'pieChart--detail--divider' )
-                    .attr( 'x1', 0 )
-                    .attr( 'x2', 0 )
-                    .attr( 'y1', 0 )
-                    .attr( 'y2', 0 )
-                    .transition()
-                    .duration( DURATION )
-                    .attr( 'x2', infoWidth );
-      
-      infoContainer.data( [ data.description ] ) 
-                    .append( 'foreignObject' )
-                    .attr( 'width', infoWidth ) 
-                    .attr( 'height', 100 )
-                    .append( 'xhtml:body' )
+          // 텍스트에서 숫자 값을 추출합니다.
+          // 예를 들어, "문제가 없을 확률이 85% 정도 됩니다."에서 숫자 부분만 추출
+          var percentText = percentElement.textContent || percentElement.innerText;
+          var percentMatch = percentText.match(/(\d+(\.\d+)?)/);
+
+          if (!percentMatch) {
+              console.error('No percentage value found in the text.');
+              return;
+          }
+
+          var percentValue = parseFloat(percentMatch[0]) / 100; // 퍼센트를 소수점 값으로 변환
+
+          // 기존의 data 객체를 업데이트합니다.
+          var data = {
+              pieChart: [
+                  {
+                      color: 'blue',
+                      value: percentValue, // 추출한 percent 값을 사용
+                  },
+                  {
+                      color: 'red',
+                      value: 1 - percentValue, // 나머지 비율
+                  }
+              ]
+          };
+        var DURATION = 1500;
+        var DELAY    = 500;
+        
+        /**
+         * draw the fancy line chart
+         *
+         * @param {String} elementId elementId
+         * @param {Array}  data      data
+         */
+
+      function drawPieChart( elementId, data ) {
+        // TODO code duplication check how you can avoid that
+        var containerEl = document.getElementById( elementId ),
+            width       = containerEl.clientWidth,
+            height      = width * 0.4,
+            radius      = Math.min( width, height ) / 2,
+            container   = d3.select( containerEl ),
+            svg         = container.select( 'svg' )
+                                  .attr( 'width', width )
+                                  .attr( 'height', height );
+        var pie = svg.append( 'g' )
                     .attr(
-                      'class',
-                      'pieChart--detail--textContainer ' + 'pieChart--detail__' + position
-                    )
-                    .html( data.description );
+                      'transform',
+                      'translate(' + width / 2 + ',' + height / 2 + ')'
+                    );
+        
+        var detailedInfo = svg.append( 'g' )
+                              .attr( 'class', 'pieChart--detailedInformation' );
+
+        var twoPi   = 2 * Math.PI;
+        var pieData = d3.layout.pie()
+                        .value( function( d ) { return d.value; } );
+
+        var arc = d3.svg.arc()
+                        .outerRadius( radius - 20)
+                        .innerRadius( 0 );
+        
+        var pieChartPieces = pie.datum( data )
+                                .selectAll( 'path' )
+                                .data( pieData )
+                                .enter()
+                                .append( 'path' )
+                                .attr( 'class', function( d ) {
+                                  return 'pieChart__' + d.data.color;
+                                } )
+                                .attr( 'filter', 'url(#pieChartInsetShadow)' )
+                                .attr( 'd', arc )
+                                .each( function() {
+                                  this._current = { startAngle: 0, endAngle: 0 }; 
+                                } )
+                                .transition()
+                                .duration( DURATION )
+                                .attrTween( 'd', function( d ) {
+                                  var interpolate = d3.interpolate( this._current, d );
+                                  this._current = interpolate( 0 );
+                        
+                                  return function( t ) {
+                                    return arc( interpolate( t ) );
+                                  };
+                                } )
+                                .each( 'end', function handleAnimationEnd( d ) {
+                                  // drawDetailedInformation( d.data, this ); 
+                                } );
+
+        drawChartCenter(); 
+        
+        function drawChartCenter() {
+          var centerContainer = pie.append( 'g' )
+                                    .attr( 'class', 'pieChart--center' );
+          
+          centerContainer.append( 'circle' )
+                          .attr( 'class', 'pieChart--center--outerCircle' )
+                          .attr( 'r', 0 )
+                          .attr( 'filter', 'url(#pieChartDropShadow)' )
+                          .transition()
+                          .duration( DURATION )
+                          .delay( DELAY )
+                          .attr( 'r', radius - 90 );
+          
+          centerContainer.append( 'circle' )
+                          .attr( 'id', 'pieChart-clippy' )
+                          .attr( 'class', 'pieChart--center--innerCircle' )
+                          .attr( 'r', 0 )
+                          .transition()
+                          .delay( DELAY )
+                          .duration( DURATION )
+                          .attr( 'r', radius - 100 )
+                          .attr( 'fill', '#fff' );
         }
-      }
+        
+        // function drawDetailedInformation ( data, element ) {
+        //   var bBox      = element.getBBox(),
+        //       infoWidth = width * 0.3,
+        //       anchor,
+        //       infoContainer,
+        //       position; 
+         
+        //   if ( ( bBox.x + bBox.width / 2 ) > 0 ) {
+        //     infoContainer = detailedInfo.append( 'g' )
+        //                                 .attr( 'width', infoWidth )
+        //                                 .attr(
+        //                                   'transform',
+        //                                   'translate(' + width / 2 + ',' + height / 2 + ')'
+        //                                 );
+        //     anchor   = 'end';
+        //     position = 'right';
+        //   } else {
+        //     infoContainer = detailedInfo.append( 'g' )
+        //                                 .attr( 'width', infoWidth )
+        //                                 .attr(
+        //                                   'transform',
+        //                                   'translate(' + width / 5 + ',' + height / 2 + ')'
+        //                                 );
+        //     anchor   = 'start';
+        //     position = 'left';
+        //   }
 
-      function ಠ_ಠ() {
-        drawPieChart( 'pieChart', data.pieChart );
-      }
+        //   infoContainer.data( [ data.value * 100 ] )
+        //                 .append( 'text' )
+        //                 .text ( '0 %' )
+        //                 .attr( 'class', 'pieChart--detail--percentage' )
+        //                 .attr( 'x', ( position === 'left' ? 0 : infoWidth ) )
+        //                 .attr( 'y', 0 )
+        //                 .attr( 'text-anchor', anchor )
+        //                 .transition()
+        //                 .duration( DURATION )
+        //                 .tween( 'text', function( d ) {
+        //                   var i = d3.interpolateRound(
+        //                     +this.textContent.replace( /\s%/ig, '' ),
+        //                     d
+        //                   );
 
-      ಠ_ಠ();
+        //                   return function( t ) {
+        //                     this.textContent = i( t ) + ' %';
+        //                   };
+        //                 } );
+          
+        //   infoContainer.append( 'line' )
+        //                 .attr( 'class', 'pieChart--detail--divider' )
+        //                 .attr( 'x1', 0 )
+        //                 .attr( 'x2', 0 )
+        //                 .attr( 'y1', 0 )
+        //                 .attr( 'y2', 0 )
+        //                 .transition()
+        //                 .duration( DURATION )
+        //                 .attr( 'x2', infoWidth );
+          
+        //   infoContainer.data( [ data.description ] ) 
+        //                 .append( 'foreignObject' )
+        //                 .attr( 'width', infoWidth ) 
+        //                 .attr( 'height', 100 )
+        //                 .append( 'xhtml:body' )
+        //                 .attr(
+        //                   'class',
+        //                   'pieChart--detail--textContainer ' + 'pieChart--detail__' + position
+        //                 )
+        //                 .html( data.description );
+        //     }
+          }
 
-    })();
+          function ಠ_ಠ() {
+            setTimeout(() => {
+               drawPieChart('pieChart', data.pieChart);
+               }, 3000);
+          }
+
+          ಠ_ಠ();
+          
+
+        })();
 
 </script>
 <!-- <script scr="{% static 'js/surveyresult.js' %}"></script> -->
