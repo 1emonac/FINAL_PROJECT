@@ -26,21 +26,14 @@ def survey_room(request):
     except Exception as e:
         return render(request, 'survey/error.html', {'error': str(e)})
 
-    return render(request, 'survey/survey3.html', {'room': room})
+    return render(request, 'survey/survey.html', {'room': room})
 
 
-
-
-# WebSocket 기반 설문조사를 위한 뷰
-def chat_view(request):
-    return render(request, 'survey/chat.html')
 
 # 결과 페이지를 보여주는 뷰
 def result_view(request):
     return render(request, 'survey/result.html')
 
-def example(request):
-    return render(request, 'survey/survey3.html')
 
 def example2(request):
    if request.method == 'POST':
