@@ -17,7 +17,8 @@
 .chat-message.me {
     text-align: right;
     margin-left: auto;
-    float: right; /* 추가 간격을 줍니다 */
+    margin-top: 12px; /* 간격 추가 */
+    width: 100%; /* 전체 너비 차지 */
 }
 .chat-message.me .message {
     background-color: #1f8cff;
@@ -37,6 +38,7 @@
     padding: 12px; /* 내부 여백 */
     margin: 32px 0; /* 외부 여백을 크게 추가하여 간격을 확보합니다 */
     display: none; /* 처음에는 숨김 처리 */
+    width: 100%;
 }
 .survey-circle {
     background-color: white; /* 흰색 배경 */
@@ -64,12 +66,12 @@
 {% block content %}
 <div class="row2">
    <div class="col-sm-7" style="margin-top: 100px; margin-bottom: 50px;">
-        <div class="card" style="height: 700px;">
+        <div class="card" style="height: 100%;">
             <div class="card-header">
                 Dr.A와의 대화
             </div>
            
-            <div class="card-body overflow-hidden hide-scrollbar w-100 h-100 border-0 overflow-scroll">
+            <div class="card-body" sytle="height=100%">
                 <ul id="chat-message-list">
                     <li class="chat-message">
                         <div class="message">안녕하세요! 수면 진단 설문조사 챗봇입니다. 시작해 볼게요!</div>
@@ -80,8 +82,8 @@
                     <div>
                     어제 밤 잠을 잘 주무셨나요?
                     </div>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"네\", \"postback\":\"0\"}", this)'><span>네</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"아니오\", \"postback\":\"1\"}", this)'><span>아니오</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"네\", \"postback\":\"0\"}", this, "survey1")'><span>네</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"아니오\", \"postback\":\"1\"}", this, "survey1")'><span>아니오</span></button>
                 </div>
 
                 <div class="survey-chat col-sm-6" id="survey2" style="margin-top: px;">
@@ -90,11 +92,11 @@
                     </div>
                     <br>
                     <span class="survey-circle">매우 많이</span>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"1\", \"postback\":\"0\"}", this)'><span>1</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"2\", \"postback\":\"1\"}", this)'><span>2</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"3\", \"postback\":\"2\"}", this)'><span>3</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"4\", \"postback\":\"3\"}", this)'><span>4</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"5\", \"postback\":\"4\"}", this)'><span>5</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"1\", \"postback\":\"0\"}", this, "survey2")'><span>1</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"2\", \"postback\":\"1\"}", this, "survey2")'><span>2</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"3\", \"postback\":\"2\"}", this, "survey2")'><span>3</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"4\", \"postback\":\"3\"}", this, "survey2")'><span>4</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"5\", \"postback\":\"4\"}", this, "survey2")'><span>5</span></button>
                     <span class="survey-circle">전혀 안 받음</span>
                 </div>
 
@@ -104,36 +106,30 @@
                     </div>
                     <br>
                     <span class="survey-circle">여유</span>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"1\", \"postback\":\"0\"}", this)'><span>1</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"2\", \"postback\":\"1\"}", this)'><span>2</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"3\", \"postback\":\"2\"}", this)'><span>3</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"4\", \"postback\":\"3\"}", this)'><span>4</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"5\", \"postback\":\"4\"}", this)'><span>5</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"6\", \"postback\":\"5\"}", this)'><span>6</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"7\", \"postback\":\"6\"}", this)'><span>7</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"1\", \"postback\":\"0\"}", this, "survey3")'><span>1</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"2\", \"postback\":\"1\"}", this, "survey3")'><span>2</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"3\", \"postback\":\"2\"}", this, "survey3")'><span>3</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"4\", \"postback\":\"3\"}", this, "survey3")'><span>4</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"5\", \"postback\":\"4\"}", this, "survey3")'><span>5</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"6\", \"postback\":\"5\"}", this, "survey3")'><span>6</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"7\", \"postback\":\"6\"}", this, "survey3")'><span>7</span></button>
                     <span class="survey-circle">긴장</span>
                 </div>
             </div>
             
-            <div class="card-footer">
-                <div class="d-flex gap-2">
-                    <form id="message-form" class="d-flex gap-1 flex-grow-1">
-                        <input type="text"
-                            name="message"
-                            placeholder="메시지를 입력하세요."
-                            class="form-control flex-grow-1" />
-                    </form>
-                </div>
-            </div>
+            
         </div>
     </div>
 </div>
 
 <script>
-function onButtonClick(data, button) {
+var messageData = {};
+function onButtonClick(data, button, parentId) {
     var parsedData = JSON.parse(data);
-    var messageText = parsedData.displayText;
-
+    var messageText = parsedData.postback;
+    var parentElementId = parentId;;
+    messageData[parentElementId] = messageText;
+    console.log(messageData)
     // 현재 설문 div를 찾음
     var currentSurvey = button.closest('.survey-chat');
 
@@ -153,11 +149,58 @@ function onButtonClick(data, button) {
     if (nextSurvey) {
         nextSurvey.style.display = 'block';
     } else {
+
+        var thankYouMessage2 = document.createElement('form');
+        thankYouMessage2.classList.add('chat-message');
+        thankYouMessage2.action = "{% url 'survey:survey4' %}"; // 폼이 전송될 URL
+        thankYouMessage2.method = "post"; // 폼의 전송 방식 설정
+
+        var csrfTokenInput = document.createElement('input');
+        csrfTokenInput.type = "hidden";
+        csrfTokenInput.name = "csrfmiddlewaretoken"; // Django가 기대하는 CSRF 토큰 이름
+        csrfTokenInput.value = "{{ csrf_token }}"; // Django 템플릿 태그로 CSRF 토큰 값 추가
+        thankYouMessage2.appendChild(csrfTokenInput);
+
+        // 폼 데이터를 포함할 숨은 입력 필드 추가
+        var key1Input = document.createElement('input');
+        key1Input.type = "hidden";
+        key1Input.name = Object.keys(messageData)[0]; // 이 이름은 서버에서 해당 값을 식별하는 데 사용됩니다.
+        key1Input.value =  messageData[key1Input.name]; // 실제 데이터를 여기에 추가할 수 있습니다.
+        thankYouMessage2.appendChild(key1Input);
+
+        var key2Input = document.createElement('input');
+        key2Input.type = "hidden";
+        key2Input.name = Object.keys(messageData)[1];
+        key2Input.value =  messageData[key2Input.name];
+        thankYouMessage2.appendChild(key2Input);
+
+        var key3Input = document.createElement('input');
+        key3Input.type = "hidden";
+        key3Input.name = Object.keys(messageData)[2];
+        key3Input.value =  messageData[key3Input.name];
+        thankYouMessage2.appendChild(key3Input);
+
+        // 버튼(링크) 추가
+        var linkElement = document.createElement('a');
+        linkElement.href = "#"; // 폼을 전송하는 버튼으로 설정
+        linkElement.textContent = "결과 페이지로 이동";
+        linkElement.onclick = function() {
+            thankYouMessage2.submit(); // 폼 제출
+            return false; // 링크 기본 동작 방지
+        };
+        thankYouMessage2.appendChild(linkElement);
+
+        // 폼을 문서에 추가
+        newMessage.insertAdjacentElement('afterend', thankYouMessage2);
+
+        
         // 모든 설문이 끝났을 때 감사 메시지 출력
-        var thankYouMessage = document.createElement('li');
+        var thankYouMessage = document.createElement('div');
         thankYouMessage.classList.add('chat-message');
         thankYouMessage.innerHTML = '<div class="message">짧은 설문조사에 참여해 주셔서 감사합니다!</div>';
         newMessage.insertAdjacentElement('afterend', thankYouMessage);
+        
+        
     }
 
     // 사용자가 버튼을 눌렀을 때 버튼을 비활성화
@@ -174,5 +217,8 @@ document.addEventListener("DOMContentLoaded", function() {
         firstSurvey.style.display = 'block';
     }
 });
+
+
+
 </script>
 {% endblock %}

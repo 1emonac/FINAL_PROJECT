@@ -550,7 +550,27 @@
             transform: none;
         }
         }
+  /* 추가한 CSS 코드 */
+  .left,
+.right {
+    position: absolute;
+    width: 50%; /* 요소의 너비를 50%로 설정하여 화면의 반을 차지하도록 함 */
+    height: 100%; /* 요소의 높이를 화면의 100%로 설정 */
+    transition: transform 0.5s ease-out;
+}
 
+.right {
+    left: 50%; /* .right 요소를 화면의 오른쪽 반을 차지하도록 설정 */
+    transform: translateX(0); /* 초기 상태에서는 .right 요소가 왼쪽으로 이동하지 않도록 함 */
+}
+
+.left.hide {
+    transform: translateX(-100%); /* .left 요소가 왼쪽으로 이동하여 화면에서 사라지도록 함 */
+}
+
+.right.hide {
+    transform: translateX(100%); /* .right 요소가 오른쪽으로 이동하여 화면에서 사라지도록 함 */
+}
     </style>
 </head>
 <body>
@@ -590,6 +610,27 @@
           </div>
         </div>
       </div>
-      
+      <center><h1>{{predict}}</h1></center>
 </body>
+    <script>
+        // JavaScript 코드는 그대로 유지
+        const leftElement = document.querySelector('.left');
+        const rightElement = document.querySelector('.right');
+
+        function handleClick() {
+            // 요소들에 hide 클래스를 추가하여 슬라이드 효과를 보여줍니다.
+            leftElement.classList.add('hide');
+            rightElement.classList.add('hide');
+          
+            setTimeout(() => {
+            leftElement.style.display = 'none';
+            rightElement.style.display = 'none';
+            }, 500); // 이 숫자는 CSS의 transition duration과 동일해야 함
+        }
+
+
+
+        document.body.addEventListener('click', handleClick);
+
+</script>
 </html>
