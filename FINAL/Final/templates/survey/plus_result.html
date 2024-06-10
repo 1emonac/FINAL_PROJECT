@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+{% load static %}
+{% load django_bootstrap5 %}
+
+{% block head %}
+<style>
+    .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+    }
+
+    @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+            font-size: 3.5rem;
+        }
+    }
+
+    .b-example-divider {
+        width: 100%;
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+    }
+
+    .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+    }
+
+    .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+    }
+
+    .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+    }
+
+    .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .btn-bd-primary {
+        --bd-violet-bg: #712cf9;
+        --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+
+        --bs-btn-font-weight: 600;
+        --bs-btn-color: var(--bs-white);
+        --bs-btn-bg: var(--bd-violet-bg);
+        --bs-btn-border-color: var(--bd-violet-bg);
+        --bs-btn-hover-color: var(--bs-white);
+        --bs-btn-hover-bg: #6528e0;
+        --bs-btn-hover-border-color: #6528e0;
+        --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+        --bs-btn-active-color: var(--bs-btn-hover-color);
+        --bs-btn-active-bg: #5a23c8;
+        --bs-btn-active-border-color: #5a23c8;
+    }
+
+    .bd-mode-toggle {
+        z-index: 1500;
+    }
+
+    .bd-mode-toggle .dropdown-menu .active .bi {
+        display: block !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="my-5">
+    <div class="p-4 text-center bg-body-tertiary" style="margin-top: 150px; margin-bottom: 50px;">
+        <div class="container">
+            <h1 class="text-body-emphasis ibm-plex-sans-kr-regular ">{{ user }}님의 수면 진단 결과</h1>
+            <p class="col-lg-8 mx-auto lead noto-sans-kr-main" id="currentTime"></p>
+            <h4 class="noto-sans-kr-main">결과지입니당당숭구리당당</h4>
+            <p>*잠을 잘 잤다면 0, 못 잤다면 1입니다. 스트레스 강도의 수치가 높을 수록 좋습니다. 긍정수치가 높을 수록 좋습니다.*</p>
+        </div>
+    </div>
+</div>
+
+<div class="container py-4">
+    <div class="pb-3 mb-4">
+        <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+            <ul class="noto-sans-kr-main">
+                {% for response in survey %}
+                    {% if response.predict == "0" %}
+                <li>일시 : {{ response.date }}, 잠을 잘 잤는지 유무 : {{ response.sleep_survey }}, 스트레스 강도(1~5) : {{ response.stress_survey}}, 긍정수치(1~7) : {{ response.positive_survey }} = 개운한 기상을 한 날</li>
+                    {% else %}
+                <li>일시 : {{ response.date }}, 잠을 잘 잤는지 유무 : {{ response.sleep_survey }}, 스트레스 강도(1~5) : {{ response.stress_survey}}, 긍정수치(1~7) : {{ response.positive_survey }} = 개운하지 못한 기상을 한 날</li>
+                    {% endif %}
+                {% empty %}
+                <li>진단 결과가 없습니다.</li>
+                {% endfor %}
+            </ul>
+
+            <hr>
+            <br>
+            <center><a href="{% url 'dr:drai' %}"><button class="btn btn-outline-secondary me-4" type="button">Dr.A와 대화해보기</button></a><a href="{% url 'chat:index' %}"><button class="btn btn-outline-secondary" type="button">실시간 채팅해보기</button></a></center>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1" aria-label="First">
+                        <span aria-hidden="true">&laquo;&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {% endif %}
+                {% for num in page_obj.paginator.page_range %}
+                <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                </li>
+                {% endfor %}
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
+                        <span aria-hidden="true">&raquo;&raquo;</span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<script>
+    function displayTime() {
+        var now = new Date();
+        var year = now.getFullYear();
+        var month = (now.getMonth() + 1).toString().padStart(2, '0');
+        var day = now.getDate().toString().padStart(2, '0');
+        var formattedTime = year + '년 ' + month + '월 ' + day + '일';
+        document.getElementById('currentTime').textContent = formattedTime;
+    }
+
+    window.onload = function() {
+        displayTime();
+        setInterval(displayTime, 1000);
+    };
+</script>
+
+{% endblock %}

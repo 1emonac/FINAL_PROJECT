@@ -55,10 +55,10 @@
         {% if user.is_authenticated %}
         <div></div>
         <button type="submit" class="btn btn-success" id="submitButton" style="display: none; margin-top: 10px;">저장하시겠습니까</button>
-        {% else %}
+        {% endif %}
         <div></div>
         <button href="{% url 'sleep:main' %}" class="btn btn-primary" id="moveToMainButton" style="display: none; margin-top: 10px;">메인 페이지로 이동</button>
-        {% endif %}
+        
     </form>
   </center>
 </section>

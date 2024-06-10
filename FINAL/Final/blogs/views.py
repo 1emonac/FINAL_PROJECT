@@ -1,4 +1,3 @@
-from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 from .models import Post
@@ -13,7 +12,6 @@ def index(request):
     }
     return render(request, 'feed/blog_list.html', context)
 
-@staff_member_required
 def detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     context = {

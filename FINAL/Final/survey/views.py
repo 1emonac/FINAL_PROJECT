@@ -87,4 +87,10 @@ def result_add(request):
 def survey5(request):
     return render(request, 'survey/survey5.html')
 
+def plus_result(request):
+    if request.method == 'POST':
+        for key, value in request.POST.items():
+            print(key, value)
+    return render(request, 'survey/plus_result.html')
+
 
