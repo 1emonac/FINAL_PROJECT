@@ -1,27 +1,144 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block head%}
+{% block head %}
 <link href="{% static 'css/profile.css' %}" rel="stylesheet">
-{% endblock%}
+<style>
+  ::selection {
+    background-color: salmon;
+    color: white;
+  }
+
+  .parallax > use {
+    animation: move-forever 12s linear infinite;
+  }
+
+  .parallax > use:nth-child(1) {
+    animation-delay: -2s;
+  }
+
+  .parallax > use:nth-child(2) {
+    animation-delay: -2s;
+    animation-duration: 5s;
+  }
+
+  .parallax > use:nth-child(3) {
+    animation-delay: -4s;
+    animation-duration: 3s;
+  }
+
+  @keyframes move-forever {
+    0% {
+      transform: translate(-90px, 0%);
+    }
+    100% {
+      transform: translate(85px, 0%);
+    }
+  }
+
+  .editorial {
+    display: block;
+    width: 100%;
+    height: 10em;
+    max-height: 100vh;
+    margin: 0;
+  }
+
+  .content {
+    font-family: "Lato", sans-serif;
+    text-align: center;
+    background-color: #79C7C5;
+    text-align: center;
+    min-height: 30vh;
+    margin: -0.1em 0 0 0;
+    padding: 1em;
+    color: #eee;
+    font-size: 2em;
+    font-weight: 300;
+    position: relative;
+  }
+
+  .content h1 {
+    margin-top: -1.3em;
+    font-weight: 100;
+    font-size: 5em;
+    user-select: none;
+    cursor: default;
+  }
+
+  .card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+    width: 35%; /* 카드 너비 설정 */
+    height: 20%;
+  }
+
+  .firstinfo img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    /* color: #a2ebe8 */
+  }
+
+  .profileinfo {
+    text-align: center;
+  }
+
+  @media (max-width: 50em) {
+    .content h1 {
+      font-size: 12vmax;
+    }
+
+    .editorial {
+      height: 17vw;
+    }
+  }
+
+  h1 {
+    outline: none;
+  }
+</style>
+{% endblock %}
 
 {% block content %}
 <section id="breadcrumbs" class="breadcrumbs">
-    <br><br>
+  <br><br>
 </section>
-
-<section style="background: linear-gradient(to bottom left, #79C7C5 40%, #F9FBFF 100%);">
-  <div class="content" style="margin-top: 1px;">
-      <div class="card">
-        <div class="firstinfo"><img src="{% static 'media/image/cat3.jpg' %}"/>
-          <div class="profileinfo">
-            <h1>{{ user }}의 프로필</h1>
-            <p class="bio">Last login: {{ user.last_login }}</p>
-            <center><a href="{% url 'survey:result' %}" class="login-button btn btn-primary me-3">진단 결과</a>
-            <a href="{% url 'dr:list' %}" class="btn btn-primary">Dr.Eunoia 대화</a></center>
-          </div>
-        </div>
-      </div>
+<div class="card" style="margin-top: -10px;">
+  <div class="firstinfo"><img src="{% static 'media/image/cat3.jpg' %}"/>
+    <div class="profileinfo" style="margin-top: 15px;">
+      <h1>{{ user }}의 프로필</h1>
+      <p class="bio">Last login: {{ user.last_login }}</p>
+      <center><a href="{% url 'survey:result' %}" class="login-button btn btn-primary me-3">진단 결과</a>
+      <a href="{% url 'dr:list' %}" class="btn btn-primary">Dr.Eunoia 대화</a></center>
+    </div>
   </div>
-</section>
+</div>
+
+<svg class="editorial" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" style="margin-top: 230px;">
+  <defs>
+    <path id="gentle-wave" d="M-160 44c30 0 
+    58-18 88-18s
+    58 18 88 18 
+    58-18 88-18 
+    58 18 88 18
+    v44h-352z" />
+  </defs>
+  <g class="parallax">
+    <use xlink:href="#gentle-wave" x="50" y="0" fill="#a2ebe8" />
+    <use xlink:href="#gentle-wave" x="50" y="3" fill="#8dd6d4" />
+    <use xlink:href="#gentle-wave" x="50" y="6" fill="#79C7C5" />
+  </g>
+</svg>
+<div class="content">
+</div>
+
+<link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet">
 {% endblock %}

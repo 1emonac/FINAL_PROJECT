@@ -46,7 +46,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["jamjobgo.store", "192.168.3.2", "127.0.0.1", "3.37.218.60"]
+ALLOWED_HOSTS = ["localhost", "192.168.3.2", "127.0.0.1"]
 
 # Application definition
 
@@ -67,7 +67,6 @@ INSTALLED_APPS = [
     "dr",
     "survey",
     "blogs",
-    'ckeditor',
 ]
 
 MIDDLEWARE = [

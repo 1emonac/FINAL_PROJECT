@@ -11,22 +11,7 @@ import numpy as np
 openai.api_key = os.environ.get("OPENAI_API_KEY")
 
 def survey_room(request):
-    try:
-        # 단일 고정된 채팅방을 가져오거나 생성합니다.
-        room, created = SurveyRoom.objects.get_or_create(
-            pk=1,
-            defaults={
-                'user': request.user,  # 현재 접속한 사용자를 기본값으로 설정
-                'situation': '기본 상황',
-                'situation_kr': '기본 상황 (한국어)',
-                'my_role': '설문조사 참여자',
-                'gpt_role': '설문조사 안내원'
-            }
-        )
-    except Exception as e:
-        return render(request, 'survey/error.html', {'error': str(e)})
-
-    return render(request, 'survey/survey.html', {'room': room})
+    return render(request, 'survey/survey.html')
 
 
 
