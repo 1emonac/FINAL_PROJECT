@@ -90,6 +90,7 @@
             <h1 class="text-body-emphasis ibm-plex-sans-kr-regular ">{{ user }}님의 수면 진단 결과</h1>
             <p class="col-lg-8 mx-auto lead noto-sans-kr-main" id="currentTime"></p>
             <h4 class="noto-sans-kr-main">결과지입니당당숭구리당당</h4>
+            <p>*잠을 잘 잤다면 0, 못 잤다면 1입니다. 스트레스 강도의 수치가 높을 수록 좋습니다. 긍정수치가 높을 수록 좋습니다.*</p>
         </div>
     </div>
 </div>
@@ -100,9 +101,9 @@
             <ul class="noto-sans-kr-main">
                 {% for response in survey %}
                     {% if response.predict == "0" %}
-                <li>일시 : {{ response.date }}, 잠을 잘 잤는지 유무 : {{ response.survey1 }}, 스트레스 강도 : {{ response.survey2}}, 하루 긴장도 : {{ response.survey3 }} = 잠을 잘 잔 날</li>
+                <li>일시 : {{ response.date }}, 잠을 잘 잤는지 유무 : {{ response.sleep_survey }}, 스트레스 강도(1~5) : {{ response.stress_survey}}, 긍정수치(1~7) : {{ response.positive_survey }} = 개운한 기상을 한 날</li>
                     {% else %}
-                <li>일시 : {{ response.date }}, 잠을 잘 잤는지 유무 : {{ response.survey1 }}, 스트레스 강도 : {{ response.survey2}}, 하루 긴장도 : {{ response.survey3 }} = 잠을 못 잔 날</li>
+                <li>일시 : {{ response.date }}, 잠을 잘 잤는지 유무 : {{ response.sleep_survey }}, 스트레스 강도(1~5) : {{ response.stress_survey}}, 긍정수치(1~7) : {{ response.positive_survey }} = 개운하지 못한 기상을 한 날</li>
                     {% endif %}
                 {% empty %}
                 <li>진단 결과가 없습니다.</li>

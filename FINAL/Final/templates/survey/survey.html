@@ -4,8 +4,9 @@
 <link href="{% static 'css/survey.css' %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
-<div class="row2">
-   <div class="col-sm-7" style="margin-top: 100px; margin-bottom: 50px;">
+<center>
+<div class="row1">
+   <div class="col-sm-7" style="margin-top: 100px; height: 800px;">
         <div class="" style="height: 100%;">
             <div class="body">
                 <ul id="chat-message-list">
@@ -14,42 +15,38 @@
                     </li>
                 </ul>
                 
-                <div class="survey-chat col-sm-4" id="survey1">
+                <div class="survey-chat col-sm-4" id="sleep_survey">
                     <div>
-                    어제 밤 잠을 잘 주무셨나요?
+                    최근에 잠을 잘 주무셨나요?
                     </div>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"네\", \"postback\":\"0\"}", this, "survey1")'><span>네</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"아니오\", \"postback\":\"1\"}", this, "survey1")'><span>아니오</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"네\", \"postback\":\"0\"}", this, "sleep_survey")'><span>네</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"아니오\", \"postback\":\"1\"}", this, "sleep_survey")'><span>아니오</span></button>
                 </div>
 
-                <div class="survey-chat col-sm-6" id="survey2" style="margin-top: px;">
+                <div class="survey-chat col-sm-6" id="stress_survey" style="margin-top: px;">
                     <div>
-                    스트레스를 얼만큼 받으셨나요?
+                    최근에 스트레스를 얼만큼 받으셨나요?
                     </div>
                     <br>
-                    <span class="survey-circle">매우 많이</span>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"postback\":\"1\"}", this, "survey2")'><span>1</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"postback\":\"2\"}", this, "survey2")'><span>2</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"postback\":\"3\"}", this, "survey2")'><span>3</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"postback\":\"4\"}", this, "survey2")'><span>4</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"postback\":\"5\"}", this, "survey2")'><span>5</span></button>
-                    <span class="survey-circle">전혀 안 받음</span>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"매우 많이 받음\", \"postback\":\"1\"}", this, "stress_survey")'><span>매우 많이</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"많이 받음\", \"postback\":\"2\"}", this, "stress_survey")'><span>많이</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"보통\", \"postback\":\"3\"}", this, "stress_survey")'><span>보통</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"적게 받음\", \"postback\":\"4\"}", this, "stress_survey")'><span>적게</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"매우 적게 받음\", \"postback\":\"5\"}", this, "stress_survey")'><span>매우 적게</span></button>
                 </div>
 
-                <div class="survey-chat col-sm-6" id="survey3">
+                <div class="survey-chat col-sm-6" id="poitive_survey">
                     <div>
-                    하루동안 긴장을 많이 하셨나요?
+                    최근에 하루하루가 긍정적인가요?
                     </div>
                     <br>
-                    <span class="survey-circle">여유</span>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"postback\":\"1\"}", this, "survey3")'><span>1</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"postback\":\"2\"}", this, "survey3")'><span>2</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"postback\":\"3\"}", this, "survey3")'><span>3</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"postback\":\"4\"}", this, "survey3")'><span>4</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"postback\":\"5\"}", this, "survey3")'><span>5</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"postback\":\"6\"}", this, "survey3")'><span>6</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"postback\":\"7\"}", this, "survey3")'><span>7</span></button>
-                    <span class="survey-circle">긴장</span>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"매우 부정적\", \"postback\":\"1\"}", this, "poitive_survey")'><span>매우 부정적</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"부정적\", \"postback\":\"2\"}", this, "poitive_survey")'><span>부정적</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"다소 부정적\", \"postback\":\"3\"}", this, "poitive_survey")'><span>다소 부정적</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"보통\", \"postback\":\"4\"}", this, "poitive_survey")'><span>보통</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"다소 긍정적\", \"postback\":\"5\"}", this, "poitive_survey")'><span>다소 긍정적</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"긍정적\", \"postback\":\"6\"}", this, "poitive_survey")'><span>긍정적</span></button>
+                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"매우 긍정적\", \"postback\":\"7\"}", this, "poitive_survey")'><span>매우 긍정적</span></button>
                 </div>
             </div>
             
@@ -57,101 +54,100 @@
         </div>
     </div>
 </div>
-
+</center>
 <script>
-var messageData = {};
-function onButtonClick(data, button, parentId) {
-    var parsedData = JSON.parse(data);
-    var messageText = parsedData.postback;
-    var parentElementId = parentId;;
-    messageData[parentElementId] = messageText;
-    console.log(messageData)
-    // 현재 설문 div를 찾음
-    var currentSurvey = button.closest('.survey-chat');
-
-    // 사용자가 선택한 답변을 현재 설문 div 다음에 추가
-    var messageList = document.getElementById('chat-message-list');
-    var newMessage = document.createElement('div');
-    newMessage.classList.add('chat-message', 'me');
-    newMessage.style.marginTop = '32px'; // 간격 추가
-    newMessage.innerHTML = '<div class="message">' + messageText + '</div>';
-    currentSurvey.insertAdjacentElement('afterend', newMessage);
-
-    // 다음 설문을 표시
-    var nextSurvey = currentSurvey.nextElementSibling;
-    while (nextSurvey && !nextSurvey.classList.contains('survey-chat')) {
-        nextSurvey = nextSurvey.nextElementSibling;
+    var messageData = {};
+    
+    function onButtonClick(data, button, parentId) {
+        var parsedData = JSON.parse(data);
+        var messageText = parsedData.postback;
+        var parentElementId = parentId;
+        messageData[parentElementId] = messageText;
+        console.log(messageData)
+        var currentSurvey = button.closest('.survey-chat');
+    
+        var messageList = document.getElementById('chat-message-list');
+        var newMessage = document.createElement('div');
+        newMessage.classList.add('chat-message', 'me', 'animate__animated', 'animate__fadeInUp');
+        newMessage.style.marginTop = '32px';
+        newMessage.innerHTML = '<div class="message">' + parsedData.displayText + '</div>';
+        currentSurvey.insertAdjacentElement('afterend', newMessage);
+    
+        // 애니메이션 끝난 후 다음 설문을 표시하는 로직
+        newMessage.addEventListener('animationend', function() {
+            showNextSurvey(currentSurvey, newMessage);
+        });
+    
+        var buttons = button.parentElement.querySelectorAll('button');
+        buttons.forEach(function(btn) {
+            btn.disabled = true;
+        });
     }
-    if (nextSurvey) {
-        nextSurvey.style.display = 'block';
-    } else {
-
-        var to_result_page = document.createElement('form');
-        to_result_page.classList.add('chat-message');
-        to_result_page.action = "{% url 'survey:survey_result' %}"; // 폼이 전송될 URL
-        to_result_page.method = "post"; // 폼의 전송 방식 설정
-
-        var csrfTokenInput = document.createElement('input');
-        csrfTokenInput.type = "hidden";
-        csrfTokenInput.name = "csrfmiddlewaretoken"; // Django가 기대하는 CSRF 토큰 이름
-        csrfTokenInput.value = "{{ csrf_token }}"; // Django 템플릿 태그로 CSRF 토큰 값 추가
-        to_result_page.appendChild(csrfTokenInput);
-
-        // 폼 데이터를 포함할 숨은 입력 필드 추가
-        var key1Input = document.createElement('input');
-        key1Input.type = "hidden";
-        key1Input.name = Object.keys(messageData)[0]; // 이 이름은 서버에서 해당 값을 식별하는 데 사용됩니다.
-        key1Input.value =  messageData[key1Input.name]; // 실제 데이터를 여기에 추가할 수 있습니다.
-        to_result_page.appendChild(key1Input);
-
-        var key2Input = document.createElement('input');
-        key2Input.type = "hidden";
-        key2Input.name = Object.keys(messageData)[1];
-        key2Input.value =  messageData[key2Input.name];
-        to_result_page.appendChild(key2Input);
-
-        var key3Input = document.createElement('input');
-        key3Input.type = "hidden";
-        key3Input.name = Object.keys(messageData)[2];
-        key3Input.value =  messageData[key3Input.name];
-        to_result_page.appendChild(key3Input);
-
-        // 버튼(링크) 추가
-        var linkElement = document.createElement('a');
-        linkElement.href = "#"; // 폼을 전송하는 버튼으로 설정
-        linkElement.textContent = "결과 페이지로 이동";
-        linkElement.onclick = function() {
-            to_result_page.submit(); // 폼 제출
-            return false; // 링크 기본 동작 방지
-        };
-        to_result_page.appendChild(linkElement);
-
-        // 폼을 문서에 추가
-        newMessage.insertAdjacentElement('afterend', to_result_page);
-
-        
-        // 모든 설문이 끝났을 때 감사 메시지 출력
+    
+    function showNextSurvey(currentSurvey, newMessage) {
+        var nextSurvey = currentSurvey.nextElementSibling;
+        while (nextSurvey && !nextSurvey.classList.contains('survey-chat')) {
+            nextSurvey = nextSurvey.nextElementSibling;
+        }
+        if (nextSurvey) {
+            nextSurvey.style.display = 'block';
+            nextSurvey.classList.add('animate__animated', 'animate__fadeInUp');
+        } else {
+            // 마지막 설문 이후의 행동 (감사 메시지 및 결과 페이지로 이동)
+            showThankYouAndResultLink(newMessage);
+        }
+    }
+    
+    function showThankYouAndResultLink(newMessage) {
+        // 감사 메시지 추가
         var thankYouMessage = document.createElement('div');
-        thankYouMessage.classList.add('chat-message');
+        thankYouMessage.classList.add('chat-message', 'animate__animated', 'animate__fadeInUp');
         thankYouMessage.innerHTML = '<div class="message">짧은 설문조사에 참여해 주셔서 감사합니다!</div>';
         newMessage.insertAdjacentElement('afterend', thankYouMessage);
-        
-        
+    
+        // 결과 페이지로 이동하는 폼 생성
+        var to_result_page = document.createElement('form');
+        to_result_page.classList.add('chat-message');
+        to_result_page.action = "{% url 'survey:survey_result' %}";
+        to_result_page.method = "post";
+    
+        var csrfTokenInput = document.createElement('input');
+        csrfTokenInput.type = "hidden";
+        csrfTokenInput.name = "csrfmiddlewaretoken";
+        csrfTokenInput.value = "{{ csrf_token }}";
+        to_result_page.appendChild(csrfTokenInput);
+    
+        var keys = Object.keys(messageData);
+        keys.forEach(function(key) {
+            var hiddenInput = document.createElement('input');
+            hiddenInput.type = "hidden";
+            hiddenInput.name = key;
+            hiddenInput.value = messageData[key];
+            to_result_page.appendChild(hiddenInput);
+        });
+    
+        var linkElement = document.createElement('a');
+        linkElement.href = "#";
+        linkElement.textContent = "결과 페이지로 이동";
+        linkElement.classList.add('animate__animated', 'animate__fadeInUp');
+        linkElement.onclick = function() {
+            to_result_page.submit();
+            return false;
+        };
+        to_result_page.appendChild(linkElement);
+    
+        // 폼을 감사 메시지 뒤에 삽입
+        thankYouMessage.insertAdjacentElement('afterend', to_result_page);
     }
-
-    // 사용자가 버튼을 눌렀을 때 버튼을 비활성화
-    var buttons = button.parentElement.querySelectorAll('button');
-    buttons.forEach(function(btn) {
-        btn.disabled = true;
+    
+    document.addEventListener("DOMContentLoaded", function() {
+        var firstSurvey = document.getElementById('sleep_survey');
+        if (firstSurvey) {
+            firstSurvey.style.display = 'block';
+            firstSurvey.classList.add('animate__animated', 'animate__fadeInUp');
+        }
     });
-}
-
-document.addEventListener("DOMContentLoaded", function() {
-    // 첫 번째 설문을 표시합니다.
-    var firstSurvey = document.getElementById('survey1');
-    if (firstSurvey) {
-        firstSurvey.style.display = 'block';
-    }
-});
-</script>
+    </script>
+    
+    
 {% endblock %}

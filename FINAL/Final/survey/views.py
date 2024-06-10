@@ -76,9 +76,9 @@ def result_add(request):
             user=request.user,  # 사용자 객체
             predict=pred_dt,  # 예측 결과
             predict_proba=pred_proba,
-            survey1=request.POST.get('survey1'),  # survey1 값
-            survey2=request.POST.get('survey2'),  # survey2 값
-            survey3=request.POST.get('survey3'),  # survey3 값
+            sleep_survey=request.POST.get('sleep_survey'),  # survey1 값
+            stress_survey=request.POST.get('stress_survey'),  # survey2 값
+            positive_survey=request.POST.get('poitive_survey'),  # survey3 값
         )
         pred_instance.save()
 
