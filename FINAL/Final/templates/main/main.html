@@ -27,9 +27,9 @@
           </div>
           <div class="col-lg-6 pt-4 pt-lg-0" data-aos="fade-left" data-aos-delay="200">
             <p class="noto-sans-kr-main" style="text-align: justify;">
-                　양질의 수면 유지를 위해 관리와 치료 인식을 개선해야 한다는 임상 전문가들의 공통된 의견이 나왔습니다. 수면 부족의 사회경제적 영향이 커지면서 그 중요성이 더욱 강조되고 있지만, 여전히 인식은 낮습니다. 
+                양질의 수면 유지를 위해 관리와 치료 인식을 개선해야 한다는 임상 전문가들의 공통된 의견이 나왔습니다. 수면 부족의 사회경제적 영향이 커지면서 그 중요성이 더욱 강조되고 있지만, 여전히 인식은 낮습니다. 
                 <br><br>
-                　현재 우리나라는 수면 위생의 인식 확대가 필요합니다. 수면 위생은 잠을 잘 자기 위한 습관과 환경을 의미합니다. 젊은 성인들이 중장년에 비해 수면 위생이 불량하고, 수면에 나쁜 행동에는 성별 차이도 관측되고 있습니다.
+                현재 우리나라는 수면 위생의 인식 확대가 필요합니다. 수면 위생은 잠을 잘 자기 위한 습관과 환경을 의미합니다. 젊은 성인들이 중장년에 비해 수면 위생이 불량하고, 수면에 나쁜 행동에는 성별 차이도 관측되고 있습니다.
                 
             </p>
             <ul>
@@ -305,7 +305,11 @@
                     <iframe width="800" height="500" src="https://www.youtube.com/embed/FoO7Pmx0bE4?autoplay=1&mute=1&si=sy4V_DXUSDFRvYYs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 </div>
                 <div class="col-md-2">
+                  {% if user.is_authenticated %}
                     <h2 class="featurette-heading fw-normal lg-1 ibm-plex-sans-kr-regular" style="text-align: right; color: #ffffff;">잘자요, {{ user }}님</h2>
+                  {% else %}
+                    <h2 class="featurette-heading fw-normal lg-1 ibm-plex-sans-kr-regular" style="text-align: right; color: #ffffff;">Good night, 고슈진사마</h2>
+                  {% endif %}
                     <br><br>
                     <p class="noto-sans-kr-main" style="text-align: right;">　지친 일상 속, 때로는 즐거운 콘텐츠와 함께 휴식을 가져보세요.<br>Eunoianest가 준비한 영상과 함께 좋은 하루 보내시길 바랍니다.<br><br>당신의 모든 노력이 쌓여 더 나은 내일을 만듭니다.😊<br>Eunoianest는 당신의 노력을 응원합니다.</p>
                 </div>

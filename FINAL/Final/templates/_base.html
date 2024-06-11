@@ -76,8 +76,11 @@
             <li><a class="active ibm-plex-sans-kr-regular" href="{% url 'sleep:define' %}"><strong>About Sleep</strong></a><li>
             <li class="dropdown ibm-plex-sans-kr-regular" style=" margin-left: -15px;"><a><span><strong>SERVICES</strong></span> <i class="bi bi-chevron-down"></i></a>
               <ul>
-                <li class="dropdown ibm-plex-sans-kr-regular"><a href="{% url 'survey:survey' %}"><span>수면 진단 챗봇</span> <i class="bi bi-chevron-right"></i></a>
-                  <ul><li><a href="{% url 'survey:result' %}">수면 진단 결과</a></li></ul>
+                <li class="dropdown ibm-plex-sans-kr-regular"><a><span>수면 진단 챗봇</span> <i class="bi bi-chevron-right"></i></a>
+                  <ul>
+                    <li><a href="{% url 'survey:survey_door' %}">수면 진단 챗봇</a></li>
+                    <li><a href="{% url 'survey:result' %}">수면 진단 결과</a></li>
+                  </ul>
                 </li>
                 <li><a href="{% url 'chat:index' %}">실시간 채팅</a></li>
                 <li><a href="{% url 'dr:list' %}">Dr.Eunoia 상담</a></li>

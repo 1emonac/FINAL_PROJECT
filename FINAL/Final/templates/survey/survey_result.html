@@ -210,7 +210,8 @@ body ul, body li {
 
 
 
-    <center><form id="myForm" action="{% url 'survey:result_add' %}" method="POST">
+    <center>
+      <form id="myForm" action="{% url 'survey:result_add' %}" method="POST">
         {% csrf_token %}
         {% for i, j in pred_df.items %}
         <input type="hidden" name="{{ i }}" value="{{ j }}">
@@ -226,8 +227,9 @@ body ul, body li {
             <button type="submit" class="btn btn-success" id="submitButton" style="display: none; margin-top: 10px;">저장하시겠습니까</button>
           {% endif %}
           <div></div>
-        <button href="{% url 'sleep:main' %}" class="btn btn-primary" id="moveToMainButton" style="display: none; margin-top: 10px;">메인 페이지로 이동</button>
+        
     </form>
+    <a href="{% url 'sleep:main' %}"><button class="btn btn-primary" id="moveToMainButton" style="display: none; margin-top: 10px;">메인 페이지로 이동</button></a>
   </center>
 </section>
 

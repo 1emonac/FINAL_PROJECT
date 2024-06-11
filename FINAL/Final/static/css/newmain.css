@@ -394,7 +394,9 @@ h6 {
 .navbar-mobile .dropdown>.dropdown-active {
   display: block;
 }
-
+.getstarted.ibm-plex-sans-kr-regular {
+  cursor: pointer; /* 링크나 버튼을 가리킬 때 사용되는 손 모양 커서 */
+        }
 /*--------------------------------------------------------------
 # Hero Section
 --------------------------------------------------------------*/

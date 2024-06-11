@@ -87,10 +87,18 @@
 <div class="my-5">
     <div class="p-4 text-center bg-body-tertiary" style="margin-top: 150px; margin-bottom: 50px;">
         <div class="container">
+            {% if user.is_authenticated %}
             <h1 class="text-body-emphasis ibm-plex-sans-kr-regular ">{{ user }}님의 수면 진단 결과</h1>
+            {% else %}
+            <h1 class="text-body-emphasis ibm-plex-sans-kr-regular ">초보자님의 수면 진단 결과</h1>
+            {% endif %}
             <p class="col-lg-8 mx-auto lead noto-sans-kr-main" id="currentTime"></p>
             <h4 class="noto-sans-kr-main">결과지입니당당숭구리당당</h4>
+            {% if user.is_authenticated %}
             <p>*잠을 잘 잤다면 0, 못 잤다면 1입니다. 스트레스 강도의 수치가 높을 수록 좋습니다. 긍정수치가 높을 수록 좋습니다.*</p>
+            {% else %}
+            <p>로그인을 하신다면 결과를 저장하고 보실 수 있으십니다.</p>
+            {% endif %}
         </div>
     </div>
 </div>
@@ -99,20 +107,31 @@
     <div class="pb-3 mb-4">
         <div class="h-100 p-5 bg-body-tertiary border rounded-3">
             <ul class="noto-sans-kr-main">
-                {% for response in pred_df %}
-                    {% if response.predict == "0" %}
-                <li>일시 : {{ response.date }}, 잠을 잘 잤는지 유무 : {{ response.sleep_survey }}, 스트레스 강도(1~5) : {{ response.stress_survey}}, 긍정수치(1~7) : {{ response.positive_survey }} = 개운한 기상을 한 날</li>
-                    {% else %}
-                <li>일시 : {{ response.date }}, 잠을 잘 잤는지 유무 : {{ response.sleep_survey }}, 스트레스 강도(1~5) : {{ response.stress_survey}}, 긍정수치(1~7) : {{ response.positive_survey }} = 개운하지 못한 기상을 한 날</li>
+                {% if survey %}
+                {% for response in survey %}
+                    {% if response.predict == 0 %}
+                    <li style="white-space: nowrap;">일시 : {{ response.date }}, 잠을 잘 잤는지 유무 : {{ response.sleep_survey }}, 스트레스 강도(1~5) : {{ response.stress_survey}}, 긍정수치(1~7) : {{ response.positive_survey }} = 개운한 기상을 한 날
+                        <a href="{% url 'survey:alter_survey' date=response.date  %}"><button class="btn btn-outline-secondary" type="button">수정하기</button></a>
+                        <a href="{% url 'survey:plus_survey' date=response.date %}"><button class="btn btn-outline-secondary" type="button">추가 이야기 진행</button></a>
+                    </li>
+                        {% else %}
+                    <li style="white-space: nowrap;">일시 : {{ response.date }}, 잠을 잘 잤는지 유무 : {{ response.sleep_survey }}, 스트레스 강도(1~5) : {{ response.stress_survey}}, 긍정수치(1~7) : {{ response.positive_survey }} = 개운하지 못한 기상을 한 날 
+                        <a href="{% url 'survey:alter_survey' date=response.date  %}"><button class="btn btn-outline-secondary" type="button">수정하기</button></a>
+                        <a href="{% url 'survey:plus_survey' date=response.date %}"><button class="btn btn-outline-secondary" type="button">추가 이야기 진행</button></a>
+                    </li>
                     {% endif %}
                 {% empty %}
                 <li>진단 결과가 없습니다.</li>
                 {% endfor %}
+                {% endif %}
             </ul>
 
             <hr>
             <br>
-            <center><a href="{% url 'dr:drai' %}"><button class="btn btn-outline-secondary me-4" type="button">Dr.A와 대화해보기</button></a><a href="{% url 'chat:index' %}"><button class="btn btn-outline-secondary" type="button">실시간 채팅해보기</button></a></center>
+            <center>
+                <a href="{% url 'dr:list' %}"><button class="btn btn-outline-secondary me-4" type="button">Dr.Eunoia와 대화해보기</button></a>
+                <a href="{% url 'chat:index' %}"><button class="btn btn-outline-secondary me-4" type="button">실시간 채팅해보기</button></a>
+            </center>
         </div>
     </div>
     <div class="d-flex justify-content-center">

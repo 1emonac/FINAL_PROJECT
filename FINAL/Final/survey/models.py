@@ -59,10 +59,22 @@ class Message(models.Model):
 
 class Pred(models.Model):
     user = models.CharField(max_length=255)
-    predict = models.TextField("결과", max_length=1) # 0은 잘 잤다고 평가 1은 잘 못잤다고 평가
-    predict_proba = models.TextField("잘 잤을 확률", max_length=2) # 0이 나올 확률(정확하지 않다고 입력 시 1이 나올 확률을 입력)
-    sleep_survey = models.TextField("숙면여부", max_length=1) # 0은 잘 잤다고 평가 1은 잘 못잤다고 평가
-    stress_survey = models.TextField("스트레스의 강도", max_length=1) # 1 ~ 5 사이의 값 높을 수록 강도가 낮음
-    positive_survey = models.TextField("긍정의 강도", max_length=1 ) # 1 ~ 7 사이의 값 높을 수록 긍정
-    date = models.DateField("일자", auto_now_add=True) 
+    predict = models.SmallIntegerField("결과") # 0은 잘 잤다고 평가 1은 잘 못잤다고 평가
+    predict_proba = models.SmallIntegerField("잘 잤을 확률") # 0이 나올 확률(정확하지 않다고 입력 시 1이 나올 확률을 입력)
+    sleep_survey = models.SmallIntegerField("숙면여부") # 0은 잘 잤다고 평가 1은 잘 못잤다고 평가
+    stress_survey = models.SmallIntegerField("스트레스의 강도") # 1 ~ 5 사이의 값 높을 수록 강도가 낮음
+    positive_survey = models.SmallIntegerField("긍정의 강도") # 1 ~ 7 사이의 값 높을 수록 긍정
+    date = models.DateField("일자", auto_now_add=True, unique=True) 
+    
+
+class PlusPred(models.Model):
+    user = models.CharField(max_length=255)
+    date = models.DateField("일자", auto_now_add=True, unique=True) 
+    dream_survey = models.SmallIntegerField("꿈의 강도")
+    caffeine_survey = models.SmallIntegerField("카페인 강도")
+    alcohol_survey = models.SmallIntegerField("알코올의 강도")
+    talk_survey = models.SmallIntegerField("대화의 강도")
+    personalcare_survey = models.SmallIntegerField("개인정비의 강도")
+    work_survey = models.SmallIntegerField("당일 업무 유무")
+    home_survey = models.SmallIntegerField("집에서 많은 시간을 보내는지의 여부")
     

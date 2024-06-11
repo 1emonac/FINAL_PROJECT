@@ -1,0 +1,53 @@
+{% extends "base_chat.html" %}
+{% load static %}
+{% load django_bootstrap5 %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<main id="main">
+    <section id="breadcrumbs" class="breadcrumbs">
+      <br><br>
+    </section>
+
+    <!-- ======= Portfolio Details Section ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container">
+
+        <div class="row gy-4" style="margin-top: 30px; margin-bottom: 30px;">
+
+          <div class="col-lg-8">
+            <div class="portfolio-details-slider swiper">
+              <div class="swiper-wrapper align-items-center">
+
+                <div class="swiper-slide">
+                  <img src="{% static 'media/image/doctor1.jpg' %}" alt="" width="300" height="500">
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+          <div class="col-lg-4" style="margin-top: 105px; margin-bottom: 80px;">
+            <div class="portfolio-info">
+              <center><h3>Eunoianest의 Dr.Eunoia</h3></center>
+              <ul>
+                <li>자고 일어나도 개운함을 느끼기 어려우신가요?<br>
+                Dr.Eunoia와 이야기를 나눠보시는건 어떠한가요?<br>
+                편안한 환경에서 수면에 관한 이야기를 나눠보세요.<br>
+                가벼운 대화들은 건강에 도움이 됩니다.<br>
+                건강을 되찾고 건강한 잠자리를 되찾으세요.</li>
+              </ul>
+            </div>
+            <a href="{% url 'survey:survey' %}" class="btn btn-dark mt-3" style="width: 420px;">낄낄깔깔꼴꼴껠껠</a>
+
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End Portfolio Details Section -->
+
+</main><!-- End #main -->
+{% endblock %}
