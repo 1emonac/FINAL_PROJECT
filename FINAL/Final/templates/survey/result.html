@@ -110,12 +110,12 @@
                 {% if survey %}
                 {% for response in survey %}
                     {% if response.predict == 0 %}
-                    <li style="white-space: nowrap;">일시 : {{ response.date }}, 잠을 잘 잤는지 유무 : {{ response.sleep_survey }}, 스트레스 강도(1~5) : {{ response.stress_survey}}, 긍정수치(1~7) : {{ response.positive_survey }} = 개운한 기상을 한 날
+                    <li style="white-space: nowrap;">일시 : {{ response.date }} : 개운한 기상을 했을 것으로 예상됩니다.
                         <a href="{% url 'survey:alter_survey' date=response.date  %}"><button class="btn btn-outline-secondary" type="button">수정하기</button></a>
                         <a href="{% url 'survey:plus_survey' date=response.date %}"><button class="btn btn-outline-secondary" type="button">추가 이야기 진행</button></a>
                     </li>
                         {% else %}
-                    <li style="white-space: nowrap;">일시 : {{ response.date }}, 잠을 잘 잤는지 유무 : {{ response.sleep_survey }}, 스트레스 강도(1~5) : {{ response.stress_survey}}, 긍정수치(1~7) : {{ response.positive_survey }} = 개운하지 못한 기상을 한 날 
+                    <li style="white-space: nowrap;">일시 : {{ response.date }} : 개운하지 못 한 기상이였을 것으로 예상됩니다.
                         <a href="{% url 'survey:alter_survey' date=response.date  %}"><button class="btn btn-outline-secondary" type="button">수정하기</button></a>
                         <a href="{% url 'survey:plus_survey' date=response.date %}"><button class="btn btn-outline-secondary" type="button">추가 이야기 진행</button></a>
                     </li>

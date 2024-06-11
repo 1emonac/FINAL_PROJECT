@@ -225,11 +225,16 @@ body ul, body li {
           {% if user.is_authenticated %}
             <div></div>
             <button type="submit" class="btn btn-success" id="submitButton" style="display: none; margin-top: 10px;">저장하시겠습니까</button>
-          {% endif %}
           <div></div>
         
     </form>
     <a href="{% url 'sleep:main' %}"><button class="btn btn-primary" id="moveToMainButton" style="display: none; margin-top: 10px;">메인 페이지로 이동</button></a>
+    <a href="{% url 'survey:survey' %}"><button class="btn btn-primary" id="moveToMainButton" style="display: none; margin-top: 10px;">다시하기</button></a>
+          {% endif %}
+    </form>
+    <a href="{% url 'sleep:main' %}"><button class="btn btn-primary" id="moveToMainButton" style="display: none; margin-top: 10px;">메인 페이지로 이동</button></a>
+    <a href="{% url 'survey:survey' %}"><button class="btn btn-primary" id="returnButton" style="display: none; margin-top: 10px;">다시하기</button></a>
+    </a>
   </center>
 </section>
 
@@ -281,7 +286,10 @@ body ul, body li {
           if (submitButton) {
               submitButton.style.display = "block";
           }
-
+           // moveToMainButton이 존재하는 경우 표시합니다.
+           if (returnButton) {
+            returnButton.style.display = "block";
+          }
           // moveToMainButton이 존재하는 경우 표시합니다.
           if (moveToMainButton) {
               moveToMainButton.style.display = "block";

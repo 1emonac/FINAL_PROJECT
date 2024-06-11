@@ -83,7 +83,7 @@ def result_add(request):
         sleep_survey = df["sleep_survey"]
         stress_survey = df["stress_survey"]
         positive_survey = df["positive_survey"]
-        try:
+        if PlusPred.objects.filter(date=date, user=request.user).exists():
         # 오늘 날짜와 사용자를 기준으로 레코드를 찾습니다.
             pred_instance = Pred.objects.get(date=date, user=user)
 
@@ -95,7 +95,7 @@ def result_add(request):
             pred_instance.positive_survey = positive_survey
             pred_instance.save()
 
-        except Pred.DoesNotExist:
+        else:
             # 오늘 날짜와 사용자에 해당하는 레코드가 없으면 새로운 레코드를 생성합니다.
             pred_instance = Pred(
                 user=user,
@@ -111,20 +111,18 @@ def result_add(request):
     return render(request, 'users/profile.html')
 
 def alter_survey(request, date):
-    df = dict()
     context = {"date" : date} 
     return render(request, 'survey/survey.html', context)
 
 def alter_plus_survey(request, date):
-    df = dict()
     context = {"date" : date} 
     return render(request, 'survey/plus_survey.html', context)
 
 
 def plus_survey(request, date):
-    
-    try:    # 오늘 날짜와 사용자를 기준으로 레코드를 찾습니다.
-        df = dict()
+    df = dict()
+    if PlusPred.objects.filter(date=date, user=request.user).exists():
+
         for PlusPred_instance in PlusPred.objects.filter(date=date, user=request.user):
             df["dream_survey"] = PlusPred_instance.dream_survey
             df["caffeine_survey"] = PlusPred_instance.caffeine_survey
@@ -173,7 +171,7 @@ def plus_survey(request, date):
         context = {"date" : date, "df" : df}
         return render(request, 'survey/plus_result.html', context)
         
-    except PlusPred.DoesNotExist:
+    else:
         context = {"date" : date} 
         return render(request, 'survey/plus_survey.html', context)
 
