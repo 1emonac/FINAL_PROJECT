@@ -38,7 +38,7 @@
     margin-left: 40px;
     padding: 16px 20px 16px 20px;
     margin: 0 0 20px 0;
-    font: 14px/14px "Noto Sans", sans-serif;
+    font: 16px/16px "Noto Sans", sans-serif;
 
     text-align: right;
 }
@@ -51,16 +51,16 @@
     white-space: pre-wrap;
     text-align: left;
     
-    margin-right: 40px;
+    margin-right: 50px;
     padding: 16px 20px 16px 20px;
     margin: 0 0 20px 0;
-    font: 14px/14px "Noto Sans", sans-serif;
-    color: #0EC879;
+    font: 16px/16px "Noto Sans", sans-serif;
+    color: #ffffff;
 }
 
 .chat-message:not(.me) {
     text-align: left;
-    margin-right: 80px; 
+    margin-right: 100px; 
 }
 
 /* 텍스트 스타일 */

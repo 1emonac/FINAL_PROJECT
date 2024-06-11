@@ -89,7 +89,7 @@
         <div class="container">
             <h1 class="text-body-emphasis ibm-plex-sans-kr-regular ">{{ user }}님의 수면 진단 결과</h1>
             <p class="col-lg-8 mx-auto lead noto-sans-kr-main">{{ date }}</p>
-            <h4 class="noto-sans-kr-main">결과지입니당당숭구리당당</h4>
+            {% comment %} <h4 class="noto-sans-kr-main">결과지입니당당숭구리당당</h4> {% endcomment %}
             <p></p>
         </div>
     </div>
@@ -107,9 +107,9 @@
             <hr>
             <br>
             <center>
-                <a href="{% url 'survey:alter_plus_survey' date=date  %}"><button class="btn btn-outline-secondary me-4" type="button">수정하기</button></a>
-                <a href="{% url 'blog:list' %}"><button class="btn btn-outline-secondary me-4" type="button">수면에 관한 다양한 이야기 보러가기</button></a>
-                <a href="{% url 'sleep:main' %}"><button class="btn btn-outline-secondary" type="button">메인으로 이동</button></a>
+                <a href="{% url 'survey:alter_plus_survey' date=date  %}"><button class="btn btn-outline-secondary me-4 noto-sans-kr-main" type="button">다시하기</button></a>
+                <a href="{% url 'blog:list' %}"><button class="btn btn-outline-secondary me-4 noto-sans-kr-main" type="button">수면에 관한 다양한 이야기 보러가기</button></a>
+                <a href="{% url 'sleep:main' %}"><button class="btn btn-outline-secondary noto-sans-kr-main" type="button">메인으로 이동</button></a>
             </center>
         </div>
     </div>

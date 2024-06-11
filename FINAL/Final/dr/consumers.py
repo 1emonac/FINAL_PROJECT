@@ -68,7 +68,7 @@ class SleepClinicRoomConsumer(JsonWebsocketConsumer):
         response: ChatCompletion = OPENAI_CLIENT.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=self.gpt_messages,
-            temperature=1,
+            temperature=0.9
         )
         response_role = response.choices[0].message.role
         response_content = response.choices[0].message.content

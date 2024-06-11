@@ -181,7 +181,7 @@ body ul, body li {
       <ul>
         <li class="chart">
           <!-- <h3 class="chart--subHeadline">Chart 1</h3> -->
-          <h2 class="chart--headline ibm-plex-sans-kr-regular" id="percent_predict" vlaue={{predict}}><strong>개운한 아침을 맞을 {{predict}}% 정도 됩니다.</strong></h2>
+          <h2 class="chart--headline ibm-plex-sans-kr-regular" id="percent_predict" vlaue={{predict}}><strong>개운한 아침을 맞을 확률이 {{predict}}% 정도 됩니다.</strong></h2>
           <div id="pieChart">
             <svg id="pieChartSVG">
               <defs>
@@ -224,16 +224,16 @@ body ul, body li {
           
           {% if user.is_authenticated %}
             <div></div>
-            <button type="submit" class="btn btn-success" id="submitButton" style="display: none; margin-top: 10px;">저장하시겠습니까</button>
+            <button type="submit" class="btn btn-success noto-sans-kr-main" id="submitButton" style="display: none; margin-top: 10px;">저장하시겠습니까</button>
           <div></div>
         
     </form>
-    <a href="{% url 'sleep:main' %}"><button class="btn btn-primary" id="moveToMainButton" style="display: none; margin-top: 10px;">메인 페이지로 이동</button></a>
-    <a href="{% url 'survey:survey' %}"><button class="btn btn-primary" id="moveToMainButton" style="display: none; margin-top: 10px;">다시하기</button></a>
+    <a href="{% url 'sleep:main' %}"><button class="btn btn-primary noto-sans-kr-main" id="moveToMainButton" style="display: none; margin-top: 10px;">메인 페이지로 이동</button></a>
+    <a href="{% url 'survey:survey' %}"><button class="btn btn-primary noto-sans-kr-main" id="moveToMainButton" style="display: none; margin-top: 10px;">다시하기</button></a>
           {% endif %}
     </form>
-    <a href="{% url 'sleep:main' %}"><button class="btn btn-primary" id="moveToMainButton" style="display: none; margin-top: 10px;">메인 페이지로 이동</button></a>
-    <a href="{% url 'survey:survey' %}"><button class="btn btn-primary" id="returnButton" style="display: none; margin-top: 10px;">다시하기</button></a>
+    <a href="{% url 'sleep:main' %}"><button class="btn btn-primary noto-sans-kr-main" id="moveToMainButton" style="display: none; margin-top: 10px;">메인 페이지로 이동</button></a>
+    <a href="{% url 'survey:survey' %}"><button class="btn btn-primary noto-sans-kr-main" id="returnButton" style="display: none; margin-top: 10px;">다시하기</button></a>
     </a>
   </center>
 </section>
@@ -418,75 +418,6 @@ body ul, body li {
                           .attr( 'r', radius - 100 )
                           .attr( 'fill', '#fff' );
         }
-        
-        // function drawDetailedInformation ( data, element ) {
-        //   var bBox      = element.getBBox(),
-        //       infoWidth = width * 0.3,
-        //       anchor,
-        //       infoContainer,
-        //       position; 
-         
-        //   if ( ( bBox.x + bBox.width / 2 ) > 0 ) {
-        //     infoContainer = detailedInfo.append( 'g' )
-        //                                 .attr( 'width', infoWidth )
-        //                                 .attr(
-        //                                   'transform',
-        //                                   'translate(' + width / 2 + ',' + height / 2 + ')'
-        //                                 );
-        //     anchor   = 'end';
-        //     position = 'right';
-        //   } else {
-        //     infoContainer = detailedInfo.append( 'g' )
-        //                                 .attr( 'width', infoWidth )
-        //                                 .attr(
-        //                                   'transform',
-        //                                   'translate(' + width / 5 + ',' + height / 2 + ')'
-        //                                 );
-        //     anchor   = 'start';
-        //     position = 'left';
-        //   }
-
-        //   infoContainer.data( [ data.value * 100 ] )
-        //                 .append( 'text' )
-        //                 .text ( '0 %' )
-        //                 .attr( 'class', 'pieChart--detail--percentage' )
-        //                 .attr( 'x', ( position === 'left' ? 0 : infoWidth ) )
-        //                 .attr( 'y', 0 )
-        //                 .attr( 'text-anchor', anchor )
-        //                 .transition()
-        //                 .duration( DURATION )
-        //                 .tween( 'text', function( d ) {
-        //                   var i = d3.interpolateRound(
-        //                     +this.textContent.replace( /\s%/ig, '' ),
-        //                     d
-        //                   );
-
-        //                   return function( t ) {
-        //                     this.textContent = i( t ) + ' %';
-        //                   };
-        //                 } );
-          
-        //   infoContainer.append( 'line' )
-        //                 .attr( 'class', 'pieChart--detail--divider' )
-        //                 .attr( 'x1', 0 )
-        //                 .attr( 'x2', 0 )
-        //                 .attr( 'y1', 0 )
-        //                 .attr( 'y2', 0 )
-        //                 .transition()
-        //                 .duration( DURATION )
-        //                 .attr( 'x2', infoWidth );
-          
-        //   infoContainer.data( [ data.description ] ) 
-        //                 .append( 'foreignObject' )
-        //                 .attr( 'width', infoWidth ) 
-        //                 .attr( 'height', 100 )
-        //                 .append( 'xhtml:body' )
-        //                 .attr(
-        //                   'class',
-        //                   'pieChart--detail--textContainer ' + 'pieChart--detail__' + position
-        //                 )
-        //                 .html( data.description );
-        //     }
           }
 
           function ಠ_ಠ() {
@@ -501,5 +432,4 @@ body ul, body li {
         })();
 
 </script>
-<!-- <script scr="{% static 'js/surveyresult.js' %}"></script> -->
 {% endblock %}
