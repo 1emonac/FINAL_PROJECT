@@ -122,8 +122,9 @@ def alter_plus_survey(request, date):
 
 
 def plus_survey(request, date):
-    df = dict()
+    
     try:    # 오늘 날짜와 사용자를 기준으로 레코드를 찾습니다.
+        df = dict()
         for PlusPred_instance in PlusPred.objects.filter(date=date, user=request.user):
             df["dream_survey"] = PlusPred_instance.dream_survey
             df["caffeine_survey"] = PlusPred_instance.caffeine_survey
@@ -132,6 +133,8 @@ def plus_survey(request, date):
             df["personal_care_survey"] = PlusPred_instance.personalcare_survey
             df["work_survey"] = PlusPred_instance.work_survey
             df["home_survey"] = PlusPred_instance.home_survey
+
+        print(df)
         if df["dream_survey"] > 2:
             df["dream_survey"] = "악몽을 오랜기간 꾸고 있다면 스트레스로 인해 수면에 어려움이 있을 것으로 예상됩니다."
         else:

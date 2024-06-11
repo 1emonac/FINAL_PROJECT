@@ -27,12 +27,6 @@ def main(request):
 def define(request):    
     return render(request, "feed/define.html")
 
-def chatbot(request):    
-    return render(request, "feed/chatbot.html")
-
-def result(request):    
-    return render(request, "feed/result.html")
-
 def team(request):    
     return render(request, "business/team.html")
 
