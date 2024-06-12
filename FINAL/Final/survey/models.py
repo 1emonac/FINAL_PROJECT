@@ -55,8 +55,6 @@ class Message(models.Model):
     def __str__(self):
         return f"{self.user}: {self.content}"
 
-
-
 class Pred(models.Model):
     user = models.ForeignKey("users.User", on_delete=models.CASCADE,)
     predict = models.SmallIntegerField("결과") # 0은 잘 잤다고 평가 1은 잘 못잤다고 평가

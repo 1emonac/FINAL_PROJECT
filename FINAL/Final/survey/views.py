@@ -1,15 +1,11 @@
-import openai
 import os
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from .models import SurveyRoom, Pred, PlusPred
+from django.shortcuts import render
+from .models import Pred, PlusPred
 import joblib
 import pandas as pd
 import numpy as np
 from django.utils import timezone
 
-# OpenAI API 키 설정
-openai.api_key = os.environ.get("OPENAI_API_KEY")
 
 def survey_door(request):
     return render(request, 'survey/survey_door.html')
