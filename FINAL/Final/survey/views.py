@@ -1,5 +1,5 @@
 import os
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Pred, PlusPred
 import joblib
 import pandas as pd
@@ -18,9 +18,8 @@ def survey_room(request):
 
 # 결과 페이지를 보여주는 뷰
 def result_view(request):
-    survey = Pred.objects.filter(user=request.user)  # 예시: 모든 데이터 가져오기
+    survey = Pred.objects.filter(user_username=request.user)  # 예시: 모든 데이터 가져오기
     context = {"survey" : survey}
-    
     return render(request, 'survey/result.html', context)
 
 
@@ -79,20 +78,16 @@ def result_add(request):
         sleep_survey = df["sleep_survey"]
         stress_survey = df["stress_survey"]
         positive_survey = df["positive_survey"]
-        if PlusPred.objects.filter(date=date, user=request.user).exists():
-        # 오늘 날짜와 사용자를 기준으로 레코드를 찾습니다.
-            pred_instance = Pred.objects.get(date=date, user=user)
 
-            # 기존 레코드가 존재하면 업데이트합니다.
+        if Pred.objects.filter(date=date, user_username=user).exists():
+            pred_instance = Pred.objects.get(date=date, user_username=user)
             pred_instance.predict = pred_dt
             pred_instance.predict_proba = pred_proba
             pred_instance.sleep_survey = sleep_survey
             pred_instance.stress_survey = stress_survey
             pred_instance.positive_survey = positive_survey
             pred_instance.save()
-
-        else:
-            # 오늘 날짜와 사용자에 해당하는 레코드가 없으면 새로운 레코드를 생성합니다.
+        else:    
             pred_instance = Pred(
                 user=user,
                 predict=pred_dt,
@@ -108,7 +103,73 @@ def result_add(request):
 
 def alter_survey(request, date):
     context = {"date" : date} 
-    return render(request, 'survey/survey.html', context)
+    return render(request, 'survey/alter_survey.html', context)
+
+
+def alter_result(request, date):
+    if request.method == 'POST':
+        lr = joblib.load(os.path.join('static', "model", 'logistic_regression_model.pkl'))
+        values = list()
+        df = dict()
+        # POST 요청으로 전송된 데이터 확인
+        for key, value in request.POST.items():
+            
+            if "token" in key:
+                pass
+            elif "predict" == key:
+                key = value
+            else:
+                values.append(value)
+                df[key] = value
+        pred = pd.DataFrame(values).T
+        pred = lr.predict(pred)
+
+        if key == "1":
+            # 저장 만들어 주기
+            if pred[0] == 0:
+                pred_dt = 0
+        
+            else:
+                pred_dt = 1
+
+            pred_proba = np.round(lr.predict_proba(pd.DataFrame(values).T)[0][0] * 100).astype(int)
+        else:
+            if pred[0] == 0:
+                pred_dt = 1
+            else:
+                pred_dt = 0
+            pred_proba = np.round(lr.predict_proba(pd.DataFrame(values).T)[0][1] * 100).astype(int)
+
+        user = request.user
+        sleep_survey = df["sleep_survey"]
+        stress_survey = df["stress_survey"]
+        positive_survey = df["positive_survey"]
+        pred_instance = Pred.objects.get(date=date, user_username=user)
+
+        # 기존 레코드가 존재하면 업데이트합니다.
+        pred_instance.predict = pred_dt
+        pred_instance.predict_proba = pred_proba
+        pred_instance.sleep_survey = sleep_survey
+        pred_instance.stress_survey = stress_survey
+        pred_instance.positive_survey = positive_survey
+        pred_instance.save()
+    return redirect('survey:result')
+
+def alter_survey_result(request, date):
+    if request.method == 'POST':
+        # POST 요청으로 전송된 데이터 가져오기
+        lr = joblib.load(os.path.join('static', "model", 'logistic_regression_model.pkl'))
+        pred_df = dict()
+        for key, value in request.POST.items():
+            if "token" not in key:
+                pred_df[key] = value
+        pred = pd.DataFrame(pred_df.values()).T
+        pred = np.round(lr.predict_proba(pred)[0][0] * 100).astype(int)
+        context = {"predict" : pred, "pred_df" : pred_df, "date" : date}
+        return render(request, 'survey/alter_survey_result.html', context)
+    
+    else:
+        return render(request, 'survey/alter_survey.html')
 
 def alter_plus_survey(request, date):
     context = {"date" : date} 
@@ -117,9 +178,9 @@ def alter_plus_survey(request, date):
 
 def plus_survey(request, date):
     df = dict()
-    if PlusPred.objects.filter(date=date, user=request.user).exists():
+    if PlusPred.objects.filter(date=date, user_username=request.user).exists():
 
-        for PlusPred_instance in PlusPred.objects.filter(date=date, user=request.user):
+        for PlusPred_instance in PlusPred.objects.filter(date=date, user_username=request.user):
             df["dream_survey"] = PlusPred_instance.dream_survey
             df["caffeine_survey"] = PlusPred_instance.caffeine_survey
             df["alcohol_survey"] = PlusPred_instance.alcohol_survey
@@ -128,11 +189,10 @@ def plus_survey(request, date):
             df["work_survey"] = PlusPred_instance.work_survey
             df["home_survey"] = PlusPred_instance.home_survey
 
-        print(df)
-        if df["dream_survey"] > 2:
+        if df["dream_survey"] < 2:
             df["dream_survey"] = "악몽을 오랜기간 꾸고 있다면 스트레스로 인해 수면에 어려움이 있을 것으로 예상됩니다."
         else:
-            df["dream_survey"] = "꿈을 꾸지 않는 것이 가장 좋다고 할 수 있지만"
+            df["dream_survey"] = "꿈을 꾸지 않고 충분한 숙면을 취하는 것은 최상의 건강과 웰빙을 유지하는 데에 좋습니다."
 
         if df["caffeine_survey"] == 2:
             df["caffeine_survey"] ="☕과도한 카페인 섭취는 건강에 해로울 수 있습니다. 하루 카페인 섭취량을 줄여 더 건강하고 균형 잡힌 생활을 유지하세요."
@@ -144,10 +204,12 @@ def plus_survey(request, date):
         else:
             df["alcohol_survey"] = "🍻적당한 음주는 심혈관 건강을 증진시키고, 사회적 유대감을 강화하는 등 건강에 긍정적인 영향을 미칠 수 있습니다."
 
-        if df["talk_survey"] > 2:
-            df["talk_survey"] = "잘 하고 계십니다😊 많은 대화를 나누는 것은 관계를 강화하고, 새로운 아이디어를 얻으며, 이해와 공감을 높이는 데 도움이 됩니다."
+        if df["talk_survey"] == 3:
+            df["talk_survey"] = "잘 하고 계십니다😊 대화를 나누는 것은 이해와 공감을 높이는 데 도움이 됩니다. 하지만 너무 과한 대화는 긴장감을 유발시킬 수도 있으니 주의하시기 바랍니다."
+        elif df["talk_survey"] == 0:
+            df["talk_survey"] = "하루 동안 적당히 대화를 즐기면 스트레스 해소, 관계 강화 , 그리고 새로운 아이디어를 얻는 등 다양한 곳에서 도움이 됩니다."
         else:
-            df["talk_survey"] = "멋집니다🍀 하루 동안 적당히 대화를 즐기면 스트레스 해소, 관계 강화, 그리고 새로운 시각을 얻는 데 도움이 됩니다."
+            df["talk_survey"] = "멋집니다🍀 하루 동안 적당히 대화를 즐기면 스트레스 해소, 관계 강화, 그리고 새로운 아이디어를 얻는 데 도움이 됩니다."
 
         if df["personal_care_survey"] == 1:
             df["personal_care_survey"] = "외부 활동이 많으면 신체 건강을 증진시키고, 기분을 상쾌하게 하며, 새로운 경험과 만남을 통해 삶의 질을 높일 수 있습니다.👍"
@@ -172,6 +234,7 @@ def plus_survey(request, date):
         return render(request, 'survey/plus_survey.html', context)
 
 
+
 def plus_result(request, date):
     if request.method == 'POST':
         df = dict()
@@ -193,9 +256,9 @@ def plus_result(request, date):
         home_survey = df["home_survey"]
 
 
-        try:
+        if PlusPred.objects.filter(date=day, user_username=user).exists():
         # 오늘 날짜와 사용자를 기준으로 레코드를 찾습니다.
-            PlusPred_instance = PlusPred.objects.get(date=day, user=user)
+            PlusPred_instance = PlusPred.objects.get(date=day, user_username=user)
 
             # 기존 레코드가 존재하면 업데이트합니다.
             PlusPred_instance.dream_survey = dream_survey
@@ -207,7 +270,7 @@ def plus_result(request, date):
             PlusPred_instance.home_survey = home_survey
             PlusPred_instance.save()
 
-        except PlusPred.DoesNotExist:
+        else:
             # 오늘 날짜와 사용자에 해당하는 레코드가 없으면 새로운 레코드를 생성합니다.
             PlusPred_instance = PlusPred(
                 user=user,
@@ -223,10 +286,10 @@ def plus_result(request, date):
             PlusPred_instance.save()
 
 
-        if df["dream_survey"] > 2:
+        if df["dream_survey"] < 2:
             df["dream_survey"] = "악몽을 오랜기간 꾸고 있다면 스트레스로 인해 수면에 어려움이 있을 것으로 예상됩니다."
         else:
-            df["dream_survey"] = "꿈을 꾸지 않는 것이 가장 좋다고 할 수 있지만"
+            df["dream_survey"] = "꿈을 꾸지 않고 충분한 숙면을 취하는 것은 최상의 건강과 웰빙을 유지하는 데에 좋습니다."
 
         if df["caffeine_survey"] == 2:
             df["caffeine_survey"] ="☕과도한 카페인 섭취는 건강에 해로울 수 있습니다. 하루 카페인 섭취량을 줄여 더 건강하고 균형 잡힌 생활을 유지하세요."
@@ -238,10 +301,12 @@ def plus_result(request, date):
         else:
             df["alcohol_survey"] = "🍻적당한 음주는 심혈관 건강을 증진시키고, 사회적 유대감을 강화하는 등 건강에 긍정적인 영향을 미칠 수 있습니다."
 
-        if df["talk_survey"] > 2:
-            df["talk_survey"] = "잘 하고 계십니다😊 많은 대화를 나누는 것은 관계를 강화하고, 새로운 아이디어를 얻으며, 이해와 공감을 높이는 데 도움이 됩니다."
+        if df["talk_survey"] == 3:
+            df["talk_survey"] = "잘 하고 계십니다😊 대화를 나누는 것은 이해와 공감을 높이는 데 도움이 됩니다. 하지만 너무 과한 대화는 긴장감을 유발시킬 수도 있으니 주의하시기 바랍니다."
+        elif df["talk_survey"] == 0:
+            df["talk_survey"] = "하루 동안 적당히 대화를 즐기면 스트레스 해소, 관계 강화 , 그리고 새로운 아이디어를 얻는 등 다양한 곳에서 도움이 됩니다."
         else:
-            df["talk_survey"] = "멋집니다🍀 하루 동안 적당히 대화를 즐기면 스트레스 해소, 관계 강화, 그리고 새로운 시각을 얻는 데 도움이 됩니다."
+            df["talk_survey"] = "멋집니다🍀 하루 동안 적당히 대화를 즐기면 스트레스 해소, 관계 강화, 그리고 새로운 아이디어를 얻는 데 도움이 됩니다."
 
         if df["personal_care_survey"] == 1:
             df["personal_care_survey"] = "외부 활동이 많으면 신체 건강을 증진시키고, 기분을 상쾌하게 하며, 새로운 경험과 만남을 통해 삶의 질을 높일 수 있습니다.👍"
