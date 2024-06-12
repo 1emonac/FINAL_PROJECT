@@ -110,12 +110,12 @@
                 {% if survey %}
                 {% for response in survey %}
                     {% if response.predict == 0 %}
-                    <center><p class="ibm-plex-sans-kr-regular" style="white-space: nowrap;">🌲{{ response.date }}🌲은 개운한 기상을 했을 것으로 예상됩니다.　
+                    <center><p class="ibm-plex-sans-kr-regular" style="white-space: nowrap;">🌲{{ response.date }}🌲 개운한 기상을 했을 것으로 예상됩니다.　
                         <a href="{% url 'survey:alter_survey' date=response.date  %}"><button class="btn btn-outline-secondary noto-sans-kr-main me-3" type="button">다시하기</button></a>
                         <a href="{% url 'survey:plus_survey' date=response.date %}"><button class="btn btn-outline-secondary noto-sans-kr-main me-3" type="button">추가 이야기 진행</button></a>
                     </p></center>
                         {% else %}
-                        <center><p class="ibm-plex-sans-kr-regular" style="white-space: nowrap;">🌲{{ response.date }}🌲은 개운하지 못 한 기상이었을 것으로 예상됩니다.　
+                        <center><p class="ibm-plex-sans-kr-regular" style="white-space: nowrap;">🌲{{ response.date }}🌲 개운하지 못 한 기상이었을 것으로 예상됩니다.　
                         <a href="{% url 'survey:alter_survey' date=response.date  %}"><button class="btn btn-outline-secondary noto-sans-kr-main me-3" type="button">다시하기</button></a>
                         <a href="{% url 'survey:plus_survey' date=response.date %}"><button class="btn btn-outline-secondary noto-sans-kr-main me-3" type="button">추가 이야기 진행</button></a>
                     </p></center>

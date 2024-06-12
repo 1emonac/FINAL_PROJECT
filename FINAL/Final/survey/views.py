@@ -132,7 +132,7 @@ def plus_survey(request, date):
         if df["dream_survey"] > 2:
             df["dream_survey"] = "악몽을 오랜기간 꾸고 있다면 스트레스로 인해 수면에 어려움이 있을 것으로 예상됩니다."
         else:
-            df["dream_survey"] = "꿈을 꾸지 않는 것이 가장 좋다고 할 수 있지만"
+            df["dream_survey"] = "꿈을 꾸지 않고 충분한 숙면을 취하는 것은 최상의 건강과 웰빙을 유지하는 데 좋습니다."
 
         if df["caffeine_survey"] == 2:
             df["caffeine_survey"] ="☕과도한 카페인 섭취는 건강에 해로울 수 있습니다. 하루 카페인 섭취량을 줄여 더 건강하고 균형 잡힌 생활을 유지하세요."
@@ -226,37 +226,38 @@ def plus_result(request, date):
         if df["dream_survey"] > 2:
             df["dream_survey"] = "악몽을 오랜기간 꾸고 있다면 스트레스로 인해 수면에 어려움이 있을 것으로 예상됩니다."
         else:
-            df["dream_survey"] = "꿈을 꾸지 않는 것이 가장 좋다고 할 수 있지만"
+            df["dream_survey"] = "꿈을 꾸지 않고 충분한 숙면을 취하는 것은 최상의 건강과 웰빙을 유지하는 데 좋습니다."
 
         if df["caffeine_survey"] == 2:
-            df["caffeine_survey"] ="과한 카페인 심함"
+            df["caffeine_survey"] ="☕과도한 카페인 섭취는 건강에 해로울 수 있습니다. 하루 카페인 섭취량을 줄여 더 건강하고 균형 잡힌 생활을 유지하세요."
         else:
-            df["caffeine_survey"] ="카페인 져아~"
+            df["caffeine_survey"] ="☕하루 한 잔의 커피는 항산화제 섭취를 증가시키고, 집중력과 기분을 개선하며, 특정 질병의 위험을 감소시키는 등 건강에 긍정적인 영향을 미칠 수 있습니다."
 
         if df["alcohol_survey"] == 2:
-            df["alcohol_survey"] = "과한 알코올 심함"
+            df["alcohol_survey"] = "🍺과도한 알코올 섭취는 건강에 해로울 수 있습니다. 적당한 음주를 통해 더 건강한 생활을 지향하세요."
         else:
-            df["alcohol_survey"] = "한잔해~"
+            df["alcohol_survey"] = "🍻적당한 음주는 심혈관 건강을 증진시키고, 사회적 유대감을 강화하는 등 건강에 긍정적인 영향을 미칠 수 있습니다."
 
         if df["talk_survey"] > 2:
-            df["talk_survey"] = "대화많음"
+            df["talk_survey"] = "잘 하고 계십니다😊 많은 대화를 나누는 것은 관계를 강화하고, 새로운 아이디어를 얻으며, 이해와 공감을 높이는 데 도움이 됩니다."
         else:
-            df["talk_survey"] = "적당"
+            df["talk_survey"] = "멋집니다🍀 하루 동안 적당히 대화를 즐기면 스트레스 해소, 관계 강화, 그리고 새로운 시각을 얻는 데 도움이 됩니다."
 
         if df["personal_care_survey"] == 1:
-            df["personal_care_survey"] = "개인정비최고"
+            df["personal_care_survey"] = "외부 활동이 많으면 신체 건강을 증진시키고, 기분을 상쾌하게 하며, 새로운 경험과 만남을 통해 삶의 질을 높일 수 있습니다.👍"
         else:
-            df["personal_care_survey"] = "업승ㅁ"
+            df["personal_care_survey"] = "외부 활동이 부족하면 건강과 기분에 부정적인 영향을 줄 수 있습니다. 신선한 공기를 마시고 새로운 경험을 쌓기 위해 자주 밖으로 나가보세요!🙌"
 
         if df["work_survey"] == 1:
-           df["work_survey"] = "퇴근해"
+           df["work_survey"] = "💻과도한 업무와 학업 부담은 만성 스트레스와 건강 문제를 초래할 수 있습니다. 이를 예방하기 위해 적절한 휴식이 반드시 필요합니다."
         else:
-            df["work_survey"] = "출근해야지~"
+            df["work_survey"] = "🏫적절한 사회 활동과 학업은 정신 건강과 전반적인 삶의 만족도를 높이는 데 중요한 역할을 합니다."
 
         if df["home_survey"] == 1:
-            df["home_survey"] = "집 최고임"
+            df["home_survey"] = "좋습니다! 때로는 집에서 적당한 휴식을 취하는 것이 스트레스를 줄이고, 마음의 안정을 가져다주며, 전반적인 건강을 증진시킵니다.😎"
         else:
-            df["home_survey"] = "하...."
+            df["home_survey"] = "실외 활동은 건강과 활력을 증진시키지만, 집에서 휴식을 취하는 것도 중요합니다. 집에서의 휴식은 몸과 마음을 재충전하는 데 큰 도움이 됩니다.😉"
+
         context = {"df" : df, "date" : date}
     return render(request, 'survey/plus_result.html', context)
 
