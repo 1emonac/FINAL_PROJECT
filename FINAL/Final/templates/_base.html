@@ -39,6 +39,9 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&family=Noto+Sans+KR:wght@100..900&display=swap');
+        * {
+        user-select: none; /* 모든 요소의 텍스트 선택을 금지 */
+        }
 
         .ibm-plex-sans-kr-regular {
         font-family: "IBM Plex Sans KR", sans-serif;
@@ -72,7 +75,7 @@
         <nav id="navbar" class="navbar">
           <ul>
             <li><a class="active ibm-plex-sans-kr-regular" href="{% url 'sleep:main' %}" ><strong>Home</strong></a></li>
-            <li><a class="active ibm-plex-sans-kr-regular" href="{% url 'sleep:team' %}"><strong>Info</strong></a></li>
+            <li><a class="active ibm-plex-sans-kr-regular" href="{% url 'sleep:team' %}"><strong>About us</strong></a></li>
             <li><a class="active ibm-plex-sans-kr-regular" href="{% url 'sleep:define' %}"><strong>About Sleep</strong></a><li>
             <li class="dropdown ibm-plex-sans-kr-regular" style=" margin-left: -15px;"><a><span><strong>SERVICES</strong></span> <i class="bi bi-chevron-down"></i></a>
               <ul>
@@ -143,6 +146,16 @@
               <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a href="{% url 'dr:list' %}">Dr.Eunoia 상담</a></li>
             </ul>
           </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4 class="ibm-plex-sans-kr-regular ">We are C-Class</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a>GenZ</a></li>
+              <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a>PMK</a></li>
+              <li><i class="bx bx-chevron-right noto-sans-kr-main"></i> <a>Ten_Circle</a></li>
+            </ul>
+          </div>
+
         </div>
       </div>
     </div>
