@@ -11,42 +11,42 @@
             <div class="body">
                 <ul id="chat-message-list">
                     <li class="chat-message">
-                        <div class="message">안녕하세요! 수면 진단 설문조사 챗봇입니다. 시작해 볼게요!</div>
+                        <div class="message noto-sans-kr-main">안녕하세요! 수면 진단 설문조사 챗봇입니다. 시작해 볼게요!</div>
                     </li>
                 </ul>
                 
                 <div class="survey-chat col-sm-4" id="sleep_survey">
-                    <div>
+                    <div class="ibm-plex-sans-kr-regular">
                     최근에 잠을 잘 주무셨나요?
                     </div>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"네\", \"postback\":\"0\"}", this, "sleep_survey")'><span>네</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"아니오\", \"postback\":\"1\"}", this, "sleep_survey")'><span>아니오</span></button>
+                    <button type="button" class="btn btn-success noto-sans-kr-main" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"네\", \"postback\":\"0\"}", this, "sleep_survey")'><span>네</span></button>
+                    <button type="button" class="btn btn-success noto-sans-kr-main" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"아니오\", \"postback\":\"1\"}", this, "sleep_survey")'><span>아니오</span></button>
                 </div>
 
                 <div class="survey-chat col-sm-6" id="stress_survey" style="margin-top: px;">
-                    <div>
+                    <div class="ibm-plex-sans-kr-regular">
                     최근에 스트레스를 얼만큼 받으셨나요?
                     </div>
                     <br>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"매우 많이 받음\", \"postback\":\"1\"}", this, "stress_survey")'><span>매우 많이</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"많이 받음\", \"postback\":\"2\"}", this, "stress_survey")'><span>많이</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"보통\", \"postback\":\"3\"}", this, "stress_survey")'><span>보통</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"적게 받음\", \"postback\":\"4\"}", this, "stress_survey")'><span>적게</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"매우 적게 받음\", \"postback\":\"5\"}", this, "stress_survey")'><span>매우 적게</span></button>
+                    <button type="button" class="btn btn-success noto-sans-kr-main" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"매우 많이 받음\", \"postback\":\"1\"}", this, "stress_survey")'><span>매우 많이</span></button>
+                    <button type="button" class="btn btn-success noto-sans-kr-main" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"많이 받음\", \"postback\":\"2\"}", this, "stress_survey")'><span>많이</span></button>
+                    <button type="button" class="btn btn-success noto-sans-kr-main" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"보통\", \"postback\":\"3\"}", this, "stress_survey")'><span>보통</span></button>
+                    <button type="button" class="btn btn-success noto-sans-kr-main" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"적게 받음\", \"postback\":\"4\"}", this, "stress_survey")'><span>적게</span></button>
+                    <button type="button" class="btn btn-success noto-sans-kr-main" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"매우 적게 받음\", \"postback\":\"5\"}", this, "stress_survey")'><span>매우 적게</span></button>
                 </div>
 
                 <div class="survey-chat col-sm-6" id="positive_survey">
-                    <div>
-                    최근에 하루하루가 긍정적인가요?
+                    <div class="ibm-plex-sans-kr-regular">
+                    최근에 하루가 긍정적인가요?
                     </div>
                     <br>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"매우 부정적\", \"postback\":\"1\"}", this, "positive_survey")'><span>매우 부정적</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"부정적\", \"postback\":\"2\"}", this, "positive_survey")'><span>부정적</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"다소 부정적\", \"postback\":\"3\"}", this, "positive_survey")'><span>다소 부정적</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"보통\", \"postback\":\"4\"}", this, "positive_survey")'><span>보통</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"다소 긍정적\", \"postback\":\"5\"}", this, "positive_survey")'><span>다소 긍정적</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"긍정적\", \"postback\":\"6\"}", this, "positive_survey")'><span>긍정적</span></button>
-                    <button type="button" class="btn btn-success" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"매우 긍정적\", \"postback\":\"7\"}", this, "positive_survey")'><span>매우 긍정적</span></button>
+                    <button type="button" class="btn btn-success noto-sans-kr-main" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"매우 부정적\", \"postback\":\"1\"}", this, "positive_survey")'><span>매우 부정적</span></button>
+                    <button type="button" class="btn btn-success noto-sans-kr-main" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"부정적\", \"postback\":\"2\"}", this, "positive_survey")'><span>부정적</span></button>
+                    <button type="button" class="btn btn-success noto-sans-kr-main" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"다소 부정적\", \"postback\":\"3\"}", this, "positive_survey")'><span>다소 부정적</span></button>
+                    <button type="button" class="btn btn-success noto-sans-kr-main" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"보통\", \"postback\":\"4\"}", this, "positive_survey")'><span>보통</span></button>
+                    <button type="button" class="btn btn-success noto-sans-kr-main" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"다소 긍정적\", \"postback\":\"5\"}", this, "positive_survey")'><span>다소 긍정적</span></button>
+                    <button type="button" class="btn btn-success noto-sans-kr-main" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"긍정적\", \"postback\":\"6\"}", this, "positive_survey")'><span>긍정적</span></button>
+                    <button type="button" class="btn btn-success noto-sans-kr-main" onclick='onButtonClick("{\"type\": \"TEXT\", \"displayText\": \"매우 긍정적\", \"postback\":\"7\"}", this, "positive_survey")'><span>매우 긍정적</span></button>
                 </div>
             </div>
             
@@ -102,7 +102,7 @@
         // 감사 메시지 추가
         var thankYouMessage = document.createElement('div');
         thankYouMessage.classList.add('chat-message', 'animate__animated', 'animate__fadeInUp');
-        thankYouMessage.innerHTML = '<div class="message">추가 질문들에 답변해 주셔서 감사합니다!</div>';
+        thankYouMessage.innerHTML = '<div class="message noto-sans-kr-main">답변해 주셔서 감사합니다!</div>';
         newMessage.insertAdjacentElement('afterend', thankYouMessage);
     
         // 결과 페이지로 이동하는 폼 생성

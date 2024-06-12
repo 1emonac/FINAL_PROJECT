@@ -16,33 +16,31 @@
       <div class="container">
 
         <div class="row gy-4" style="margin-top: 30px; margin-bottom: 30px;">
+          <div class="col-lg-4" style="margin-top: 105px; margin-bottom: 80px;">
+            <div class="portfolio-info">
+              <center><h3 class="ibm-plex-sans-kr-regular">Eunoianest 수면 진단</h3></center>
+              <ul>
+                <li class="noto-sans-kr-main">잠을 푹 자고 싶으신가요? 간단한 질문에 답하고,<br>
+                다음 날 개운하게 일어날 확률을 확인해보세요! <br>
+                하루를 돌아보며 가볍게 참여할 수 있는<br>수면 진단 설문에 함께 하세요.<br>
+                더 나은 하루를 위해 지금 시작해 보세요!</li>
+              </ul>
+            </div>
+            <a href="{% url 'survey:survey' %}" class="btn btn-primary mt-3 noto-sans-kr-main" style="width: 420px;">가벼운 수면 진단 해보기🍀</a>
+
+          </div>
 
           <div class="col-lg-8">
             <div class="portfolio-details-slider swiper">
               <div class="swiper-wrapper align-items-center">
 
                 <div class="swiper-slide">
-                  <img src="{% static 'media/image/doctor1.jpg' %}" alt="" width="300" height="500">
+                  <img src="{% static 'media/image/surveydoor.jpg' %}" alt="" width="300" height="500">
                 </div>
 
               </div>
 
             </div>
-          </div>
-
-          <div class="col-lg-4" style="margin-top: 105px; margin-bottom: 80px;">
-            <div class="portfolio-info">
-              <center><h3>Eunoianest의 Dr.Eunoia</h3></center>
-              <ul>
-                <li>자고 일어나도 개운함을 느끼기 어려우신가요?<br>
-                Dr.Eunoia와 이야기를 나눠보시는건 어떠한가요?<br>
-                편안한 환경에서 수면에 관한 이야기를 나눠보세요.<br>
-                가벼운 대화들은 건강에 도움이 됩니다.<br>
-                건강을 되찾고 건강한 잠자리를 되찾으세요.</li>
-              </ul>
-            </div>
-            <a href="{% url 'survey:survey' %}" class="btn btn-dark mt-3" style="width: 420px;">낄낄깔깔꼴꼴껠껠</a>
-
           </div>
         </div>
 
