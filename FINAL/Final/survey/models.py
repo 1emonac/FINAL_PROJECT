@@ -66,6 +66,10 @@ class Pred(models.Model):
     positive_survey = models.SmallIntegerField("긍정의 강도") # 1 ~ 7 사이의 값 높을 수록 긍정
     date = models.DateField("일자", auto_now_add=True) 
     
+    def __str__(self):
+        # 연결된 User 객체의 username 필드를 사용하여 읽기 쉽게 출력합니다.
+        return f"{self.user.username} - {self.date}"
+    
 
 class PlusPred(models.Model):
     user = models.ForeignKey("users.User", on_delete=models.CASCADE,)
@@ -78,3 +82,6 @@ class PlusPred(models.Model):
     work_survey = models.SmallIntegerField("당일 업무 유무")
     home_survey = models.SmallIntegerField("집에서 많은 시간을 보내는지의 여부")
     
+    def __str__(self):
+        # 연결된 User 객체의 username 필드를 사용하여 읽기 쉽게 출력합니다.
+        return f"{self.user.username} - {self.date}"
