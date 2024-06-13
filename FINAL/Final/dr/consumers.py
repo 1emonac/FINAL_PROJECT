@@ -58,13 +58,17 @@ class SleepClinicRoomConsumer(JsonWebsocketConsumer):
         return room
 
     def get_query(self, command_query: str = None, user_query: str = None) -> str:
+        # command_query와 user_query가 동시에 제공된 경우 오류를 발생시킴
         if command_query is not None and user_query is not None:
             raise ValueError("command_query 인자와 user_query 인자는 동시에 사용할 수 없습니다.")
+        # command_query가 제공된 경우 이를 gpt_messages 목록에 추가
         elif command_query is not None:
             self.gpt_messages.append(GptMessage(role="user", content=command_query))
+        # user_query가 제공된 경우 이를 gpt_messages 목록에 추가
         elif user_query is not None:
             self.gpt_messages.append(GptMessage(role="user", content=user_query))
 
+        # OpenAI 클라이언트를 사용하여 채팅 응답 생성
         response: ChatCompletion = OPENAI_CLIENT.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=self.gpt_messages,
@@ -72,7 +76,8 @@ class SleepClinicRoomConsumer(JsonWebsocketConsumer):
         )
         response_role = response.choices[0].message.role
         response_content = response.choices[0].message.content
-
+        
+        # command_query가 없는 경우 GPT 응답 메시지를 gpt_messages 목록에 추가
         if command_query is None:
             gpt_message = GptMessage(role=response_role, content=response_content)
             self.gpt_messages.append(gpt_message)
