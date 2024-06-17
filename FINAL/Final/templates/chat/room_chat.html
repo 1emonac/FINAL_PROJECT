@@ -108,7 +108,6 @@
         username_set: new Set(),
 
         // 초기화
-        // init() 함수에서는 채팅 메시지 form에서 submit 이벤트가 발생하면 onsubmit() 함수가 호출되도록 이벤트 리스너 할당
         init() {
             this.chat_messages_tag = document.querySelector("#chat_messages");
             document.querySelector("#message_form")
@@ -154,7 +153,7 @@
             //element.textContent = message;
 
             this.chat_messages_tag.appendChild(element);
-            this.chat_messages_tag.scrollTop = this.chat_messages_tag.scrollHeight; // scroll to the bottom
+            this.chat_messages_tag.scrollTop = this.chat_messages_tag.scrollHeight;
         },
         // 채팅 메시지 입력폼에 대한 submit 이벤트 핸들러
         // onsubmit() 호출 시에는 아직 웹소켓 통신은 하진 않지만, append_message 함수 호출을 통해 입력된 메시지를 메시지로그에 추가
@@ -166,7 +165,7 @@
             event.target.reset();  // reset form
 
             const { message } = props;
-            console.log("웹소켓으로 전송할 메세지 :", message);
+           // console.log("웹소켓으로 전송할 메세지 :", message);
 
             // this.append_message(message);
             this.ws.send(JSON.stringify({
@@ -177,7 +176,7 @@
         
         // 웹소켓 : onmessage를 제외한 구현이 동일
         onopen() {
-            console.log("웹소켓 서버와 접속");
+           // console.log("웹소켓 서버와 접속");
             this.retry = 0;
     
             fetch('{% url "chat:room_users" room.pk %}')
@@ -196,27 +195,27 @@
                 });
              }
             else if(!event.wasClean) {
-                console.error("웹소켓 서버가 죽었거나, 네트워크 장애입니다.");
+                //console.error("웹소켓 서버가 죽었거나, 네트워크 장애입니다.");
                 if( this.retry < 3 ) {
                     this.retry += 1;
                     setTimeout(() => {
                         this.reconnect();
-                        console.log('[$(this.retry)] 접속 재시도 ...');
+                        //console.log('[$(this.retry)] 접속 재시도 ...');
                     }, 1000 * this.retry);
                 }
                 else {
-                    console.log("웹소켓 서버에 접속할 수 없습니다. 대기실로 이동합니다.");
+                   // console.log("웹소켓 서버에 접속할 수 없습니다. 대기실로 이동합니다.");
                     window.location.href = "{% url 'chat:index' %}";
                 }
             }
         },
         onerror() {
-            console.log("웹소켓 에러가 발생했습니다. 대기실로 이동합니다.");
+           // console.log("웹소켓 에러가 발생했습니다. 대기실로 이동합니다.");
             window.location.href = "{% url 'chat:index' %}";
         },
         onmessage(event) {
             const message_json = event.data;
-            console.log("메세지 수신 :", message_json);
+           // console.log("메세지 수신 :", message_json);
 
             const { type, message, sender, username } = JSON.parse(message_json);
             // 메시지 타입에 따라 분기

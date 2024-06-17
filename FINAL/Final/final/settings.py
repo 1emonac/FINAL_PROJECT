@@ -47,8 +47,8 @@ SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "eunoianest.site",
-    "127.0.0.1"
+
+    "192.168.3.2"
 ]
 
 # Application definition
