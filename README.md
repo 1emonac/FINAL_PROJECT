@@ -21,6 +21,7 @@
 - 추가 질문들을 통해 자신의 생활 패턴을 파악 수면에 좋지 않는 영향을 끼치는 항목들이 어떤 것들이 있는지 확인할 수 있도록 함
 <br>
 <br>
+
 ![jamjobgo](https://github.com/1emonac/FINAL_PROJECT/assets/139857418/bd331a5d-cef1-4653-866e-a67fe8d5f2a8)
 
 ![elogo](https://github.com/1emonac/FINAL_PROJECT/assets/139857418/a7ae14e0-2809-478d-a8a8-5701c9b7e5a2)
