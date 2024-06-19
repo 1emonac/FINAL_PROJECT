@@ -1,4 +1,4 @@
-aiohttp==3.7.4
+aiohttp==3.7.4.post0
 annotated-types==0.7.0
 anyio==4.4.0
 asgiref==3.8.1

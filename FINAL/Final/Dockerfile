@@ -8,9 +8,10 @@ WORKDIR /usr/src/app
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-# copy project files to the container
-COPY . /usr/src/app/
-
-# install dependencies
+# copy and install dependencies
+COPY requirements.txt /usr/src/app/
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
+
+# copy project files to the container
+COPY . /usr/src/app/
