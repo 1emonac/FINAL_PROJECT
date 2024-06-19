@@ -5,15 +5,20 @@ FROM python:3.10-slim-buster
 WORKDIR /usr/src/app
 
 # set environment variables
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
-# copy requirements file first
-COPY requirements.txt /usr/src/app/
+# install dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    pkg-config \
+    libmariadb-dev-compat \
+    libmariadb-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-# install dependencies with additional options
-RUN pip install --upgrade pip
-RUN pip install --no-cache-dir -r requirements.txt
-
-# copy project files to the container
+# copy project
 COPY . /usr/src/app/
+
+# install python dependencies
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
