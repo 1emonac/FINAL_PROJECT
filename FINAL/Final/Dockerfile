@@ -1,6 +1,6 @@
 # pull official base image
 # 도커는 파이썬이 설치되어 있는 이미지를 기본으로 제공합니다. 이 이미지를 불러옵니다.
-FROM python:3.8.0-silm0buster
+FROM python:3.8.0-silm-buster
 
 # set work directory
 # 프로젝트의 작업 폴더를 /usr/src/app으로 지정
