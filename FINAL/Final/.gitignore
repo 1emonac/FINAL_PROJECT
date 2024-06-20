@@ -3,7 +3,7 @@ private_file/
 .sqlite3
 video/
 definition.txt
-image/
+# image/
 # media/blogs/images
 
 # Created by https://www.toptal.com/developers/gitignore/api/python
