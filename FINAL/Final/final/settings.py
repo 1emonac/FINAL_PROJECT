@@ -42,7 +42,6 @@ if env_path.exists():
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-eqe^-+*paj08w9gn%z*w1g5o$zfntye91!yf(miw^ea(4tw(&-')
-SECRET_KEY = os.environ['SECRET_KEY']
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -109,13 +108,19 @@ ASGI_APPLICATION = "final.asgi.application"
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
+	'ENGINE': os.environ.get("SQL_ENGIN", 'django.db.backends.sqlite3'),
+	'NAME': os.environ.get('SQL_DATABASE', os.path.join(BASE_DIR, 'db.sqlite3')),
+	'USER': os.environ.get('SQL_USER', 'user'),
+	'PASSWORD': os.environ.get('SQL_PASSWORD', 'password'),
+	'HOST': os.environ.get('SQL_HOST', 'localhost'),
+	'PORT': os.environ.get("SQL_PORT", "5432"),
     }
 }
 
 # CHANNEL_LAYER_REDIS_URL 환경변수가 설정되어있다면 로딩/파싱하여, CHANNEL_LAYERS 값을 설정
-if "CHANNEL_LAYER_REDIS_URL" in env:
+if "CHANNEL_LAYER_REDIS_URL" in os.environ:
     channel_layer_redis = env.db_url("CHANNEL_LAYER_REDIS_URL")
     CHANNEL_LAYERS = {
         "default": {
@@ -125,7 +130,7 @@ if "CHANNEL_LAYER_REDIS_URL" in env:
                     {
                         "host": channel_layer_redis["HOST"],
                         "port": channel_layer_redis.get("PORT") or 6379, # PORT 값이 거짓일 경우 (빈문자열, 0), 디폴트 포트번호로서 6379를 사용
-                        "password": channel_layer_redis["PASSWORD"],
+                        "password": channel_layer_redis.get["PASSWORD"],
                     },
                 ],
             },
@@ -170,6 +175,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, '_static')
 
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
@@ -185,7 +191,7 @@ LOGIN_REDIRECT_URL = "/"
 # Logout 성공시 URL 경로
 LOGOUT_REDIRECT_URL = "/"
 
-OPENAI_API_KEY = env.str("OPENAI_API_KEY")
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 
 BOOTSTRAP5 = {
     "required_css_class": "fw-bold",
