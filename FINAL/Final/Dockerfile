@@ -16,6 +16,8 @@ RUN apt-get update && apt-get install -y \
     libmariadb-dev \
     && rm -rf /var/lib/apt/lists/*
 
+RUN pip install twisted[tls,http2]
+
 # copy project
 COPY . /usr/src/app/
 
